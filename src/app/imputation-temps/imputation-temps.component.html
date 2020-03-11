@@ -7,9 +7,9 @@
                 {{demi_journee.libelleChamp}}
             </div>
             <div class="bloc-type-activite">
-                 <mat-select class="type-activite" id="type-activite-{{demi_journee.periode}}" name="type-activite-{{demi_journee.periode}}">
-                     <mat-option *ngFor="let activite of typeActivite" value="activite">{{activite}}</mat-option>
-                </mat-select>
+                 <select class="type-activite" id="type-activite-{{demi_journee.periode}}" name="type-activite-{{demi_journee.periode}}">
+                     <option *ngFor="let activite of typeActivite" value="activite">{{activite}}</option>
+                </select>
                 <input class="type-activite" type="checkbox" id="rechEtDev-{{demi_journee.periode}}" name="rechEtDev-{{demi_journee.periode}}" value="Recherche et Developpement">
                 <label for="rechEtDev-{{demi_journee.periode}}">Recherche et développement</label>
             </div>
