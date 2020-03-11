@@ -1,6 +1,43 @@
-<h1>Hello World</h1>
-<div> 
-</div>
+<!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
 <div>
-  
+    <!-- Type d'activité pour matin et après-midi-->
+    <div>
+        <div *ngFor="let demi_journee of journee">
+            <div>
+                <label for="type-activite-{{demi_journee.periode}}"> {{demi_journee.libelleChamp}} </label>
+            </div>
+            <div>
+                <div>
+                    <select id="type-activite-{{demi_journee.periode}}" name="type-activite-{{demi_journee.periode}}">
+                        <option *ngFor="let activite of typeActivite" value="activite">{{activite}}</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="checkbox" id="rechEtDev-{{demi_journee.periode}}" name="rechEtDev-{{demi_journee.periode}}" value="Recherche et Developpement">
+                    <label for="rechEtDev-{{demi_journee.periode}}">Recherche et développement</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Champs description -->
+    <div>
+        <textarea placeholder="Description de l'activité"></textarea>
+    </div>   
+</div>
+
+<!-- Bloc pour le calendar -->
+<div>
+
+</div>
+
+<!-- Bloc avec les bouttons du bas -->
+<div>
+    <div>
+        <input type="text" placeholder="Recherche">
+        <input type="button" value="Recherche">
+    </div>
+    <div>
+        <input type="button" value="Sauvegarder">
+    </div>
 </div>

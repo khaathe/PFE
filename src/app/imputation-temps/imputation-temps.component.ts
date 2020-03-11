@@ -12,4 +12,29 @@ export class ImputationTempsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  typeActivite = [
+    "Absent",
+    "Congés",
+    "Formation",
+    "Production",
+    "Qualité et Réglementaire"
+  ]
+
+  matin = {
+    periode : "matin",
+    libelleChamp : "Matin : ",
+    activite : null
+  };
+
+  apres_midi = {
+    periode : "apres-midi",
+    libelleChamp : "Après-Midi :",
+    activite : null
+  }
+
+  journee = [
+    this.matin,
+    this.apres_midi
+  ]
+
 }
