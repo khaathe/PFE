@@ -1,7 +1,37 @@
-.bloc-droite {
-
+.bloc-choix-type-activite {
+    display: inline;
+    float: left;
+    width: 50%;
 }
 
-.bloc-gauche {
-    
+.desc-ativite {
+    display: inline;
+    float: right;
+    width: 50%;
+}
+
+.champ-demi-journee {
+    float: left;
+    font-size: 18px;
+    width: 40%;
+}
+
+.bloc-type-activite {
+    width: auto;
+}
+
+.type-activite {
+    display: inline-block;
+    height: 50%;
+    padding-bottom: 5px;
+}
+
+.bar-recherche {
+    display: block;
+    width: 100%;
+}
+
+.boutton-sauvegarder {
+    display: inline;
+    float: right;
 }
