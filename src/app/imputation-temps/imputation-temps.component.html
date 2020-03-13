@@ -1,36 +1,34 @@
-<!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
-<div class="bloc-activite-et-desc">
-    <!-- Type d'activité pour matin et après-midi-->
-    <div>
-        <div class="bloc-choix-type-activite"  *ngFor="let demi_journee of journee">
-            <div class="champ-demi-journee">
-                {{demi_journee.libelleChamp}}
+<div class="main-div">
+    <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
+    <div class="bloc-activite-et-desc">
+        <!-- Type d'activité pour matin et après-midi-->
+        <div class="bloc-demi-journee" *ngFor="let demi_journee of journee">
+            <div class="div-periode-demi-journee">
+                <h1>{{demi_journee.libelleChamp}}</h1>
             </div>
-            <div class="bloc-type-activite">
-                 <select id="type-activite-{{demi_journee.periode}}" name="type-activite-{{demi_journee.periode}}">
-                     <option *ngFor="let activite of typeActivite" value="activite">{{activite}}</option>
-                </select>
-                <div>
-                    <input type="checkbox" id="rechEtDev-{{demi_journee.periode}}" name="rechEtDev-{{demi_journee.periode}}" value="Recherche et Developpement">
-                <label for="rechEtDev-{{demi_journee.periode}}">Recherche et développement</label>
-                </div>
+            <div class="select-checkbox-type-activite ">
+                <mat-form-field>
+                    <mat-select>
+                        <mat-option *ngFor="let activite of typeActivite" value="activite">{{activite}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-checkbox>Recherche et Developpement</mat-checkbox>
             </div>
-        </div>
+            
+            <mat-form-field>
+                <textarea matInput placeholder="Description de l'activité"></textarea>
+            </mat-form-field>
+        </div>   
     </div>
-    <!-- Champs description -->
+
+    <!-- Bloc avec les bouttons sauvegarder et annuler -->
+    <div class="bar-sauvegarder-annuler">
+        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="accent">Recherche</button>
+        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="accent">Sauvegarder</button>
+    </div>
+
+    <!-- Bloc pour le calendar -->
     <div>
-        <textarea placeholder="Description de l'activité"></textarea>
-    </div>   
-</div>
 
-<!-- Bloc pour le calendar -->
-<div>
-
-</div>
-
-<!-- Bloc avec les bouttons du bas -->
-<div class="bar-recherche">
-    <input type="text" class = "bar-recherche-item" placeholder="Recherche">
-    <button class = "bar-recherche-item">Recherche</button>
-    <button class = "bar-recherche-item">Sauvegarder</button>
+    </div>
 </div>

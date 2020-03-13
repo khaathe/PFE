@@ -8,6 +8,7 @@ import { ImputationTempsComponent } from './imputation-temps/imputation-temps.co
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelectModule} from '@angular/material/select'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     NoopAnimationsModule,
     MatInputModule,
     MatSelectModule,
-    MatCheckboxModule    
+    MatCheckboxModule,
+    MatButtonModule    
   ],
   providers: [],
   bootstrap: [AppComponent]
