@@ -8,7 +8,7 @@
             </div>
             <div class="select-checkbox-type-activite ">
                 <mat-form-field>
-                    <mat-select>
+                    <mat-select placeholder="Type d'activité">
                         <mat-option *ngFor="let activite of typeActivite" value="activite">{{activite}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -23,8 +23,8 @@
 
     <!-- Bloc avec les bouttons sauvegarder et annuler -->
     <div class="bar-sauvegarder-annuler">
-        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="accent">Recherche</button>
-        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="accent">Sauvegarder</button>
+        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="accent">Sauvegarder les saisies</button>
+        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="accent">Annuler</button>
     </div>
 
     <!-- Bloc pour le calendar -->

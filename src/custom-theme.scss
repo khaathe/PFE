@@ -22,7 +22,7 @@ $PFE-primary: mat-palette($mat-gray, 600);
 $PFE-accent: mat-palette($mat-blue, 900);
 
 // The warn palette is optional (defaults to red).
-$PFE-warn: mat-palette($mat-teal, 500);
+$PFE-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $PFE-theme: mat-light-theme($PFE-primary, $PFE-accent, $PFE-warn,);
