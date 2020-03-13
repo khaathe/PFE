@@ -1,22 +1,24 @@
 <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
-<div class="clearfix">
+<div class="bloc-activite-et-desc">
     <!-- Type d'activité pour matin et après-midi-->
-    <div class="surround-with-space bloc-choix-type-activite">
-        <div *ngFor="let demi_journee of journee">
+    <div>
+        <div class="bloc-choix-type-activite"  *ngFor="let demi_journee of journee">
             <div class="champ-demi-journee">
                 {{demi_journee.libelleChamp}}
             </div>
             <div class="bloc-type-activite">
-                 <select class="type-activite" id="type-activite-{{demi_journee.periode}}" name="type-activite-{{demi_journee.periode}}">
+                 <select id="type-activite-{{demi_journee.periode}}" name="type-activite-{{demi_journee.periode}}">
                      <option *ngFor="let activite of typeActivite" value="activite">{{activite}}</option>
                 </select>
-                <input class="type-activite" type="checkbox" id="rechEtDev-{{demi_journee.periode}}" name="rechEtDev-{{demi_journee.periode}}" value="Recherche et Developpement">
+                <div>
+                    <input type="checkbox" id="rechEtDev-{{demi_journee.periode}}" name="rechEtDev-{{demi_journee.periode}}" value="Recherche et Developpement">
                 <label for="rechEtDev-{{demi_journee.periode}}">Recherche et développement</label>
+                </div>
             </div>
         </div>
     </div>
     <!-- Champs description -->
-    <div class="surround-with-space desc-activite">
+    <div>
         <textarea placeholder="Description de l'activité"></textarea>
     </div>   
 </div>
@@ -31,6 +33,6 @@
     <div>
         <input type="text" placeholder="Recherche">
         <input type="button" value="Recherche">
-        <input type="button" class="boutton-sauvegarder" value="Sauvegarder">
+        <input type="button" value="Sauvegarder">
     </div>
 </div>

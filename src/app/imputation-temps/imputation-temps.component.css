@@ -1,37 +1,14 @@
+.bloc-activite-et-desc {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50%);
+}
+
 .bloc-choix-type-activite {
-    display: inline;
-    float: left;
-    width: 50%;
-}
-
-.desc-ativite {
-    display: inline;
-    float: right;
-    width: 50%;
-}
-
-.champ-demi-journee {
-    float: left;
-    font-size: 18px;
-    width: 40%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20%, 33%));
 }
 
 .bloc-type-activite {
-    width: auto;
-}
-
-.type-activite {
-    display: inline-block;
-    height: 50%;
-    padding-bottom: 5px;
-}
-
-.bar-recherche {
-    display: block;
-    width: 100%;
-}
-
-.boutton-sauvegarder {
-    display: inline;
-    float: right;
+    display: flex;
+    flex-direction: column;
 }
