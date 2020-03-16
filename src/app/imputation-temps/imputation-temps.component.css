@@ -4,7 +4,7 @@
 
 .bloc-activite-et-desc {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 45%) );
+    grid-template-columns: repeat(auto-fit, minmax(26em, 45%) );
     column-gap: 4em;
     row-gap: 4em;
 }
