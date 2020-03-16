@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { Calendar } from '@fullcalendar/core';
-import frLocale from '@fullcalendar/core/locales/es';
 
 @Component({
   selector: 'app-calendar',
