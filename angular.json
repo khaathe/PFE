@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "PFE": {
@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PFE"
+    }
+  },
+  "defaultProject": "PFE",
+  "cli": {
+    "analytics": "ce1b7e05-8642-4b3f-a2bf-f6c9775bddcc"
+  }
 }
