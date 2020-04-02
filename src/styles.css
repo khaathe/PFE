@@ -9,3 +9,5 @@ body {
     /*font-family: Verdana, Geneva, Tahoma, sans-serif; */
 }
 
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';

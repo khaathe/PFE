@@ -9,11 +9,15 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatButtonModule} from '@angular/material/button';
+import { CalendarComponent } from './calendar/calendar.component';
+
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImputationTempsComponent
+    ImputationTempsComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +26,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatInputModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatButtonModule    
+    MatButtonModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
