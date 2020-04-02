@@ -32,7 +32,13 @@
     margin-left: auto;
 }
 
-.mat-input-element {
+.desc-activite-textarea {
     height: 10em;
     resize: none;
+}
+
+.div-calendrier {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
