@@ -1,0 +1,15 @@
+<div>
+    <h1 class="mat-h1"> {{user}} </h1>
+</div>
+
+<div>
+    <mat-nav-list>
+        <mat-list-item *ngFor="let button of buttons">
+            <button mat-raised-button color="accent">
+                <a routerLink="{{button.route}}">{{button.text}}</a>
+            </button>
+        </mat-list-item>
+    </mat-nav-list>
+    <button mat-raised-button color="warn">Déconnexion</button>
+</div>
+<div></div>

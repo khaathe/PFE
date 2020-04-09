@@ -1,7 +1,9 @@
+<span>Hello</span>
 <mat-sidenav-container>
-    <mat-sidenav mode="side" opened>Sidenav content</mat-sidenav>
+    <mat-sidenav mode="side" opened>
+        <app-bar-navigation></app-bar-navigation>
+    </mat-sidenav>
     <mat-sidenav-content>
-        <app-imputation-temps></app-imputation-temps>
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
-<router-outlet></router-outlet>

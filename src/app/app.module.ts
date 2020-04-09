@@ -11,13 +11,20 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import {FullCalendarModule} from '@fullcalendar/angular';
+import {BarNavigationComponent} from './bar-navigation/bar-navigation.component';
+import {MatListModule} from '@angular/material/list';
+import { AuthentificationComponent } from './authentification/authentification.component';
+import { AccueilComponent } from './accueil/accueil.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     ImputationTempsComponent,
-    CalendarComponent
+    CalendarComponent,
+    BarNavigationComponent,
+    AuthentificationComponent,
+    AccueilComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +35,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     MatCheckboxModule,
     MatButtonModule,
     FullCalendarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
