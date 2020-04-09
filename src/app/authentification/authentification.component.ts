@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConnectionService } from '../service/connection/connection.service';
 
 @Component({
   selector: 'app-authentification',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthentificationComponent implements OnInit{
 
-  constructor() {
+  constructor(private connectionService : ConnectionService) {
    }
 
   ngOnInit(): void {
@@ -15,10 +16,7 @@ export class AuthentificationComponent implements OnInit{
   }
 
   connexion = function () {
+    this.connectionService.setUserConnected(null);
   }
-
-  getUser = function () {
-  }
-
 
 }

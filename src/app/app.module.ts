@@ -14,8 +14,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {BarNavigationComponent} from './bar-navigation/bar-navigation.component';
 import {MatListModule} from '@angular/material/list';
-import { AuthentificationComponent } from './authentification/authentification.component';
-import { AccueilComponent } from './accueil/accueil.component'; 
+import {AuthentificationComponent} from './authentification/authentification.component';
+import {AccueilComponent} from './accueil/accueil.component'; 
 
 @NgModule({
   declarations: [
