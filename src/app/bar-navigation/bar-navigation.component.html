@@ -3,17 +3,15 @@
         <h1 class="mat-h1"> {{user}} </h1>
     </div>
     <div class="nav-list-button">
-        <div>
-            <mat-nav-list>
-                <mat-list-item *ngFor="let button of buttons">
-                    <button mat-raised-button color="accent" class="nav-button">
-                        <a routerLink="{{button.route}}">{{button.text}}</a>
-                    </button>
-                </mat-list-item>
-            </mat-nav-list>
-        </div>
-        <div>
-            <button mat-raised-button color="warn" (click)="deconnect()" class="nav-button">Déconnexion</button>
-        </div>
+        <mat-nav-list>
+            <mat-list-item *ngFor="let button of buttons">
+                <button mat-raised-button color="accent" class="nav-button">
+                    <a routerLink="{{button.route}}">{{button.text}}</a>
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button mat-raised-button color="warn" (click)="deconnect()" class="nav-button">Déconnexion</button>
+            </mat-list-item>
+        </mat-nav-list>
     </div>
 </div>
