@@ -1,31 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {AuthentificationComponent} from './authentification/authentification.component';
 import { Router } from '@angular/router';
 import { ConnectionService } from './service/connection/connection.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-  opened : boolean;
+  public connected : boolean;
+  private connectionSubscription : Subscription;
 
   constructor (private router : Router, private connectionService : ConnectionService ){
-    console.log("init app");
-    this.opened = false;
+    console.log("AppComponent.constructor");
+    this.connected = this.connectionService.isConnected();
     this.router = router;
-    let connectionObservable = this.connectionService.getConnectionObservable();
-    connectionObservable.subscribe( (connected) => {
+    let connectionSubject = this.connectionService.getConnectionSubject();
+    this.connectionSubscription = connectionSubject.subscribe( (connected) => {
+      this.connected = connected;
       if ( connected ){
-        this.router.navigate(['accueil']);
-        connectionObservable.unsubscribe();
+        this.router.navigate(['']);
       }
     });
+    console.debug("connected = %o", this.connected);
   }
   
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() : void {
+    this.connectionService.deconnect();
+    this.connectionSubscription.unsubscribe();
   }
   
 }

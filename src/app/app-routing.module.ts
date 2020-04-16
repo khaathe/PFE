@@ -5,8 +5,7 @@ import {AuthentificationComponent} from './authentification/authentification.com
 import {AccueilComponent} from './accueil/accueil.component';
 
 const routes: Routes = [
-  { path : '', component : AuthentificationComponent },
-  { path : 'accueil', component : AccueilComponent },
+  { path : '', component : AccueilComponent },
   { path : 'imputations-temps', component : ImputationTempsComponent }
 ];
 

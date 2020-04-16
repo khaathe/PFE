@@ -1,8 +1,13 @@
 <mat-sidenav-container>
-    <mat-sidenav mode="side" opened>
+    <mat-sidenav mode="side" [opened]="connected">
         <app-bar-navigation></app-bar-navigation>
     </mat-sidenav>
     <mat-sidenav-content>
-        <router-outlet></router-outlet>
+        <div [(hidden)]="!connected">
+            <router-outlet></router-outlet>
+        </div>
+        <div [(hidden)]="connected">
+            <app-authentification></app-authentification>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

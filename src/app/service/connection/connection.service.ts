@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observer, Observable } from 'rxjs';
+import { Observer, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnectionService {
 
-  private connectionObservable : Observable<boolean>;
+  private connectionSubject : Subject<boolean>;
   private connected : boolean;
   private user : any;
 
-  constructor() { 
+  constructor() {
+    console.log("ConnectionService.constructor")
     this.connected = false;
     this.user = null;
-    this.connectionObservable = new Observable<boolean> ( (Observer) => {
-      let handler = setInterval( () => {
-          Observer.next(this.connected)
-      }, 500); 
-      return () => clearInterval(handler);
-    } );
+    this.connectionSubject = new Subject<boolean>();
+    console.debug("connected = %o", this.connected);
   }
   
 
-  getConnectionObservable = function () {
-    return this.connectionObservable;
+  getConnectionSubject = function () {
+    return this.connectionSubject;
   }
 
   getUser = function () {
@@ -33,10 +30,17 @@ export class ConnectionService {
   setUserConnected = function (user : any) {
     this.user = user;
     this.connected = true;
+    this.connectionSubject.next(this.connected);
   }
 
   isConnected = function () : boolean {
     return this.connected;
+  }
+
+  deconnect = function () {
+    this.user = null;
+    this.connected = false;
+    this.connectionSubject.next(this.connected);
   }
 
 }
