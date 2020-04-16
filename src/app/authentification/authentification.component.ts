@@ -16,7 +16,10 @@ export class AuthentificationComponent implements OnInit{
   }
 
   connexion = function () {
-    this.connectionService.setUserConnected(null);
+    //TODO : récupérer les id et mdp user pour les envoyer au service et tenter une connexion
+    let id : string = "";
+    let password : string = "";
+    this.connectionService.connectUser(id, password);
   }
 
 }

@@ -27,8 +27,8 @@ export class ConnectionService {
     return this.user;
   }
 
-  setUserConnected = function (user : any) {
-    this.user = user;
+  connectUser = function (id : string, password : string) {
+    //TODO : faire un appel pour connecter l'utilisateur
     this.connected = true;
     this.connectionSubject.next(this.connected);
   }
