@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConnectionService } from '../service/connection/connection.service';
 
 @Component({
   selector: 'app-bar-navigation',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarNavigationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private connectionService : ConnectionService) { 
+    
+  }
 
   ngOnInit(): void {
   }
@@ -28,4 +31,7 @@ export class BarNavigationComponent implements OnInit {
     { text : "Supprimer un utilisateur", route : ""}
   ];
 
+  deconnect = function () {
+    this.connectionService.deconnect();
+  }
 }
