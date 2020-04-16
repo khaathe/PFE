@@ -1,0 +1,19 @@
+.nav-main-container {
+}
+
+.nav-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-list-button {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.nav-button {
+    width: 20em;
+}

@@ -1,15 +1,19 @@
-<div>
-    <h1 class="mat-h1"> {{user}} </h1>
+<div class="nav-main-container">
+    <div class="nav-title">
+        <h1 class="mat-h1"> {{user}} </h1>
+    </div>
+    <div class="nav-list-button">
+        <div>
+            <mat-nav-list>
+                <mat-list-item *ngFor="let button of buttons">
+                    <button mat-raised-button color="accent" class="nav-button">
+                        <a routerLink="{{button.route}}">{{button.text}}</a>
+                    </button>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+        <div>
+            <button mat-raised-button color="warn" (click)="deconnect()" class="nav-button">Déconnexion</button>
+        </div>
+    </div>
 </div>
-
-<div>
-    <mat-nav-list>
-        <mat-list-item *ngFor="let button of buttons">
-            <button mat-raised-button color="accent">
-                <a routerLink="{{button.route}}">{{button.text}}</a>
-            </button>
-        </mat-list-item>
-    </mat-nav-list>
-    <button mat-raised-button color="warn" (click)="deconnect()">Déconnexion</button>
-</div>
-<div></div>
