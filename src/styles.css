@@ -4,10 +4,13 @@
 
 html, body { 
     height: 100%; 
+    --background-color : white;
     --primary-color: #757575;
     --warn-color: #f44336;
     --accent-color: #0d47a1;
     --white-color: white;
 }
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
