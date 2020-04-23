@@ -1,22 +1,24 @@
 <div class="container">
-    <h1>Optim'App</h1>
     <form (ngSubmit)="connection()" #authentificationForm="ngForm">
-        <mat-grid-list cols="1" rowHeight="10em">
-            <mat-grid-tile>
+        <div class="container authenfication-container">
+            <div class="item">
+                <h1 class="app-title">Optim'App</h1>
+            </div>
+            <div class="item">
                 <mat-form-field>
                     <mat-label>Identifiant : </mat-label>
                     <input type="text" name="idInput" matInput placeholder="Identifiant de connexion" [(ngModel)]="id">
                 </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile>
+            </div>
+            <div class="item">
                 <mat-form-field>
                     <mat-label>Mot de passe : </mat-label>
                     <input type="password" name="passwordInput" matInput placeholder="Mot de passe" [(ngModel)]="password">
                 </mat-form-field>
-            </mat-grid-tile>
-            <mat-grid-tile>
+            </div>
+            <div class="item">
                 <button type="submit" mat-raised-button color="warn">Connexion</button>
-            </mat-grid-tile>
-        </mat-grid-list>
+            </div>
+        </div>
     </form>
 </div>
