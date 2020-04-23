@@ -4,7 +4,7 @@ import { ConnectionService } from '../service/connection/connection.service';
 @Component({
   selector: 'app-authentification',
   templateUrl: './authentification.component.html',
-  styleUrls: ['./authentification.component.css']
+  styleUrls: ['./authentification.component.scss']
 })
 export class AuthentificationComponent implements OnInit{
   

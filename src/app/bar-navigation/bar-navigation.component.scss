@@ -1,3 +1,6 @@
+@import '../../custom-theme.scss';
+@include angular-material-theme($PFE-theme);
+
 .nav-main-container {
     
 }
@@ -9,22 +12,19 @@
 }
 
 .mat-list-item {
-    background-color: var(--accent-color);
-    color: var(--white-color);
+    background-color: mat-color($primary);
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
 .mat-list-item:last-child {
-    background-color: var(--warn-color);
-    color: var(--white-color);
+    background-color: mat-color($warn);
 }
 
 .mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    background-color: mat-color($accent);
 }
 
 .mat-nav-list .mat-list-item:focus{
-    background-color: var(--primary-color);
+    background-color: mat-color($accent);
 }

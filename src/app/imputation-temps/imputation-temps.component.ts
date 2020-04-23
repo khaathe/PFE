@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-imputation-temps',
   templateUrl: './imputation-temps.component.html',
-  styleUrls: ['./imputation-temps.component.css']
+  styleUrls: ['./imputation-temps.component.scss']
 })
 export class ImputationTempsComponent implements OnInit {
 
