@@ -25,7 +25,7 @@
 
         <!-- Bloc avec les bouttons sauvegarder et annuler -->
         <div class="bar-sauvegarder-annuler">
-            <button mat-raised-button type="submit" [disabled]="form.untouched || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
+            <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
             <button mat-raised-button type="reset" (click)="form.reset(); reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
         </div>
 
