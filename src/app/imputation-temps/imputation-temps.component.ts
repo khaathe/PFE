@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -7,34 +9,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImputationTempsComponent implements OnInit {
 
+  a : any;
+
+  journee: Array<any>;
+
+  typeActivite: Array<String>;
+
+  form : FormControl;
+
+  libelle : any;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.libelle = {
+      MATIN : 'Matin : ',
+      APRES_MIDI : 'Après-Midi : '
+    };
+
+    this.typeActivite = [
+      "Aucune",
+      "Absent",
+      "Congés",
+      "Formation",
+      "Production",
+      "Qualité et Réglementaire"
+    ];
+
+    this.journee = [
+      {
+        periode: "MATIN",
+        rchDev : true,
+        typeActivite : null,
+        descActivite : "Une petite activité pour le matin"
+      },
+      {
+        periode: "APRES_MIDI",
+        rchDev : false,
+        typeActivite : null,
+        descActivite : null
+      }
+    ];
   }
 
-  typeActivite = [
-    "Absent",
-    "Congés",
-    "Formation",
-    "Production",
-    "Qualité et Réglementaire"
-  ]
-
-  matin = {
-    periode : "matin",
-    libelleChamp : "Matin : ",
-    activite : null
-  };
-
-  apres_midi = {
-    periode : "apres-midi",
-    libelleChamp : "Après-Midi :",
-    activite : null
+  private saveInput = function () : void {
+    
   }
-
-  journee = [
-    this.matin,
-    this.apres_midi
-  ]
 
 }

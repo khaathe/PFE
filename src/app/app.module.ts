@@ -17,7 +17,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {AuthentificationComponent} from './authentification/authentification.component';
 import {AccueilComponent} from './accueil/accueil.component'; 
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { FormsModule } from '@angular/forms';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

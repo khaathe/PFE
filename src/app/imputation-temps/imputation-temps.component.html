@@ -1,34 +1,38 @@
 <div class="main-div">
     <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
-    <div class="bloc-activite-et-desc">
-        <!-- Type d'activité pour matin et après-midi-->
-        <div class="bloc-demi-journee" *ngFor="let demi_journee of journee">
-            <div class="div-periode-demi-journee">
-                <h1>{{demi_journee.libelleChamp}}</h1>
-            </div>
-            <div class="select-checkbox-type-activite ">
+    <form>
+        <div class="bloc-activite-et-desc">
+            <!-- Type d'activité pour matin et après-midi-->
+            <div class="bloc-demi-journee" *ngFor="let demi_journee of journee">
+                <div class="div-periode-demi-journee">
+                    <h1 *ngIf="demi_journee.periode === 'MATIN' "> {{libelle.MATIN}} </h1>
+                    <h1 *ngIf="demi_journee.periode === 'APRES_MIDI' " > {{libelle.APRES_MIDI}} </h1>
+                </div>
+                <div class="select-checkbox-type-activite ">
+                    <mat-form-field>
+                        <mat-select placeholder="Type d'activité" name="{{demi_journee.periode+'-type-activite'}}" [(ngModel)]="demi_journee.typeActivite" >
+                            <mat-option *ngFor="let activite of typeActivite" value="activite">{{activite}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-checkbox name="{{demi_journee.periode+'-rch-dev'}}" [(ngModel)]="demi_journee.rchDev" >Recherche et Developpement</mat-checkbox>
+                </div>
+                
                 <mat-form-field>
-                    <mat-select placeholder="Type d'activité">
-                        <mat-option *ngFor="let activite of typeActivite" value="activite">{{activite}}</mat-option>
-                    </mat-select>
+                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{demi_journee.periode+'-desc-activite'}}" [(ngModel)]="demi_journee.descActivite"></textarea>
                 </mat-form-field>
-                <mat-checkbox>Recherche et Developpement</mat-checkbox>
-            </div>
-            
-            <mat-form-field>
-                <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea"></textarea>
-            </mat-form-field>
-        </div>   
-    </div>
+            </div>   
+        </div>
 
-    <!-- Bloc avec les bouttons sauvegarder et annuler -->
-    <div class="bar-sauvegarder-annuler">
-        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
-        <button mat-raised-button class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
-    </div>
+        <!-- Bloc avec les bouttons sauvegarder et annuler -->
+        <div class="bar-sauvegarder-annuler">
+            <button mat-raised-button type="submit" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
+            <button mat-raised-button type="reset" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+        </div>
 
-    <!-- Bloc pour le calendar -->
-    <div class="div-calendrier">
-        <app-calendar></app-calendar>
-    </div>
+        <!-- Bloc pour le calendar -->
+        <div class="div-calendrier">
+            <app-calendar></app-calendar>
+        </div>
+
+    </form>
 </div>
