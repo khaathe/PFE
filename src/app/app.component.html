@@ -1,2 +1,13 @@
-<app-imputation-temps></app-imputation-temps>
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+    <mat-sidenav mode="side" [opened]="connected" fixedInViewport>
+        <app-bar-navigation></app-bar-navigation>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div [(hidden)]="!connected">
+            <router-outlet></router-outlet>
+        </div>
+        <div [(hidden)]="connected">
+            <app-authentification></app-authentification>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
