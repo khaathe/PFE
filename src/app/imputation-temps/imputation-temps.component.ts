@@ -18,6 +18,8 @@ export class ImputationTempsComponent implements OnInit {
 
   libelle : any;
 
+  selectedDate : Date;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -49,6 +51,8 @@ export class ImputationTempsComponent implements OnInit {
         descActivite : null
       }
     ];
+
+    this.selectedDate = new Date();
   }
 
   saveInput = function () : void {
@@ -58,6 +62,10 @@ export class ImputationTempsComponent implements OnInit {
 
   reset = function () : void {
     console.log("reset");
+  }
+
+  dateClick = function (date) : void {
+    this.selectedDate = date;
   }
 
 }

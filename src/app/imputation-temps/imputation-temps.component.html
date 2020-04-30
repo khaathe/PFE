@@ -31,7 +31,7 @@
 
         <!-- Bloc pour le calendar -->
         <div class="div-calendrier">
-            <app-calendar></app-calendar>
+            <app-calendar (dateClickEvent)="dateClick($event)" ></app-calendar>
         </div>
 
     </form>
