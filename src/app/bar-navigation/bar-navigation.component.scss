@@ -1,0 +1,30 @@
+@import '../../custom-theme.scss';
+@include angular-material-theme($PFE-theme);
+
+.nav-main-container {
+    
+}
+
+.nav-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-list-item {
+    background-color: mat-color($primary);
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.mat-list-item:last-child {
+    background-color: mat-color($warn);
+}
+
+.mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{
+    background-color: mat-color($accent);
+}
+
+.mat-nav-list .mat-list-item:focus{
+    background-color: mat-color($accent);
+}
