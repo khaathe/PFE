@@ -1,6 +1,6 @@
 <div class="main-div">
     <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
-    <form>
+    <form #form="ngForm" (ngSubmit)="saveInput()" >
         <div class="bloc-activite-et-desc">
             <!-- Type d'activité pour matin et après-midi-->
             <div class="bloc-demi-journee" *ngFor="let demi_journee of journee">
@@ -10,23 +10,23 @@
                 </div>
                 <div class="select-checkbox-type-activite ">
                     <mat-form-field>
-                        <mat-select placeholder="Type d'activité" name="{{demi_journee.periode+'-type-activite'}}" [(ngModel)]="demi_journee.typeActivite" >
-                            <mat-option *ngFor="let activite of typeActivite" value="activite">{{activite}}</mat-option>
+                        <mat-select placeholder="Type d'activité" name="{{demi_journee.periode+'-type-activite'}}" [(ngModel)]="demi_journee.typeActivite" required>
+                            <mat-option *ngFor="let activite of typeActivite" value="{{activite}}" >{{activite}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-checkbox name="{{demi_journee.periode+'-rch-dev'}}" [(ngModel)]="demi_journee.rchDev" >Recherche et Developpement</mat-checkbox>
+                    <mat-checkbox name="{{demi_journee.periode+'-rch-dev'}}" [(ngModel)]="demi_journee.rchDev" [disabled]="demi_journee.typeActivite==='Aucune'">Recherche et Developpement</mat-checkbox>
                 </div>
                 
                 <mat-form-field>
-                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{demi_journee.periode+'-desc-activite'}}" [(ngModel)]="demi_journee.descActivite"></textarea>
+                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{demi_journee.periode+'-desc-activite'}}" [(ngModel)]="demi_journee.descActivite" [disabled]="demi_journee.typeActivite==='Aucune'"></textarea>
                 </mat-form-field>
             </div>   
         </div>
 
         <!-- Bloc avec les bouttons sauvegarder et annuler -->
         <div class="bar-sauvegarder-annuler">
-            <button mat-raised-button type="submit" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
-            <button mat-raised-button type="reset" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+            <button mat-raised-button type="submit" [disabled]="form.untouched || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
+            <button mat-raised-button type="reset" (click)="form.reset(); reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
         </div>
 
         <!-- Bloc pour le calendar -->

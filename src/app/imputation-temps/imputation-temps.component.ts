@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -40,20 +39,25 @@ export class ImputationTempsComponent implements OnInit {
       {
         periode: "MATIN",
         rchDev : true,
-        typeActivite : null,
+        typeActivite : "Congés",
         descActivite : "Une petite activité pour le matin"
       },
       {
         periode: "APRES_MIDI",
         rchDev : false,
-        typeActivite : null,
+        typeActivite : 'Aucune',
         descActivite : null
       }
     ];
   }
 
-  private saveInput = function () : void {
-    
+  saveInput = function () : void {
+    alert('inputSaved');
+    console.log('%o', this.journee);
+  }
+
+  reset = function () : void {
+    console.log("reset");
   }
 
 }
