@@ -1,23 +1,25 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ImputationTempsComponent} from './imputation-temps/imputation-temps.component';
-import {CalendarComponent} from './calendar/calendar.component';
+import {ImputationTempsComponent} from './component/imputation-temps/imputation-temps.component';
+import {CalendarComponent} from './component/calendar/calendar.component';
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelectModule} from '@angular/material/select'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FullCalendarModule} from '@fullcalendar/angular';
-import {BarNavigationComponent} from './bar-navigation/bar-navigation.component';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
-import {AuthentificationComponent} from './authentification/authentification.component';
-import {AccueilComponent} from './accueil/accueil.component'; 
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
+
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.component';
+import {AuthentificationComponent} from './component/authentification/authentification.component';
+import {AccueilComponent} from './component/accueil/accueil.component'; 
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { FormsModule } from '@angular/forms';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

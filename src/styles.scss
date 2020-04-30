@@ -5,6 +5,10 @@
 @import 'custom-theme.scss';
 
 @include angular-material-theme($PFE-theme);
+$primary: map-get($PFE-theme, primary);
+$accent: map-get($PFE-theme, accent);
+$warn: map-get($PFE-theme, warn);
+$foreground: map-get($PFE-theme, foreground);
 
 html, body { 
     height: 100%; 
