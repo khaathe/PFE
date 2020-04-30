@@ -20,7 +20,7 @@ export class ConnectionService {
   
 
   getConnectionSubject = function () {
-    return this.connectionSubject;
+    return this.connectionSubject.asObservable();
   }
 
   getUser = function () {
