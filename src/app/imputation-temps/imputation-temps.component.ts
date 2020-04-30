@@ -8,8 +8,6 @@ import { FormControl } from '@angular/forms';
 })
 export class ImputationTempsComponent implements OnInit {
 
-  a : any;
-
   journee: Array<any>;
 
   typeActivite: Array<String>;
@@ -52,7 +50,7 @@ export class ImputationTempsComponent implements OnInit {
       }
     ];
 
-    this.selectedDate = new Date();
+    this.selectedDate = null;
   }
 
   saveInput = function () : void {
