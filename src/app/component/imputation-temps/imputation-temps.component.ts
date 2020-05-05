@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ActivityService } from 'src/app/service/activity/activity.service';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -12,35 +12,22 @@ export class ImputationTempsComponent implements OnInit {
 
   typeActivite: Array<String>;
 
-  form : FormControl;
-
-  libelle : any;
-
   selectedDate : Date;
 
-  constructor() { }
+  constructor(private activityService : ActivityService) { 
+
+  }
 
   ngOnInit(): void {
-    this.libelle = {
-      MATIN : 'Matin : ',
-      APRES_MIDI : 'Après-Midi : '
-    };
+    this.typeActivite = this.activityService.getTypeActivite();
 
-    this.typeActivite = [
-      "Aucune",
-      "Absent",
-      "Congés",
-      "Formation",
-      "Production",
-      "Qualité et Réglementaire"
-    ];
-
+    //TODO: utiliser le constructeur de day
     this.journee = [
       {
         periode: "MATIN",
-        rchDev : true,
-        typeActivite : "Congés",
-        descActivite : "Une petite activité pour le matin"
+        rchDev : false,
+        typeActivite : 'Aucune',
+        descActivite : null
       },
       {
         periode: "APRES_MIDI",
@@ -64,6 +51,7 @@ export class ImputationTempsComponent implements OnInit {
 
   dateClick = function (date) : void {
     this.selectedDate = date;
+    this.journee = this.activityService.findActivityByDate(date);
   }
 
 }

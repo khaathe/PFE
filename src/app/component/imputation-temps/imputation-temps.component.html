@@ -5,8 +5,8 @@
             <!-- Type d'activité pour matin et après-midi-->
             <div class="bloc-demi-journee" *ngFor="let demi_journee of journee">
                 <div class="div-periode-demi-journee">
-                    <h1 *ngIf="demi_journee.periode === 'MATIN' "> {{libelle.MATIN}} </h1>
-                    <h1 *ngIf="demi_journee.periode === 'APRES_MIDI' " > {{libelle.APRES_MIDI}} </h1>
+                    <h1 *ngIf="demi_journee.periode === 'MATIN' "> Matin : </h1>
+                    <h1 *ngIf="demi_journee.periode === 'APRES_MIDI' " > Après-Midi : </h1>
                 </div>
                 <div class="select-checkbox-type-activite ">
                     <mat-form-field>
