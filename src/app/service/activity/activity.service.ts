@@ -6,29 +6,27 @@ import { Activity } from 'src/app/model/activity.model';
 })
 export class ActivityService {
 
-  private typeActivite : Array<string>;
+  private activityType : Array<any>;
 
   private day : Array<Activity>;
 
   constructor() { 
-    this.typeActivite = [
-      "Aucune",
-      "Absent",
-      "Congés",
-      "Formation",
-      "Administration",
-      "Production",
-      "Qualité et Réglementaire"
+    
+    this.activityType = [
+      { code : 'ABSENT', libelle : 'Absent'},
+      { code : 'CONGES', libelle : 'Congés'},
+      { code : 'FORMATION', libelle : 'Formation'},
+      { code : 'ADMINISTRATION', libelle : 'Administration'},
+      { code : 'PRODUCTION', libelle : 'Production'},
+      { code : 'QUALITE_REGLEMENTAIRE', libelle : 'Qualité et Réglementaire'}
     ];
 
     this.day = [];
     let morning = new Activity();
-    morning.setActivityType('Aucune');
     morning.setPeriod('MATIN');
     this.day.push(morning);
     
     let afternoon = new Activity();
-    afternoon.setActivityType('Aucune');
     afternoon.setPeriod('APRES_MIDI');
     this.day.push(afternoon);
 
@@ -38,22 +36,21 @@ export class ActivityService {
     return this.day;
   }
 
-  getTypeActivite = function () : any {
-    return this.typeActivite;
+  getActivityType = function () : any {
+    return this.activityType;
   }
 
   findActivityByDate = function(date){
       //todo : récupérer une activité à l'aide d'une date
       let day = new Array<Activity>();
       let morning = new Activity();
-      morning.setActivityType('Production');
+      morning.setActivityType('ADMINISTRATION');
       morning.setPeriod('MATIN');
       morning.setComments("Une petite activité administrative un peu nulle");
       morning.setRAndD(true);
       day.push(morning);
       
       let afternoon = new Activity();
-      afternoon.setActivityType('Aucune');
       afternoon.setPeriod('APRES_MIDI');
       day.push(afternoon);
 

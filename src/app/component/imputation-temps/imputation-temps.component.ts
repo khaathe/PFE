@@ -20,7 +20,7 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activityType = this.activityService.getTypeActivite();
+    this.activityType = this.activityService.getActivityType();
     this.day = this.activityService.getDay();
     this.selectedDate = null;
   }
@@ -32,11 +32,11 @@ export class ImputationTempsComponent implements OnInit {
 
   reset = function () : void {
     console.log("reset");
+    this.selectedDate = null;
   }
 
   dateClick = function (date) : void {
     this.selectedDate = date;
     this.day = this.activityService.findActivityByDate(date);
   }
-
 }

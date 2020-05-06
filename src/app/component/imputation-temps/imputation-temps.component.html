@@ -11,14 +11,14 @@
                 <div class="select-checkbox-type-activite ">
                     <mat-form-field>
                         <mat-select placeholder="Type d'activité" name="{{half_day.period+'-type-activite'}}" [(ngModel)]="half_day.activityType" required>
-                            <mat-option *ngFor="let type of activityType" value="{{type}}" >{{type}}</mat-option>
+                            <mat-option *ngFor="let type of activityType" value="{{type.code}}" >{{type.libelle}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-checkbox name="{{half_day.period+'-rch-dev'}}" [(ngModel)]="half_day.rAndD" [disabled]="half_day.activityType==='Aucune'">Recherche et Developpement</mat-checkbox>
+                    <mat-checkbox name="{{half_day.period+'-rch-dev'}}" [(ngModel)]="half_day.rAndD" [disabled]="!half_day.activityType">Recherche et Developpement</mat-checkbox>
                 </div>
                 
                 <mat-form-field>
-                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{half_day.period+'-desc-activite'}}" [(ngModel)]="half_day.comments" [disabled]="half_day.activityType==='Aucune'"></textarea>
+                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{half_day.period+'-desc-activite'}}" [(ngModel)]="half_day.comments" [disabled]="!half_day.activityType"></textarea>
                 </mat-form-field>
             </div>   
         </div>
