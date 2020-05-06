@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Activity } from 'src/app/model/activity.model';
+import { ActivityType } from 'src/app/model/activityType.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
 
-  private activityType : Array<any>;
+  private activityType : Array<ActivityType>;
 
   private day : Array<Activity>;
 
   constructor() { 
     
-    this.activityType = [
+    this.activityType = [];
+    
+    let type = [
       { code : 'ABSENT', libelle : 'Absent'},
       { code : 'CONGES', libelle : 'Congés'},
       { code : 'FORMATION', libelle : 'Formation'},
@@ -20,6 +23,12 @@ export class ActivityService {
       { code : 'PRODUCTION', libelle : 'Production'},
       { code : 'QUALITE_REGLEMENTAIRE', libelle : 'Qualité et Réglementaire'}
     ];
+    type.forEach(t => {
+      let at = new ActivityType();
+      at.setCode(t.code);
+      at.setLibelle(t.libelle);
+      this.activityType.push(at);
+    });
 
     this.day = [];
     let morning = new Activity();
