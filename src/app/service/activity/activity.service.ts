@@ -9,12 +9,13 @@ export class ActivityService {
 
   private activityType : Array<ActivityType>;
 
-  private day : Array<Activity>;
+  constructor() {   
+    this.initActivityType();
+  }
 
-  constructor() { 
-    
+  private initActivityType(){
     this.activityType = [];
-    
+    //TODO : initié avec les valeurs de la bd
     let type = [
       { code : 'ABSENT', libelle : 'Absent'},
       { code : 'CONGES', libelle : 'Congés'},
@@ -29,16 +30,6 @@ export class ActivityService {
       at.setLibelle(t.libelle);
       this.activityType.push(at);
     });
-
-    this.day = [];
-    let morning = new Activity();
-    morning.setPeriod('MATIN');
-    this.day.push(morning);
-    
-    let afternoon = new Activity();
-    afternoon.setPeriod('APRES_MIDI');
-    this.day.push(afternoon);
-
   }
 
   getDay = function () {

@@ -21,8 +21,16 @@ export class ImputationTempsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activityType = this.activityService.getActivityType();
-    this.day = this.activityService.getDay();
     this.selectedDate = null;
+    
+    this.day = [];
+    let morning = new Activity();
+    morning.setPeriod('MATIN');
+    this.day.push(morning);
+    
+    let afternoon = new Activity();
+    afternoon.setPeriod('APRES_MIDI');
+    this.day.push(afternoon);
   }
 
   saveInput = function () : void {
