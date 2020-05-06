@@ -1,49 +1,42 @@
 export class User {
 
-    private idU : number;
+    private _idU : number;
 
-    private name : string;
+    private _name : string;
 
-    private firstName : string;
+    private _firstName : string;
 
-    private role : string;
+    private _role : string;
 
-    constructor() {
-        this.idU = null;
-        this.name = null;
-        this.firstName = null;
-        this.role = null;
+    get idU() : number {
+        return this._idU;
     }
 
-    getIdU = function () : number {
-        return this.idU;
+    set idU (idU : number){
+        this._idU = idU;
     }
 
-    setIdU = function (idU : number) : void {
-        this.idU = idU;
+    get name () : string{
+        return this._name;
     }
 
-    getName = function () : string{
-        return this.name;
+    set name ( name : string){
+        this._name = name;
     }
 
-    setName = function ( name : string){
-        this.name = name;
+    get firstName () : string {
+        return this._firstName;
     }
 
-    getFirstName = function () : string {
-        return this.firstName;
+    set firstName ( firstName : string){
+        this._firstName = firstName;
     }
 
-    setFirstName = function ( firstName : string){
-        this.firstName = firstName;
+    get role () : string {
+        return this._role;
     }
 
-    getRole = function () : string {
-        return this.role;
-    }
-
-    setRole = function ( role : string){
-        this.role = role;
+    set role ( role : string){
+        this._role = role;
     }
 }

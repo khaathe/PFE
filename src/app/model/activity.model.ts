@@ -1,64 +1,64 @@
 export class Activity {
 
-    private idA : number;
+    private _idA : number;
 
-    private period : string;
+    private _period : string;
 
-    private date : Date;
+    private _date : Date;
 
-    private activityType : string;
+    private _activityType : string;
 
-    private rAndD : boolean;
+    private _rAndD : boolean;
 
-    private comments : string;
+    private _comments : string;
 
 
-    getIdA = function () : number {
-        return this.idA;
+    get idA  () {
+        return this._idA;
     }
 
-    setIdA = function (idA : number) : void {
-        this.idA = idA;
+    set idA (idA : number) {
+        this._idA = idA;
     }
 
-    getPeriod = function () : string{
-        return this.period;
+    get period () : string{
+        return this._period;
     }
 
-    setPeriod = function ( period : string){
-        this.period = period;
+    set period ( period : string){
+        this._period = period;
     }
 
-    getActivityType = function () : string{
-        return this.activityType;
+    get activityType () : string{
+        return this._activityType;
     }
 
-    setActivityType = function ( activityType : string){
-        this.activityType = activityType;
+    set activityType ( activityType : string){
+        this._activityType = activityType;
     }
 
-    getComments = function () : string{
-        return this.comments;
+    get comments () : string{
+        return this._comments;
     }
 
-    setComments = function ( comments : string){
-        this.comments = comments;
+    set comments ( comments : string){
+        this._comments = comments;
     }
 
-    getDate = function() : Date {
-        return this.date;
+    get date () : Date {
+        return this._date;
     }
 
-    setDate = function (date:Date) {
-        this.date = date;
+    set date (date:Date) {
+        this._date = date;
     }
 
-    isRAndD = function () {
-        return this.rAndD;
+    get rAndD () {
+        return this._rAndD;
     }
 
-    setRAndD = function (rAndD:boolean) {
-        this.rAndD = rAndD;
+    set rAndD (rAndD:boolean) {
+        this._rAndD = rAndD;
     }
 
 }

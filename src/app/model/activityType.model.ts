@@ -1,23 +1,23 @@
 export class ActivityType {
 
-    private code : string;
+    private _code : string;
 
-    private libelle : string;
+    private _libelle : string;
 
-    getCode = function () {
-        return this.code;
+    get code () {
+        return this._code;
     }
 
-    setCode (code : string) {
-        this.code = code;
+    set code (code : string) {
+        this._code = code;
     }
 
-    getLibelle = function () {
-        return this.libelle;
+    get libelle () {
+        return this._libelle;
     }
 
-    setLibelle (libelle : string) {
-        this.libelle = libelle;
+    set libelle (libelle : string) {
+        this._libelle = libelle;
     }
     
 }

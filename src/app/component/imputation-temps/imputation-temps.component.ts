@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import { Activity } from 'src/app/model/activity.model';
+import { ActivityType } from 'src/app/model/activityType.model';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -11,7 +12,7 @@ export class ImputationTempsComponent implements OnInit {
 
   day : Array<Activity>;
 
-  activityType: Array<String>;
+  activityType: Array<ActivityType>;
 
   selectedDate : Date;
 
@@ -20,16 +21,16 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activityType = this.activityService.getActivityType();
+    this.activityType = this.activityService.activityType;
     this.selectedDate = null;
-    
+
     this.day = [];
     let morning = new Activity();
-    morning.setPeriod('MATIN');
+    morning.period = 'MATIN';
     this.day.push(morning);
     
     let afternoon = new Activity();
-    afternoon.setPeriod('APRES_MIDI');
+    afternoon.period = 'APRES_MIDI';
     this.day.push(afternoon);
   }
 

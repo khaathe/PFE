@@ -7,14 +7,14 @@ import { ActivityType } from 'src/app/model/activityType.model';
 })
 export class ActivityService {
 
-  private activityType : Array<ActivityType>;
+  private _activityType : Array<ActivityType>;
 
   constructor() {   
     this.initActivityType();
   }
 
   private initActivityType(){
-    this.activityType = [];
+    this._activityType = [];
     //TODO : initié avec les valeurs de la bd
     let type = [
       { code : 'ABSENT', libelle : 'Absent'},
@@ -26,32 +26,28 @@ export class ActivityService {
     ];
     type.forEach(t => {
       let at = new ActivityType();
-      at.setCode(t.code);
-      at.setLibelle(t.libelle);
-      this.activityType.push(at);
+      at.code = t.code;
+      at.libelle = t.libelle;
+      this._activityType.push(at);
     });
   }
 
-  getDay = function () {
-    return this.day;
-  }
-
-  getActivityType = function () : any {
-    return this.activityType;
+  get activityType () {
+    return this._activityType;
   }
 
   findActivityByDate = function(date){
       //todo : récupérer une activité à l'aide d'une date
       let day = new Array<Activity>();
       let morning = new Activity();
-      morning.setActivityType('ADMINISTRATION');
-      morning.setPeriod('MATIN');
-      morning.setComments("Une petite activité administrative un peu nulle");
-      morning.setRAndD(true);
+      morning.activityType = 'ADMINISTRATION';
+      morning.period = 'MATIN';
+      morning.comments = "Une petite activité administrative un peu nulle";
+      morning.rAndD = true;
       day.push(morning);
       
       let afternoon = new Activity();
-      afternoon.setPeriod('APRES_MIDI');
+      afternoon.period = 'APRES_MIDI';
       day.push(afternoon);
 
       return day;  
