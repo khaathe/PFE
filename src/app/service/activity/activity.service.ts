@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -65,22 +66,10 @@ export class ActivityService {
   }
 
   findActivityByDate = function(date) : Array<Activity>{
-      //todo : récupérer une activité à l'aide d'une date
-      let day = new Array<Activity>();
-      let morning = new Activity();
-      morning.activityType = 'ADMINISTRATION';
-      morning.period = 'MATIN';
-      morning.comments = "Une petite activité administrative un peu nulle";
-      morning.date = date;
-      morning.rAndD = true;
-      day.push(morning);
-      
-      let afternoon = new Activity();
-      afternoon.period = 'APRES_MIDI';
-      afternoon.date = date;
-      day.push(afternoon);
-
-      return day;  
+      let dateMoment = moment(date);
+      return this._listActivities.filter( a => {
+        return dateMoment.isSame(a.date, 'day');
+      });
   }
 
   saveActivities = function (activities : Array<Activity> ) {

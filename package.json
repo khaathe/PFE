@@ -29,6 +29,8 @@
     "@fullcalendar/timegrid": "^4.4.0",
     "domino": "^2.1.5",
     "fullcalendar": "^3.10.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.25.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

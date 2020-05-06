@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -16,22 +17,23 @@ export class ImputationTempsComponent implements OnInit {
 
   selectedDate : Date;
 
-  constructor(private activityService : ActivityService) { 
+  private static DEFAULT_DAY : Array<Activity>;
 
+  constructor(private activityService : ActivityService) {
+    ImputationTempsComponent.DEFAULT_DAY = [];
+    let morning = new Activity();
+    morning.period = 'MATIN';
+    ImputationTempsComponent.DEFAULT_DAY.push(morning);
+    
+    let afternoon = new Activity();
+    afternoon.period = 'APRES_MIDI';
+    ImputationTempsComponent.DEFAULT_DAY.push(afternoon);
   }
 
   ngOnInit(): void {
     this.activityType = this.activityService.activityType;
     this.selectedDate = null;
-
-    this.day = [];
-    let morning = new Activity();
-    morning.period = 'MATIN';
-    this.day.push(morning);
-    
-    let afternoon = new Activity();
-    afternoon.period = 'APRES_MIDI';
-    this.day.push(afternoon);
+    this.day = _.clone(ImputationTempsComponent.DEFAULT_DAY);
   }
 
   saveInput = function () : void {
@@ -44,6 +46,10 @@ export class ImputationTempsComponent implements OnInit {
 
   dateClick = function (date) : void {
     this.selectedDate = date;
-    this.day = this.activityService.findActivityByDate(date);
+    let a = this.activityService.findActivityByDate(date);
+    if(a.length>0) { this.day = a;}
+    else {this.day.forEach(a => {
+      a.date = _.clone(date);
+    }); }
   }
 }
