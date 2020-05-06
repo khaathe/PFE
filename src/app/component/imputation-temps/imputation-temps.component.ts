@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityService } from 'src/app/service/activity/activity.service';
+import { Activity } from 'src/app/model/activity.model';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -8,9 +9,9 @@ import { ActivityService } from 'src/app/service/activity/activity.service';
 })
 export class ImputationTempsComponent implements OnInit {
 
-  journee: Array<any>;
+  day : Array<Activity>;
 
-  typeActivite: Array<String>;
+  activityType: Array<String>;
 
   selectedDate : Date;
 
@@ -19,30 +20,14 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.typeActivite = this.activityService.getTypeActivite();
-
-    //TODO: utiliser le constructeur de day
-    this.journee = [
-      {
-        periode: "MATIN",
-        rchDev : false,
-        typeActivite : 'Aucune',
-        descActivite : null
-      },
-      {
-        periode: "APRES_MIDI",
-        rchDev : false,
-        typeActivite : 'Aucune',
-        descActivite : null
-      }
-    ];
-
+    this.activityType = this.activityService.getTypeActivite();
+    this.day = this.activityService.getDay();
     this.selectedDate = null;
   }
 
   saveInput = function () : void {
     alert('inputSaved');
-    console.log('%o', this.journee);
+    console.log('%o', this.day);
   }
 
   reset = function () : void {
@@ -51,7 +36,7 @@ export class ImputationTempsComponent implements OnInit {
 
   dateClick = function (date) : void {
     this.selectedDate = date;
-    this.journee = this.activityService.findActivityByDate(date);
+    this.day = this.activityService.findActivityByDate(date);
   }
 
 }

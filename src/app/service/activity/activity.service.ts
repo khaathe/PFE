@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Activity } from 'src/app/model/activity.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
 
-  private typeActivite : any;
+  private typeActivite : Array<string>;
 
-  private journee : any;
+  private day : Array<Activity>;
 
   constructor() { 
     this.typeActivite = [
@@ -15,25 +16,26 @@ export class ActivityService {
       "Absent",
       "Congés",
       "Formation",
+      "Administration",
       "Production",
       "Qualité et Réglementaire"
     ];
 
-    this.journee = [
-      {
-        periode: "MATIN",
-        rchDev : true,
-        typeActivite : "Congés",
-        descActivite : "Une petite activité pour le matin"
-      },
-      {
-        periode: "APRES_MIDI",
-        rchDev : false,
-        typeActivite : 'Aucune',
-        descActivite : null
-      }
-    ];
+    this.day = [];
+    let morning = new Activity();
+    morning.setActivityType('Aucune');
+    morning.setPeriod('MATIN');
+    this.day.push(morning);
+    
+    let afternoon = new Activity();
+    afternoon.setActivityType('Aucune');
+    afternoon.setPeriod('APRES_MIDI');
+    this.day.push(afternoon);
 
+  }
+
+  getDay = function () {
+    return this.day;
   }
 
   getTypeActivite = function () : any {
@@ -42,20 +44,20 @@ export class ActivityService {
 
   findActivityByDate = function(date){
       //todo : récupérer une activité à l'aide d'une date
-      return [
-        {
-          periode: "MATIN",
-          rchDev : true,
-          typeActivite : 'Administration',
-          descActivite : 'Une petite activité administrative un peu nulle'
-        },
-        {
-          periode: "APRES_MIDI",
-          rchDev : false,
-          typeActivite : 'Aucune',
-          descActivite : null
-        }
-      ];;  
+      let day = new Array<Activity>();
+      let morning = new Activity();
+      morning.setActivityType('Production');
+      morning.setPeriod('MATIN');
+      morning.setComments("Une petite activité administrative un peu nulle");
+      morning.setRAndD(true);
+      day.push(morning);
+      
+      let afternoon = new Activity();
+      afternoon.setActivityType('Aucune');
+      afternoon.setPeriod('APRES_MIDI');
+      day.push(afternoon);
+
+      return day;  
   }
 
 }
