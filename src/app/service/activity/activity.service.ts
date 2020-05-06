@@ -41,6 +41,19 @@ export class ActivityService {
 
    private initListActivities (){
       this._listActivities = [];
+      //TODO : Appel BD
+      let morning = new Activity();
+      morning.activityType = 'ADMINISTRATION';
+      morning.period = 'MATIN';
+      morning.comments = "Une petite activité administrative un peu nulle";
+      morning.rAndD = true;
+      morning.date = new Date();
+      this._listActivities.push(morning);
+      
+      let afternoon = new Activity();
+      afternoon.period = 'APRES_MIDI';
+      afternoon.date = new Date();
+      this._listActivities.push(afternoon);
   }
 
   get activityType () {
@@ -58,11 +71,13 @@ export class ActivityService {
       morning.activityType = 'ADMINISTRATION';
       morning.period = 'MATIN';
       morning.comments = "Une petite activité administrative un peu nulle";
+      morning.date = date;
       morning.rAndD = true;
       day.push(morning);
       
       let afternoon = new Activity();
       afternoon.period = 'APRES_MIDI';
+      afternoon.date = date;
       day.push(afternoon);
 
       return day;  
