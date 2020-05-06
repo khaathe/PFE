@@ -35,12 +35,10 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   saveInput = function () : void {
-    alert('inputSaved');
-    console.log('%o', this.day);
+    this.activityService.saveActivities(this.day);
   }
 
   reset = function () : void {
-    console.log("reset");
     this.selectedDate = null;
   }
 

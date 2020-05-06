@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import { ActivityService } from 'src/app/service/activity/activity.service';
 
 @Component({
   selector: 'app-calendar',
@@ -21,7 +22,7 @@ export class CalendarComponent implements OnInit {
   events : Array<any>;
   @Output() dateClickEvent = new EventEmitter<Date>();
 
-  constructor() {
+  constructor( private activityService : ActivityService) {
   }
 
   ngOnInit(): void {
@@ -42,19 +43,24 @@ export class CalendarComponent implements OnInit {
       day:      'Jour',
       list:     'Liste Semaine'
     };
-    this.events=[ {title : 'Titre', date : '2020-04-02'} ];
+    
+    this.initEvent(this.activityService.listActivities);
+    const activityObserver = {
+      next: a => this.initEvent(a)
+    };
+    this.activityService.activityObservable.subscribe(activityObserver);
   }
 
   dateClick = function (info) {
     this.dateClickEvent.emit(info.date);
   }
 
-  addEvent(){
-
-  }
-
-  removeEvent(){
-    
+  initEvent(listActivities){
+    let events=[];
+    listActivities.forEach(a => {
+      events.push( {title: a.activityType, date : a.date} );
+    });
+    this.events = events;
   }
 
 }
