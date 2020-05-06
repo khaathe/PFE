@@ -1,6 +1,9 @@
 <div class="main-div">
     <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
     <form #form="ngForm" (ngSubmit)="saveInput()" >
+        <div>
+            <h1>Date sélectionnée : {{selectedDate | date : "dd/MM/yyyy" }} </h1>
+        </div>
         <div class="bloc-activite-et-desc">
             <!-- Type d'activité pour matin et après-midi-->
             <div class="bloc-demi-journee" *ngFor="let half_day of day">
