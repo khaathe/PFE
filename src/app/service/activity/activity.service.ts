@@ -3,6 +3,7 @@ import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -67,14 +68,14 @@ export class ActivityService {
 
   findActivityByDate = function(date) : Array<Activity>{
       let dateMoment = moment(date);
-      return this._listActivities.filter( a => {
+      return _.filter(this._listActivities, a => {
         return dateMoment.isSame(a.date, 'day');
       });
   }
 
   saveActivities = function (activities : Array<Activity> ) {
     //TODO : faire un appel à la base de données
-    activities.forEach( a => {
+    _.forEach(activities, a => {
       this._listActivities.push(a);
     });
     this.activitySubject.next(this._listActivities);  

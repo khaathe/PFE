@@ -33,7 +33,7 @@ export class ImputationTempsComponent implements OnInit {
   ngOnInit(): void {
     this.activityType = this.activityService.activityType;
     this.selectedDate = null;
-    this.day = _.clone(ImputationTempsComponent.DEFAULT_DAY);
+    this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
 
   saveInput = function () : void {
@@ -48,8 +48,11 @@ export class ImputationTempsComponent implements OnInit {
     this.selectedDate = date;
     let a = this.activityService.findActivityByDate(date);
     if(a.length>0) { this.day = a;}
-    else {this.day.forEach(a => {
-      a.date = _.clone(date);
-    }); }
+    else { 
+      this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
+      _.forEach(this.day, a => {
+        a.date = _.cloneDeep(date);
+      }) 
+    }
   }
 }
