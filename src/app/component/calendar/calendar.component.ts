@@ -4,6 +4,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ActivityService } from 'src/app/service/activity/activity.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-calendar',
@@ -58,7 +59,7 @@ export class CalendarComponent implements OnInit {
   initEvent(listActivities){
     let events=[];
     listActivities.forEach(a => {
-      events.push( {title: a.activityType, date : a.date} );
+      events.push( {title: a.activityType, date : moment(a.date).format('yyyy-MM-DD')} );
     });
     this.events = events;
   }

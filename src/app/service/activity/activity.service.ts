@@ -54,6 +54,7 @@ export class ActivityService {
       
       let afternoon = new Activity();
       afternoon.period = 'APRES_MIDI';
+      afternoon.activityType = 'CONGES';
       afternoon.date = new Date();
       this._listActivities.push(afternoon);
   }
@@ -76,7 +77,13 @@ export class ActivityService {
   saveActivities = function (activities : Array<Activity> ) {
     //TODO : faire un appel à la base de données
     _.forEach(activities, a => {
-      this._listActivities.push(a);
+      let activity = _.find(this._listActivities, {idA : a.idA, period : a.period, date : a.date});
+      if(activity) { 
+        activity.activityType = a.activityType;
+        activity.comments = a.comments;
+        activity.rAndD = a.rAndD;
+      }
+      else {this._listActivities.push(a);}
     });
     this.activitySubject.next(this._listActivities);  
   }
