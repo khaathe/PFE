@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../../service/connection/connection.service';
+import { UserService } from 'src/app/service/user/user.service';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-bar-navigation',
@@ -8,28 +10,22 @@ import { ConnectionService } from '../../service/connection/connection.service';
 })
 export class BarNavigationComponent implements OnInit {
 
-  constructor(private connectionService : ConnectionService) { 
+  user : User;
+
+  private _actions : Array<any>;
+
+  constructor(private connectionService : ConnectionService, private userService : UserService) { 
     
   }
 
   ngOnInit(): void {
+    this.user = this.userService.user;
+    this._actions = this.userService.getUserActions();
   }
 
-  user = "User";
-  text = [
-
-  ];
-
-  buttons = [
-    { text : "Imputer le temps", route : "imputations-temps"},
-    { text : "Changer son mot de passe", route : ""},
-    { text : "Exporter les données", route : ""},
-    { text : "Créer une tâche", route : ""},
-    { text : "Clôturer une tâche", route : ""},
-    { text : "Ré-activer une tâche", route : ""},
-    { text : "Ajouter un utilisateur", route : ""},
-    { text : "Supprimer un utilisateur", route : ""}
-  ];
+  get actions () {
+    return this._actions;
+  }
 
   deconnect = function () {
     this.connectionService.deconnect();
