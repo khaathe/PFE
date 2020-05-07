@@ -1,7 +1,7 @@
 <div class="nav-title">
-    <h2> {{user.name}} </h2>
-    <h2> {{user.firstName}} </h2>
-    <h3> {{user.role}} </h3>
+    <span> {{user.name}} </span>
+    <span> {{user.firstName}} </span>
+    <span> {{user.role}} </span>
 </div>
 <mat-nav-list>
     <a mat-list-item routerLink="{{action.route}}" *ngFor="let action of actions"> {{action.text}} </a>

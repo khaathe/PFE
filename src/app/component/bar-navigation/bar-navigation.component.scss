@@ -7,6 +7,9 @@
 }
 
 .nav-title {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
     background-color: mat-color($accent);
     color: mat-color($white);
 }
