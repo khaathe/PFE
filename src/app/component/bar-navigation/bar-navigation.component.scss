@@ -7,11 +7,12 @@
 }
 
 .nav-title {
-
+    background-color: mat-color($accent);
+    color: mat-color($white);
 }
 
 .mat-list-item {
-    background-color: mat-color($primary, A400);
+    background-color: mat-color($primary, 500);
     margin-top: 2px;
     margin-bottom: 2px;
 
