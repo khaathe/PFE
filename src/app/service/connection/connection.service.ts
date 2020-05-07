@@ -24,6 +24,8 @@ export class ConnectionService {
   connectUser = function (id : string, password : string) {
     //TODO : faire un appel pour connecter l'utilisateur
     this.connected = true;
+    //Initié les infos utilisateurs avant que l'on notifie les observers
+    this.userService.initUserInfo();
     this.connectionSubject.next(this.connected);
   }
 

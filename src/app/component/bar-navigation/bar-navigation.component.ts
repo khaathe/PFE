@@ -20,7 +20,12 @@ export class BarNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    this._actions = this.userService.getUserActions();
+    this.connectionService.getConnectionSubject().subscribe({
+      next : connected => {
+        if(connected) { this._actions = this.userService.getUserActions(); }
+        else {this._actions = null;}
+       }
+    });
   }
 
   get actions () {

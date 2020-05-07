@@ -10,10 +10,17 @@ export class UserService {
 
   constructor() {
     this._user = new User();
+  }
+
+  initUserInfo = function (){
     this._user.name = 'SPINICCI';
     this._user.firstName = 'Kévin';
     this._user.role = 'ADMIN';
-   }
+  }
+
+  resetUserInfo = function(){
+    this._user = new User();
+  }
 
   set user (user) {
     this._user = user;
@@ -27,13 +34,20 @@ export class UserService {
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
       { text : "Changer son mot de passe", route : ""},
-      { text : "Exporter les données", route : ""},
-      { text : "Créer une tâche", route : ""},
-      { text : "Clôturer une tâche", route : ""},
-      { text : "Ré-activer une tâche", route : ""},
-      { text : "Ajouter un utilisateur", route : ""},
-      { text : "Supprimer un utilisateur", route : ""}
+      { text : "Exporter ses données", route : ""}
     ];
+    switch (this._user._role) {
+      case 'ADMIN':
+        actions.push({ text : "Créer une tâche", route : ""});
+        actions.push({ text : "Clôturer une tâche", route : ""});
+        actions.push({ text : "Ré-activer une tâche", route : ""});
+        actions.push({ text : "Ajouter un utilisateur", route : ""});
+        actions.push(({ text : "Supprimer un utilisateur", route : ""}));
+        break;
+
+      default:
+        break;
+    }
     return actions;
   }
 
