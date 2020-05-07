@@ -18,22 +18,15 @@ $custom-typography: mat-typography-config(
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$PFE-primary: mat-palette($mat-blue, 900);
-$PFE-accent: mat-palette($mat-cyan, 600);
+$primary: mat-palette($mat-blue, 900);
+$accent: mat-palette($mat-cyan, 600);
 
 // The warn palette is optional (defaults to red).
-$PFE-warn: mat-palette($mat-red);
+$warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$PFE-theme: mat-light-theme($PFE-primary, $PFE-accent, $PFE-warn);
+$theme: mat-light-theme($primary, $accent, $warn);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($PFE-theme);
-
-$primary: map-get($PFE-theme, primary);
-$accent: map-get($PFE-theme, accent);
-$warn: map-get($PFE-theme, warn);
-$foreground: map-get($PFE-theme, foreground);
-
+//Définition de mes couleurs perso
+$white: mat-palette($mat-gray, A100);
+$gray: mat-palette($mat-blue-gray, A400)

@@ -1,17 +1,19 @@
-@import '../../../custom-theme.scss';
-@include angular-material-theme($PFE-theme);
+@import '../../../styles.scss';
 
 .nav-main-container {
-    
+    background-color: mat-color($gray);
 }
 
 .nav-title {
+    background-color: mat-color($accent);
+    color: mat-color($white);
 }
 
 .mat-list-item {
-    background-color: mat-color($primary);
+    background-color: mat-color($primary, A400);
     margin-top: 2px;
     margin-bottom: 2px;
+
 }
 
 .mat-list-item:last-child {
@@ -24,4 +26,8 @@
 
 .mat-nav-list .mat-list-item:focus{
     background-color: mat-color($accent);
+}
+
+.mat-list-base .mat-list-item {
+    color:mat-color($white);
 }
