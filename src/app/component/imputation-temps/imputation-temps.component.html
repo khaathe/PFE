@@ -2,14 +2,14 @@
     <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
     <form #form="ngForm" (ngSubmit)="saveInput()" >
         <div>
-            <h1>Date sélectionnée : {{selectedDate | date : "dd/MM/yyyy" }} </h1>
+            <h3>Date sélectionnée : {{selectedDate | date : "dd/MM/yyyy" }} </h3>
         </div>
         <div class="bloc-activite-et-desc">
             <!-- Type d'activité pour matin et après-midi-->
             <div class="bloc-demi-journee" *ngFor="let half_day of day">
                 <div class="div-periode-demi-journee">
-                    <h1 *ngIf="half_day.period === 'MATIN' "> Matin : </h1>
-                    <h1 *ngIf="half_day.period === 'APRES_MIDI' " > Après-Midi : </h1>
+                    <h3 *ngIf="half_day.period === 'MATIN' "> Matin : </h3>
+                    <h3 *ngIf="half_day.period === 'APRES_MIDI' " > Après-Midi : </h3>
                 </div>
                 <div class="select-checkbox-type-activite ">
                     <mat-form-field>
@@ -17,7 +17,7 @@
                             <mat-option *ngFor="let type of activityType" value="{{type.code}}" >{{type.libelle}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-checkbox name="{{half_day.period+'-rch-dev'}}" [(ngModel)]="half_day.rAndD" [disabled]="!half_day.activityType">Recherche et Developpement</mat-checkbox>
+                    <mat-checkbox name="{{half_day.period+'-rch-dev'}}" [(ngModel)]="half_day.rAndD" [disabled]="!half_day.activityType">R&D</mat-checkbox>
                 </div>
                 
                 <mat-form-field>
@@ -28,8 +28,12 @@
 
         <!-- Bloc avec les bouttons sauvegarder et annuler -->
         <div class="bar-sauvegarder-annuler">
-            <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
-            <button mat-raised-button type="reset" (click)="form.reset(); reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+            <div>
+                <button mat-raised-button type="reset" (click)="form.reset(); reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+            </div>
+            <div>
+                <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
+            </div>
         </div>
 
         <!-- Bloc pour le calendar -->

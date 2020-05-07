@@ -30,7 +30,7 @@ export class CalendarComponent implements OnInit {
     this.calendarPlugins = [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin];
     this.locale = "fr";
     this.firstDay = 1;
-    this.aspectRatio = 2.0;
+    this.aspectRatio = 5.0;
     this.header = {
       left:   'title',
       center: 'prevYear,prev today next,nextYear',
