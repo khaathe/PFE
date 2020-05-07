@@ -17,10 +17,6 @@
 
 }
 
-.mat-list-item:last-child {
-    background-color: mat-color($warn);
-}
-
 .mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{
     background-color: mat-color($accent);
 }
@@ -31,4 +27,17 @@
 
 .mat-list-base .mat-list-item {
     color:mat-color($white);
+}
+
+.last-button {
+    margin-top: auto;    
+    background-color: mat-color($warn);
+    cursor: pointer;
+    color: mat-color($white);
+    height: 2em;
+    text-align: center;
+}
+
+.last-button:hover {
+    background-color: mat-color($warn, A700);
 }
