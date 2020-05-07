@@ -1,11 +1,10 @@
-<div class="nav-main-container">
-    <div class="nav-title">
-        <h1 class="mat-h1"> {{user}} </h1>
-    </div>
-    <div>
-        <mat-nav-list>
-            <a mat-list-item routerLink="{{button.route}}" *ngFor="let button of buttons"> {{button.text}} </a>
-            <a mat-list-item (click)="deconnect()">Déconnexion</a>
-        </mat-nav-list>
-    </div>
+<div class="nav-title">
+    <span> {{user.name}} </span>
+    <span> {{user.firstName}} </span>
+    <span> {{user.role}} </span>
 </div>
+<mat-nav-list>
+    <a mat-list-item routerLink="{{action.route}}" *ngFor="let action of actions"> {{action.text}} </a>
+</mat-nav-list>
+
+<a mat-list-item class="last-button" (click)="deconnect()">Déconnexion</a>

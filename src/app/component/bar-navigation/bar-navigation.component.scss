@@ -1,24 +1,24 @@
-@import '../../../custom-theme.scss';
-@include angular-material-theme($PFE-theme);
+@import '../../../styles.scss';
 
-.nav-main-container {
-    
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .nav-title {
+    padding: 5px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    background-color: mat-color($accent);
+    color: mat-color($white);
 }
 
 .mat-list-item {
-    background-color: mat-color($primary);
+    background-color: mat-color($primary, 500);
     margin-top: 2px;
     margin-bottom: 2px;
-}
 
-.mat-list-item:last-child {
-    background-color: mat-color($warn);
 }
 
 .mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{
@@ -27,4 +27,21 @@
 
 .mat-nav-list .mat-list-item:focus{
     background-color: mat-color($accent);
+}
+
+.mat-list-base .mat-list-item {
+    color:mat-color($white);
+}
+
+.last-button {
+    margin-top: auto;    
+    background-color: mat-color($warn);
+    cursor: pointer;
+    color: mat-color($white);
+    height: 2em;
+    text-align: center;
+}
+
+.last-button:hover {
+    background-color: mat-color($warn, A700);
 }

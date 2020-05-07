@@ -1,32 +1,39 @@
 <div class="main-div">
     <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
     <form #form="ngForm" (ngSubmit)="saveInput()" >
+        <div>
+            <h3>Date sélectionnée : {{selectedDate | date : "dd/MM/yyyy" }} </h3>
+        </div>
         <div class="bloc-activite-et-desc">
             <!-- Type d'activité pour matin et après-midi-->
-            <div class="bloc-demi-journee" *ngFor="let demi_journee of journee">
+            <div class="bloc-demi-journee" *ngFor="let half_day of day">
                 <div class="div-periode-demi-journee">
-                    <h1 *ngIf="demi_journee.periode === 'MATIN' "> {{libelle.MATIN}} </h1>
-                    <h1 *ngIf="demi_journee.periode === 'APRES_MIDI' " > {{libelle.APRES_MIDI}} </h1>
+                    <h3 *ngIf="half_day.period === 'MATIN' "> Matin : </h3>
+                    <h3 *ngIf="half_day.period === 'APRES_MIDI' " > Après-Midi : </h3>
                 </div>
                 <div class="select-checkbox-type-activite ">
                     <mat-form-field>
-                        <mat-select placeholder="Type d'activité" name="{{demi_journee.periode+'-type-activite'}}" [(ngModel)]="demi_journee.typeActivite" required>
-                            <mat-option *ngFor="let activite of typeActivite" value="{{activite}}" >{{activite}}</mat-option>
+                        <mat-select placeholder="Type d'activité" name="{{half_day.period+'-type-activite'}}" [(ngModel)]="half_day.activityType" required>
+                            <mat-option *ngFor="let type of activityType" value="{{type.code}}" >{{type.libelle}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-checkbox name="{{demi_journee.periode+'-rch-dev'}}" [(ngModel)]="demi_journee.rchDev" [disabled]="demi_journee.typeActivite==='Aucune'">Recherche et Developpement</mat-checkbox>
+                    <mat-checkbox name="{{half_day.period+'-rch-dev'}}" [(ngModel)]="half_day.rAndD" [disabled]="!half_day.activityType">R&D</mat-checkbox>
                 </div>
                 
                 <mat-form-field>
-                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{demi_journee.periode+'-desc-activite'}}" [(ngModel)]="demi_journee.descActivite" [disabled]="demi_journee.typeActivite==='Aucune'"></textarea>
+                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{half_day.period+'-desc-activite'}}" [(ngModel)]="half_day.comments" [disabled]="!half_day.activityType"></textarea>
                 </mat-form-field>
             </div>   
         </div>
 
         <!-- Bloc avec les bouttons sauvegarder et annuler -->
         <div class="bar-sauvegarder-annuler">
-            <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
-            <button mat-raised-button type="reset" (click)="form.reset(); reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+            <div>
+                <button mat-raised-button type="reset" (click)="form.reset(); reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+            </div>
+            <div>
+                <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
+            </div>
         </div>
 
         <!-- Bloc pour le calendar -->
