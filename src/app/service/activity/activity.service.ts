@@ -48,7 +48,6 @@ export class ActivityService {
       morning.activityType = 'ADMINISTRATION';
       morning.period = 'MATIN';
       morning.comments = "Une petite activité administrative un peu nulle";
-      morning.rAndD = true;
       morning.date = new Date();
       this._listActivities.push(morning);
       
@@ -81,7 +80,6 @@ export class ActivityService {
       if(activity) { 
         activity.activityType = a.activityType;
         activity.comments = a.comments;
-        activity.rAndD = a.rAndD;
       }
       else {this._listActivities.push(a);}
     });

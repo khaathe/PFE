@@ -8,8 +8,6 @@ export class Activity {
 
     private _activityType : string;
 
-    private _rAndD : boolean;
-
     private _comments : string;
 
 
@@ -51,14 +49,6 @@ export class Activity {
 
     set date (date:Date) {
         this._date = date;
-    }
-
-    get rAndD () {
-        return this._rAndD;
-    }
-
-    set rAndD (rAndD:boolean) {
-        this._rAndD = rAndD;
     }
 
 }
