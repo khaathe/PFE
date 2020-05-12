@@ -33,6 +33,7 @@ export class UserService {
   getUserActions = function() : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
+      { text : "Calcul du temps par activité", route : "calcul-temps-activite"},
       { text : "Changer son mot de passe", route : ""},
       { text : "Exporter ses données", route : ""}
     ];

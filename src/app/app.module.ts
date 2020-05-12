@@ -19,7 +19,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.component';
 import {AuthentificationComponent} from './component/authentification/authentification.component';
-import {AccueilComponent} from './component/accueil/accueil.component'; 
+import {AccueilComponent} from './component/accueil/accueil.component';
+import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {CdkTableModule} from '@angular/cdk/table'; 
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import {AccueilComponent} from './component/accueil/accueil.component';
     CalendarComponent,
     BarNavigationComponent,
     AuthentificationComponent,
-    AccueilComponent
+    AccueilComponent,
+    CalculTempsActiviteComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,9 @@ import {AccueilComponent} from './component/accueil/accueil.component';
     MatListModule,
     MatGridListModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    CdkTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
