@@ -86,6 +86,22 @@ export class ActivityService {
     this.activitySubject.next(this._listActivities);  
   }
 
+  getTimeUserSpendByActivity = function (idU:string) {
+    return [
+      { activity : 'Congés', time : 5},
+      { activity : 'Administratif', time : 2},
+      { activity : 'Nodix', time : 10}
+    ];
+  }
+
+  getTimeAllUserSpentByActivity = function(){
+    return [
+      { activity : 'Congés', time : 5},
+      { activity : 'Administratif', time : 2},
+      { activity : 'Nodix', time : 10}
+    ];
+  }
+
   get listActivities (){
     return this._listActivities;
   }

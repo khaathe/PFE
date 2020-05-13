@@ -52,4 +52,13 @@ export class UserService {
     return actions;
   }
 
+  getUsersList = function () {
+    let user1 = new User();
+    user1.idU = 1;
+    user1.name = 'BOSQUET';
+    user1.firstName = 'Hugo';
+    user1.role = 'ADMIN';
+    return [this._user, user1];
+  }
+
 }
