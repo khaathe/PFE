@@ -41,17 +41,15 @@ export class CalculTempsActiviteComponent implements OnInit {
     this.endDate = null;
   }
 
-  calculateTime = function () {
-    if(this.allUser) { this.getTimeAllUserSpentByActivity(); }
-    else {this.getTimeUserSpentByActivity(); }
-  }
-
-  getTimeUserSpentByActivity = function(){
-    console.log(this.userSelected);
-  }
-  
-  getTimeAllUserSpentByActivity = function(){
-    console.log(this.allUser);
+  getTimeUserSpentByActivity = function () {
+    let data = [];
+    if(this.allUser) {
+      data = this.activityService.getTimeAllUserSpentByActivity(this.startDate, this.endDate);
+    }
+    else {
+      data = this.activityService.getTimeUserSpentByActivity(this.userSelected, this.startDate, this.endDate);
+    }
+    this.dataSource.data = data;
   }
 
 }

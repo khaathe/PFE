@@ -4,6 +4,7 @@ import { ActivityType } from 'src/app/model/activityType.model';
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { User } from 'src/app/model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -86,19 +87,25 @@ export class ActivityService {
     this.activitySubject.next(this._listActivities);  
   }
 
-  getTimeUserSpendByActivity = function (idU:string) {
+  getTimeAllUserSpentByActivity = function(start:Date, end:Date) : Array<any>{
     return [
       { activity : 'Congés', time : 5},
       { activity : 'Administratif', time : 2},
-      { activity : 'Nodix', time : 10}
+      { activity : 'projet1', time : 10},
+      { activity : 'projet2', time : 2},
+      { activity : 'projet3', time : 10},
+      { activity : 'projet4', time : 2},
+      { activity : 'projet5', time : 10},
+      { activity : 'projet7', time : 2},
+      { activity : 'projet8', time : 10},
     ];
   }
-
-  getTimeAllUserSpentByActivity = function(){
+  
+  getTimeUserSpentByActivity = function (user:User, start:Date, end:Date) : Array<any>{
     return [
       { activity : 'Congés', time : 5},
       { activity : 'Administratif', time : 2},
-      { activity : 'Nodix', time : 10}
+      { activity : 'projet1', time : 10}
     ];
   }
 
