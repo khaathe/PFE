@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
-const HEADER = ['activity'];
-
 @Component({
   selector: 'app-calcul-temps-activite',
   templateUrl: './calcul-temps-activite.component.html',
-  styleUrls: ['./calcul-temps-activite.component.css']
+  styleUrls: ['./calcul-temps-activite.component.scss']
 })
 export class CalculTempsActiviteComponent implements OnInit {
 
-  header = HEADER.slice();
+  header : string[] = ['activity', 'time'];
 
-  body = [ 
+  dataSource = [ 
     { activity : 'Conges', time : 5}
   ];
 

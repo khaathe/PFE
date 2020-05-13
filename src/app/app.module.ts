@@ -22,7 +22,7 @@ import {AuthentificationComponent} from './component/authentification/authentifi
 import {AccueilComponent} from './component/accueil/accueil.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {CdkTableModule} from '@angular/cdk/table'; 
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import {CdkTableModule} from '@angular/cdk/table';
     FormsModule,
     ReactiveFormsModule,
     MatPaginatorModule,
-    CdkTableModule
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
