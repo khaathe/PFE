@@ -33,6 +33,7 @@ export class UserService {
   getUserActions = function() : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
+      { text : "Calcul du temps par activité", route : "calcul-temps-activite"},
       { text : "Changer son mot de passe", route : ""},
       { text : "Exporter ses données", route : ""}
     ];
@@ -49,6 +50,15 @@ export class UserService {
         break;
     }
     return actions;
+  }
+
+  getUsersList = function () {
+    let user1 = new User();
+    user1.idU = 1;
+    user1.name = 'BOSQUET';
+    user1.firstName = 'Hugo';
+    user1.role = 'ADMIN';
+    return [this._user, user1];
   }
 
 }

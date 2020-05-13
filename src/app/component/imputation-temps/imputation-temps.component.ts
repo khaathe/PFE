@@ -40,19 +40,16 @@ export class ImputationTempsComponent implements OnInit {
     this.activityService.saveActivities(this.day);
   }
 
-  reset = function () : void {
-    this.selectedDate = null;
-  }
-
   dateClick = function (date) : void {
     this.selectedDate = date;
     let a = this.activityService.findActivityByDate(date);
-    if(a.length>0) { this.day = a;}
+    //On évite de modifier l'activité directement, par exemple si jamais l'utilisateur réinitialise le formulaire
+    if(a.length>0) { this.day = _.cloneDeep(a);}
     else { 
       this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
       _.forEach(this.day, a => {
-        a.date = _.cloneDeep(date);
-      }) 
+        a.date = date;
+      })
     }
   }
 }

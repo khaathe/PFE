@@ -4,6 +4,7 @@ import { ActivityType } from 'src/app/model/activityType.model';
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { User } from 'src/app/model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,6 @@ export class ActivityService {
       morning.activityType = 'ADMINISTRATION';
       morning.period = 'MATIN';
       morning.comments = "Une petite activité administrative un peu nulle";
-      morning.rAndD = true;
       morning.date = new Date();
       this._listActivities.push(morning);
       
@@ -81,11 +81,32 @@ export class ActivityService {
       if(activity) { 
         activity.activityType = a.activityType;
         activity.comments = a.comments;
-        activity.rAndD = a.rAndD;
       }
       else {this._listActivities.push(a);}
     });
     this.activitySubject.next(this._listActivities);  
+  }
+
+  getTimeAllUserSpentByActivity = function(start:Date, end:Date) : Array<any>{
+    return [
+      { activity : 'Congés', time : 5},
+      { activity : 'Administratif', time : 2},
+      { activity : 'projet1', time : 10},
+      { activity : 'projet2', time : 2},
+      { activity : 'projet3', time : 10},
+      { activity : 'projet4', time : 2},
+      { activity : 'projet5', time : 10},
+      { activity : 'projet7', time : 2},
+      { activity : 'projet8', time : 10},
+    ];
+  }
+  
+  getTimeUserSpentByActivity = function (user:User, start:Date, end:Date) : Array<any>{
+    return [
+      { activity : 'Congés', time : 5},
+      { activity : 'Administratif', time : 2},
+      { activity : 'projet1', time : 10}
+    ];
   }
 
   get listActivities (){
