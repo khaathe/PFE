@@ -46,10 +46,9 @@ export class CalendarComponent implements OnInit {
     };
     
     this.initEvent(this.activityService.listActivities);
-    const activityObserver = {
-      next: a => this.initEvent(a)
-    };
-    this.activityService.activityObservable.subscribe(activityObserver);
+    this.activityService.activityObservable.subscribe({
+      next: listActivities => this.initEvent(listActivities)
+    });
   }
 
   dateClick = function (info) {

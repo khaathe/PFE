@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { User } from 'src/app/model/user.model';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ActivityService {
 
   private activitySubject : Subject< Array<Activity> >;
 
-  constructor() {   
+  constructor(private httpService : HttpService) {   
     this.initActivityType();
     this.initListActivities();
     this.activitySubject = new Subject<Array<Activity>>();
@@ -26,20 +27,24 @@ export class ActivityService {
   private initActivityType (){
     this._activityType = [];
     //TODO : initié avec les valeurs de la bd
-    let type = [
-      { code : 'ABSENT', libelle : 'Absent'},
-      { code : 'CONGES', libelle : 'Congés'},
-      { code : 'FORMATION', libelle : 'Formation'},
-      { code : 'ADMINISTRATION', libelle : 'Administration'},
-      { code : 'PRODUCTION', libelle : 'Production'},
-      { code : 'QUALITE_REGLEMENTAIRE', libelle : 'Qualité et Réglementaire'}
-    ];
-    type.forEach(t => {
-      let at = new ActivityType();
-      at.code = t.code;
-      at.libelle = t.libelle;
-      this._activityType.push(at);
-    });
+    // let type = [
+    //   { code : 'ABSENT', libelle : 'Absent'},
+    //   { code : 'CONGES', libelle : 'Congés'},
+    //   { code : 'FORMATION', libelle : 'Formation'},
+    //   { code : 'ADMINISTRATION', libelle : 'Administration'},
+    //   { code : 'PRODUCTION', libelle : 'Production'},
+    //   { code : 'QUALITE_REGLEMENTAIRE', libelle : 'Qualité et Réglementaire'}
+    // ];
+    // type.forEach(t => {
+    //   let at = new ActivityType();
+    //   at.code = t.code;
+    //   at.libelle = t.libelle;
+    //   this._activityType.push(at);
+    // });
+    this.httpService.get('/activity/type').subscribe(
+      (response) => { this._activityType = response},
+      (error) => { console.error(error) }
+    );
   }
 
    private initListActivities (){

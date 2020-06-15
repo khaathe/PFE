@@ -26,6 +26,7 @@ import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.
 import {AuthentificationComponent} from './component/authentification/authentification.component';
 import {AccueilComponent} from './component/accueil/accueil.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/
     MatPaginatorModule,
     MatTableModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    HttpClient
   ],
   providers: [],
   bootstrap: [AppComponent]
