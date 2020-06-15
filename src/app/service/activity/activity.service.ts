@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { User } from 'src/app/model/user.model';
 import { HttpService } from '../http/http.service';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,14 @@ export class ActivityService {
     //   this._activityType.push(at);
     // });
     this.httpService.get('/activity/type').subscribe(
-      (response) => { this._activityType = response},
+      (response) => { 
+        response.forEach(element => {
+          let activityType = new ActivityType();
+          activityType.code = element.code;
+          activityType.libelle = element.libelle;
+          this._activityType.push(activityType);
+        });
+      },
       (error) => { console.error(error) }
     );
   }

@@ -4,8 +4,7 @@ import {NgModule} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ImputationTempsComponent} from './component/imputation-temps/imputation-temps.component';
 import {CalendarComponent} from './component/calendar/calendar.component';
-import {FormsModule} from '@angular/forms';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelectModule} from '@angular/material/select'; 
@@ -26,7 +25,7 @@ import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.
 import {AuthentificationComponent} from './component/authentification/authentification.component';
 import {AccueilComponent} from './component/accueil/accueil.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -56,7 +55,7 @@ import { HttpClient } from '@angular/common/http';
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClient
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

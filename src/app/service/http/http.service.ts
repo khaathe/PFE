@@ -10,7 +10,7 @@ export class HttpService {
   private backAdress : String;
 
   constructor(private http : HttpClient) { 
-    this.backAdress = 'http://localhost:8080/';
+    this.backAdress = 'http://localhost:8080';
   }
 
   public get(url) : Observable<any>{
