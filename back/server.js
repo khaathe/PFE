@@ -1,15 +1,13 @@
 var express = require('express');
-var app = express();
-var fs = require('fs'); 
 var mysql = require('mysql');
 
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  port: "3306",
-  database: 'optimapp'
-});
+var config = require('./config.json') ;
+var users = require('./users.json');
+const { Console } = require('console');
+
+var app = express();
+
+var conn = mysql.createConnection(config.db);
 
 // app.get('', (req, res) => {
 //   conn.query('', (err, result, fields) => {
@@ -23,22 +21,30 @@ var conn = mysql.createConnection({
 function getUserActivity(idU, res){
   conn.query('SELECT * FROM activity JOIN comments ON activity.idA = comments.idA WHERE idU = "?" ORDER BY DATE', [idU], (err, result, fields) => {
     if (err) throw err;
+    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 }
 
-app.get('/activity', (req, res) => getUserActivity(req.query.idU, res) );
+app.get('/activity', (req, res) => {
+  console.log('GET /activity params[idU',req.query.idU,']')
+  getUserActivity(req.query.idU, res)
+});
 
 app.get('/user', (req, res) => {
   conn.query('SELECT * FROM `user` where idU=?', [req.query.idU], (err, result, fields) => {
+    console.log('GET /user params[idU',req.query.idU,']')
     if (err) throw err;
+    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 });
 
 app.get('/activity/type', (req, res) => {
   conn.query('SELECT * FROM activityType', (err, result, fields) => {
+    console.log('GET /activity/type')
     if (err) throw err;
+    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 });
@@ -70,11 +76,12 @@ function updateActivity (){
 }
 
 app.post('/activity', function (req, res) {
+  console.log('POST /activity param[',req.body.activities,']')
   for (const activity of req.body.activities) {
     if(activity.idA) { updateActivity(activity); }
     else { inserActivityIntoTable(activity); }
   }
-  getUserActivity(idU, res);
+  getUserActivity(req.body.idU, res);
 });
 
 // app.get('/', function(req, res) {
