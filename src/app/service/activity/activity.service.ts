@@ -27,30 +27,16 @@ export class ActivityService {
 
   private initActivityType (){
     this._activityType = [];
-    //TODO : initié avec les valeurs de la bd
-    // let type = [
-    //   { code : 'ABSENT', libelle : 'Absent'},
-    //   { code : 'CONGES', libelle : 'Congés'},
-    //   { code : 'FORMATION', libelle : 'Formation'},
-    //   { code : 'ADMINISTRATION', libelle : 'Administration'},
-    //   { code : 'PRODUCTION', libelle : 'Production'},
-    //   { code : 'QUALITE_REGLEMENTAIRE', libelle : 'Qualité et Réglementaire'}
-    // ];
-    // type.forEach(t => {
-    //   let at = new ActivityType();
-    //   at.code = t.code;
-    //   at.libelle = t.libelle;
-    //   this._activityType.push(at);
-    // });
     this.httpService.get('/activity/type').subscribe(
       (response) => { 
         response.forEach(element => {
-          let activityType = new ActivityType();
-          activityType.code = element.code;
-          activityType.libelle = element.libelle;
-          this._activityType.push(activityType);
+          let at = new ActivityType();
+          at.code = element.code;
+          at.libelle = element.libelle;
+          this._activityType.push(at);
         });
       },
+      //TODO: gérer les erreurs à l'aide d'un service
       (error) => { console.error(error) }
     );
   }
