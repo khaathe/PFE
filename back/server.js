@@ -3,6 +3,8 @@ var mysql = require('mysql');
 
 var config = require('./config.json') ;
 var users = require('./users.json');
+const { resolve } = require('path');
+const { reject } = require('lodash');
 
 var app = express();
 
@@ -12,12 +14,14 @@ var conn = mysql.createConnection(config.db);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.get('', (req, res) => {
-//   conn.query('', (err, result, fields) => {
-//     if (err) handleSqlError(err);
-//     res.json(result);
-//   });
-// });
+function query(sqlQuery,values) {
+  return new Promise( (resolve, reject) => {
+    conn.query(sqlQuery, values, (err, result, fields) => {
+      if (err) reject(err);
+      resolve(result);
+    });  
+  });
+}
 
 /** Route pour les activités */
 app.route('/activity')
@@ -49,7 +53,7 @@ function getActivity(req,res) {
   getUserActivity(req.query.idU, res)
 }
 
-function postActivity(req, res) {
+async function postActivity(req, res) {
   //TODO: ajouter la récup des infos à la fin
   console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
   for (const activity of req.body.activities) {
@@ -91,6 +95,9 @@ function postUser(req,res) {
 
 function  getCalculTempsActivite(req,res) {
   //TODO
+  /** Requête imputation temporelle
+   * SELECT idU, libelle, COUNT(DISTINCT idA) as nbActivity FROM `activity` NATURAL JOIN user JOIN activitytype ON (activitytype.code=activity.activityType) WHERE activity.dateActivity>='2020-06-16' and activity.dateActivity<='2020-06-18' GROUP BY idU, activityType
+   */
 }
 
 /** Fonction qui permet de renvoyer la liste d'imputation d'un user
@@ -148,16 +155,5 @@ function updateActivityAndComments (activity){
   })
 }
 
-// app.get('/', function(req, res) {
-//   fs.readFile('./dist/PFE/index.html', function(err, data) {
-//     res.writeHead(200, {'Content-Type': 'text/html'});
-//     res.write(data);
-//     return res.end();
-//   });
-// });
-
-/** Requête imputation temporelle
- * SELECT idU, libelle, COUNT(DISTINCT idA) as nbActivity FROM `activity` NATURAL JOIN user JOIN activitytype ON (activitytype.code=activity.activityType) WHERE activity.dateActivity>='2020-06-16' and activity.dateActivity<='2020-06-18' GROUP BY idU, activityType
- */
 app.listen(config.server.port);
 console.log("listening on port ", config.server.port);
