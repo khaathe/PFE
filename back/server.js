@@ -1,5 +1,6 @@
 var express = require('express');
 var mysql = require('mysql');
+var fs=require('fs');
 
 var config = require('./config.json') ;
 var users = require('./users.json');
@@ -13,6 +14,12 @@ var conn = mysql.createConnection(config.db);
 //Configure l'app
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/** Fonction pour gérer les erreurs */
+function handleError(err, res){
+  console.error(err);
+  res.status(500).send(err.message);
+}
 
 function query(sqlQuery,values) {
   return new Promise( (resolve, reject) => {
@@ -43,11 +50,6 @@ app.route('/user')
 app.route('/calcul-temps-activite')
   .get(getCalculTempsActivite)
 
-/** Fonction pour gérer les erreurs sql */
-function handleSqlError(err){
-  console.error(err);
-}
-
 function getActivity(req,res) {
   console.log('GET /activity params[idU=%s]', req.query.idU)
   getUserActivity(req.query.idU, res).then( (result) => {
@@ -59,8 +61,8 @@ function getActivity(req,res) {
 async function postActivity(req, res) {
   console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
   for (const activity of req.body.activities) {
-    if (activity.idA)  await updateActivityAndComments(activity).catch(handleSqlError);
-    else await insertActivityIntoTable(activity).catch(handleSqlError);
+    if (activity.idA)  await updateActivityAndComments(activity).catch((err) => handleError(err, res));
+    else await insertActivityIntoTable(activity).catch((err) => handleError(err, res));
   }
   getUserActivity(req.body.idU, res).then( (result) => {
     res.setHeader("Access-Control-Allow-Origin","*");
@@ -74,11 +76,15 @@ function getActivityType(req,res) {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   })
-  .catch(handleSqlError);
+  .catch((err) => handleError(err, res));
 }
 
 function postActivityType(req, res){
   //TODO
+  console.log("POST /activity/type - param[code=%s, libelle=%s]", req.body.code, req.body.libelle);
+  query("INSERT INTO `activitytype` (`code`, `libelle`) VALUES (?, ?)", [req.body.code, req.body.libelle]).then( ()=>{
+    res.status(200).send();
+  }).catch((err) => handleError(err, res));
 }
 
 /**
@@ -96,6 +102,24 @@ function getUser(req, res) {
 
 function postUser(req,res) {
   //TODO
+  console.log("POST /user - param[idU=%s, password=%s, nom=%s, prenom=%s, role=%s]", req.body.idU, req.body.password, req.body.nom, req.body.prenom, req.body.role);
+  if (req.body.idU && req.body.password && req.body.nom && req.body.prenom && req.body.role ){
+    query("INSERT INTO user (idU, nom, prenom, role) VALUES (?, ?, ?, ?)", [req.body.idU, req.body.nom, req.body.prenom, req.body.role])
+  .then( ()=> {
+    users.push( { "idU" : req.body.idU, "password" : req.body.password } );
+    fs.writeFile(config.server.locationDir+"users.json", JSON.stringify(users), 'utf8', (err) => {
+        if (err) throw err
+        console.log("File '%s' has been modified", config.server.locationDir+"users.json");
+    });
+  })
+  .then( res.status(200).send() )
+  .catch((err) => handleError(err, res));
+  }
+  else {
+    err = new Error('Certains paramètres sont vide');
+    err.code = 500;
+    handleError(err,res);
+  }
 }
 
 function  getCalculTempsActivite(req,res) {
