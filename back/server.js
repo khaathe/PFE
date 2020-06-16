@@ -9,12 +9,54 @@ var app = express();
 
 var conn = mysql.createConnection(config.db);
 
+//Configure l'app
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // app.get('', (req, res) => {
 //   conn.query('', (err, result, fields) => {
 //     if (err) throw err;
 //     res.json(result);
 //   });
 // });
+
+/** Route pour les activités */
+app.route('/activity')
+  .get((req, res) => {
+  console.log('GET /activity params[idU=%s]', req.query.idU)
+  getUserActivity(req.query.idU, res)
+  })
+  .post(function (req, res) {
+    console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
+    for (const activity of req.body.activities) {
+      if(activity.idA) { updateActivity(activity); }
+      else { inserActivityIntoTable(activity); }
+    }
+    getUserActivity(req.body.idU, res);
+  })
+
+  
+/** Route pour la gestion des types d'activités */
+app.route('/activity/type')
+.get((req, res) => {
+conn.query('SELECT * FROM activityType', (err, result, fields) => {
+  console.log('GET /activity/type')
+  if (err) throw err;
+  res.setHeader("Access-Control-Allow-Origin","*");
+  res.json(result);
+});
+})
+
+/** Route pour les Utilisateurs */
+app.route('/user')
+  .get((req, res) => {
+    conn.query('SELECT * FROM `user` where idU=?', [req.query.idU], (err, result, fields) => {
+      console.log('GET /user params[idU',req.query.idU,']')
+      if (err) throw err;
+      res.setHeader("Access-Control-Allow-Origin","*");
+      res.json(result);
+    });
+  })
 
 //Fonction qui permet de renvoyer la liste d'imputation d'un user
 //Est utilisé à chaque get ou post pour synchro la bd et l'appli
@@ -26,32 +68,9 @@ function getUserActivity(idU, res){
   });
 }
 
-app.get('/activity', (req, res) => {
-    console.log('GET /activity params[idU=%s]', req.query.idU)
-    getUserActivity(req.query.idU, res)
-});
-
-app.get('/user', (req, res) => {
-  conn.query('SELECT * FROM `user` where idU=?', [req.query.idU], (err, result, fields) => {
-    console.log('GET /user params[idU',req.query.idU,']')
-    if (err) throw err;
-    res.setHeader("Access-Control-Allow-Origin","*");
-    res.json(result);
-  });
-});
-
-app.get('/activity/type', (req, res) => {
-  conn.query('SELECT * FROM activityType', (err, result, fields) => {
-    console.log('GET /activity/type')
-    if (err) throw err;
-    res.setHeader("Access-Control-Allow-Origin","*");
-    res.json(result);
-  });
-});
-
 function inserActivityIntoTable (activity) {
-  conn.query("INSERT INTO `activity` (`idU`, `period`, `date`, `activityType`) VALUES (?, ?, ?, ?)", 
-  [activity.idU, activity.period, activity.date, activity.activityType],
+  conn.query("INSERT INTO `activity` (`idU`, `period`, `dateActivity`, `activityType`) VALUES (?, ?, ?, ?)", 
+  [activity.idU, activity.period, activity.dateActivity, activity.activityType],
   (err, result, fields) => {
     if (err) throw err;  
   });
@@ -74,15 +93,6 @@ function updateActivity (){
     if (err) throw err;  
   })
 }
-
-app.post('/activity', function (req, res) {
-  console.log('POST /activity param[',req.body.activities,']')
-  for (const activity of req.body.activities) {
-    if(activity.idA) { updateActivity(activity); }
-    else { inserActivityIntoTable(activity); }
-  }
-  getUserActivity(req.body.idU, res);
-});
 
 // app.get('/', function(req, res) {
 //   fs.readFile('./dist/PFE/index.html', function(err, data) {
