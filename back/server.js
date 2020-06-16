@@ -3,7 +3,6 @@ var mysql = require('mysql');
 
 var config = require('./config.json') ;
 var users = require('./users.json');
-const { resolve } = require('path');
 
 var app = express();
 
@@ -28,11 +27,17 @@ app.route('/activity')
   
 /** Route pour la gestion des types d'activités */
 app.route('/activity/type')
-.get(getActivityType)
+  .get(getActivityType)
+  .post(postActivityType)
 
 /** Route pour les Utilisateurs */
 app.route('/user')
   .get(getUser)
+  .post(postUser)
+
+ /** Route pour le calcul du temps de l'activité */
+app.route('/calcul-temps-activite')
+  .get(getCalculTempsActivite)
 
 /** Fonction pour gérer les erreurs sql */
 function handleSqlError(err){
@@ -45,15 +50,12 @@ function getActivity(req,res) {
 }
 
 function postActivity(req, res) {
+  //TODO: ajouter la récup des infos à la fin
   console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
-  promiseActivitiesModified = new Promise( (resolve, reject)=> { 
-    for (const activity of req.body.activities) {
-      if (activity.idA)  updateActivityAndComments(activity);
-      else  insertActivityIntoTable(activity);
-    }
-    resolve();
-  });
-  promiseActivitiesModified.then( ()=>getUserActivity(req.body.idU, res));
+  for (const activity of req.body.activities) {
+    if (activity.idA)  updateActivityAndComments(activity);
+    else  insertActivityIntoTable(activity);
+  }
 }
 
 function getActivityType(req,res) {
@@ -63,6 +65,10 @@ function getActivityType(req,res) {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
+}
+
+function postActivityType(req, res){
+  //TODO
 }
 
 /**
@@ -77,6 +83,14 @@ function getUser(req, res) {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
+}
+
+function postUser(req,res) {
+  //TODO
+}
+
+function  getCalculTempsActivite(req,res) {
+  //TODO
 }
 
 /** Fonction qui permet de renvoyer la liste d'imputation d'un user
