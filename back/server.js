@@ -4,7 +4,7 @@ var mysql = require('mysql');
 var config = require('./config.json') ;
 var users = require('./users.json');
 const { resolve } = require('path');
-const { reject } = require('lodash');
+const { reject, result } = require('lodash');
 
 var app = express();
 
@@ -50,25 +50,31 @@ function handleSqlError(err){
 
 function getActivity(req,res) {
   console.log('GET /activity params[idU=%s]', req.query.idU)
-  getUserActivity(req.query.idU, res)
+  getUserActivity(req.query.idU, res).then( (result) => {
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.json(result);
+  });
 }
 
 async function postActivity(req, res) {
-  //TODO: ajouter la récup des infos à la fin
   console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
   for (const activity of req.body.activities) {
-    if (activity.idA)  updateActivityAndComments(activity);
-    else  insertActivityIntoTable(activity);
+    if (activity.idA)  await updateActivityAndComments(activity).catch(handleSqlError);
+    else await insertActivityIntoTable(activity).catch(handleSqlError);
   }
+  getUserActivity(req.body.idU, res).then( (result) => {
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.json(result);
+  });
 }
 
 function getActivityType(req,res) {
   console.log('GET /activity/type');
-  conn.query('SELECT * FROM activityType', (err, result, fields) => {
-    if (err) handleSqlError(err);
+  query('SELECT * FROM activityType', []).then( (result) => {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
-  });
+  })
+  .catch(handleSqlError);
 }
 
 function postActivityType(req, res){
@@ -82,8 +88,7 @@ function postActivityType(req, res){
  */
 function getUser(req, res) {
   console.log('GET /user params[idU=%s]', req.query.idU);
-  conn.query('SELECT * FROM `user` where idU=?', [req.query.idU], (err, result, fields) => {
-    if (err) handleSqlError(err);
+  query('SELECT * FROM `user` where idU=?', [req.query.idU]).then( (result) => {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
@@ -94,21 +99,20 @@ function postUser(req,res) {
 }
 
 function  getCalculTempsActivite(req,res) {
-  //TODO
-  /** Requête imputation temporelle
-   * SELECT idU, libelle, COUNT(DISTINCT idA) as nbActivity FROM `activity` NATURAL JOIN user JOIN activitytype ON (activitytype.code=activity.activityType) WHERE activity.dateActivity>='2020-06-16' and activity.dateActivity<='2020-06-18' GROUP BY idU, activityType
-   */
+  console.log('GET /calcul-temps-activite params[dateMin=%s, dateMax=%s]', req.query.dateMin, req.query.dateMax);
+  query("SELECT idU, libelle, COUNT(DISTINCT idA) as nbActivity FROM activity NATURAL JOIN user JOIN activitytype ON (activitytype.code=activity.activityType) WHERE activity.dateActivity>=? and activity.dateActivity<=? GROUP BY idU, activityType", 
+  [req.query.dateMin, req.query.dateMax])
+  .then( (result) => {
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.json(result);
+  });
 }
 
 /** Fonction qui permet de renvoyer la liste d'imputation d'un user
  * Est utilisée à chaque get ou post pour synchro la bd et l'appli
  */
-function getUserActivity(idU, res){
-  conn.query('SELECT * FROM activity JOIN comments ON activity.idA = comments.idA WHERE idU =? ORDER BY activity.dateActivity', [idU], (err, result, fields) => {
-    if (err) handleSqlError(err);
-    res.setHeader("Access-Control-Allow-Origin","*");
-    res.json(result);
-  });
+function getUserActivity(idU){
+  return query('SELECT * FROM activity JOIN comments ON activity.idA = comments.idA WHERE idU =? ORDER BY activity.dateActivity', [idU]);
 }
 
 /**
@@ -116,12 +120,9 @@ function getUserActivity(idU, res){
  * @param {*} activity : activité à insérer
  */
 function insertActivityIntoTable (activity) {
-  conn.query("INSERT INTO `activity` (`idU`, `period`, `dateActivity`, `activityType`) VALUES (?, ?, ?, ?)", 
-  [activity.idU, activity.period, activity.dateActivity, activity.activityType],
-  (err, result, fields) => {
-    if (err) handleSqlError(err);
-    insertCommentsIntoTable(result.insertId, activity.comments);
-  });
+  return query("INSERT INTO `activity` (`idU`, `period`, `dateActivity`, `activityType`) VALUES (?, ?, ?, ?)", 
+  [activity.idU, activity.period, activity.dateActivity, activity.activityType])
+  .then( (result) => insertCommentsIntoTable(result.insertId, activity.comments) );
   
 }
 
@@ -131,11 +132,7 @@ function insertActivityIntoTable (activity) {
  * @param {*} comments : commentaire de l'activité
  */
 function insertCommentsIntoTable(idA, comments) {
-  conn.query("INSERT INTO comments (idA, comments) VALUES (?, ?)", 
-  [idA, comments],
-  (err, result, fields) => {  
-    if (err) handleSqlError(err);
-  });
+  return query("INSERT INTO comments (idA, comments) VALUES (?, ?)", [idA, comments]);
 }
 
 /**
@@ -143,16 +140,9 @@ function insertCommentsIntoTable(idA, comments) {
  * @param {*} activity  : information de l'activité
  */
 function updateActivityAndComments (activity){
-  conn.query("UPDATE activity SET idU=?, period=?, dateActivity=?, activityType=? where activity.idA=?", 
-  [activity.idU, activity.period, activity.dateActivity, activity.activityType,activity.idA],
-  (err, result, fields) => {
-    if (err) handleSqlError(err);  
-  });
-  conn.query("UPDATE comments SET comments=? where idA=?", 
-  [activity.comments, activity.idA],
-  (err, result, fields) => {
-    if (err) handleSqlError(err);  
-  })
+  query("UPDATE activity SET idU=?, period=?, dateActivity=?, activityType=? where activity.idA=?", 
+  [activity.idU, activity.period, activity.dateActivity, activity.activityType,activity.idA]);
+  query("UPDATE comments SET comments=? where idA=?",[activity.comments, activity.idA]);
 }
 
 app.listen(config.server.port);
