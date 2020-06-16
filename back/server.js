@@ -26,13 +26,7 @@ app.route('/activity')
   console.log('GET /activity params[idU=%s]', req.query.idU)
   getUserActivity(req.query.idU, res)
   })
-  .post(function (req, res) {
-    console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
-    for (const activity of req.body.activities) {
-      if (activity.idA)  updateActivityAndComments(activity);
-      else  inserActivityIntoTable(activity);
-    }
-  })
+  .post(modifyActivities)
 
   
 /** Route pour la gestion des types d'activités */
@@ -89,11 +83,23 @@ function getUserActivity(idU, res){
   });
 }
 
+function modifyActivities(req, res) {
+  console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
+  promiseActivitiesModified = new Promise( (resolve, reject)=> { 
+    for (const activity of req.body.activities) {
+      if (activity.idA)  updateActivityAndComments(activity);
+      else  insertActivityIntoTable(activity);
+    }
+    resolve();
+  });
+  promiseActivitiesModified.then( ()=>getUserActivity(req.body.idU, res));
+}
+
 /**
  * Fonction pour insérer une activité en base. Insére aussi son commentaire si celui-ci n'est pas vide.
  * @param {*} activity : activité à insérer
  */
-function inserActivityIntoTable (activity) {
+function insertActivityIntoTable (activity) {
   conn.query("INSERT INTO `activity` (`idU`, `period`, `dateActivity`, `activityType`) VALUES (?, ?, ?, ?)", 
   [activity.idU, activity.period, activity.dateActivity, activity.activityType],
   (err, result, fields) => {
