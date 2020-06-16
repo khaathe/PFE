@@ -19,7 +19,7 @@ var conn = mysql.createConnection(config.db);
 //Fonction qui permet de renvoyer la liste d'imputation d'un user
 //Est utilisé à chaque get ou post pour synchro la bd et l'appli
 function getUserActivity(idU, res){
-  conn.query('SELECT * FROM activity JOIN comments ON activity.idA = comments.idA WHERE idU =?', [idU], (err, result, fields) => {
+  conn.query('SELECT * FROM activity JOIN comments ON activity.idA = comments.idA WHERE idU =? ORDER BY activity.dateActivity', [idU], (err, result, fields) => {
     if (err) throw err;
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
