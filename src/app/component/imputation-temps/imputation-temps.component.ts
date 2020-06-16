@@ -31,7 +31,17 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activityType = this.activityService.activityType;
+    this.activityType = [];
+    this.activityService.getActivityType().subscribe(
+      (response) => { 
+        response.forEach(element => {
+          let at = new ActivityType();
+          at.code = element.code;
+          at.libelle = element.libelle;
+          this.activityType.push(at);
+        });
+      }
+    );
     this.selectedDate = null;
     this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }

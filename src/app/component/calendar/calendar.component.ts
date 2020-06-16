@@ -5,6 +5,7 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import * as moment from 'moment';
+import { Activity } from 'src/app/model/activity.model';
 
 @Component({
   selector: 'app-calendar',
@@ -44,8 +45,21 @@ export class CalendarComponent implements OnInit {
       day:      'Jour',
       list:     'Liste Semaine'
     };
-    
-    this.initEvent(this.activityService.listActivities);
+    this.activityService.getListActivities().subscribe(
+      (response) => {
+        let listActivities = []
+        response.forEach(element => {
+          let a = new Activity();
+          a.idA = element.idA;
+          a.period = element.period;
+          a.date = element.date;
+          a.activityType = element.activityType;
+          a.comments = element.comments;
+          listActivities.push(a);
+        });
+        this.initEvent(listActivities);
+      }
+    );
     this.activityService.activityObservable.subscribe({
       next: listActivities => this.initEvent(listActivities)
     });
@@ -56,6 +70,7 @@ export class CalendarComponent implements OnInit {
   }
 
   initEvent(listActivities){
+    console.log("CalendarComponent.listActivities : %o", listActivities);
     let events=[];
     listActivities.forEach(a => {
       events.push( {title: a.activityType, date : moment(a.date).format('yyyy-MM-DD')} );

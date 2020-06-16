@@ -14,55 +14,24 @@ import { UserService } from '../user/user.service';
 })
 export class ActivityService {
 
-  private _activityType : Array<ActivityType>;
-
-  private _listActivities : Array<Activity>;
-
   private activitySubject : Subject< Array<Activity> >;
 
   constructor(private httpService : HttpService, private userService : UserService) {   
-    this.initActivityType();
-    this.initListActivities();
     this.activitySubject = new Subject<Array<Activity>>();
-  }
-
-  private initActivityType (){
-    this._activityType = [];
-    this.httpService.get('/activity/type').subscribe(
-      (response) => { 
-        response.forEach(element => {
-          let at = new ActivityType();
-          at.code = element.code;
-          at.libelle = element.libelle;
-          this._activityType.push(at);
-        });
-      }
-    );
-  }
-
-  private initListActivities (){
-      this._listActivities = [];
-      this.httpService.get("/activity?idU="+this.userService.user.idU).subscribe(
-        (response) => {
-          response.forEach(element => {
-            let a = new Activity();
-            a.idA = element.idA;
-            a.period = element.period;
-            a.date = element.date;
-            a.activityType = element.activityType;
-            a.comments = element.comments;
-            this._listActivities.push(a);
-          });
-        }
-      );
-  }
-
-  get activityType () {
-    return this._activityType;
   }
 
   get activityObservable () {
     return this.activitySubject.asObservable();
+  }
+
+  getActivityType () {
+    console.log("ActivityService.getActivityType");
+    return this.httpService.get<any>('/activity/type');
+  }
+
+  getListActivities (){
+    console.log("ActivityService.getListActivities - [idU=%s]", this.userService.user.idU);
+    return this.httpService.get<any>("/activity?idU="+this.userService.user.idU);
   }
 
   findActivityByDate = function(date) : Array<Activity>{
@@ -86,6 +55,7 @@ export class ActivityService {
   }
 
   getTimeAllUserSpentByActivity = function(start:Date, end:Date) : Array<any>{
+    //TODO : appel back
     return [
       { activity : 'Congés', time : 5},
       { activity : 'Administratif', time : 2},
@@ -100,15 +70,12 @@ export class ActivityService {
   }
   
   getTimeUserSpentByActivity = function (user:User, start:Date, end:Date) : Array<any>{
+    //TODO : appel back
     return [
       { activity : 'Congés', time : 5},
       { activity : 'Administratif', time : 2},
       { activity : 'projet1', time : 10}
     ];
-  }
-
-  get listActivities (){
-    return this._listActivities;
   }
 
 }

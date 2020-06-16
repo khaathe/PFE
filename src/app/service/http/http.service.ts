@@ -14,8 +14,8 @@ export class HttpService {
     this.backAdress = 'http://localhost:8080';
   }
 
-  public get(url) : Observable<any>{
-    return this.http.get(this.backAdress + url).pipe( catchError(this.handleError));
+  public get<T> (url) : Observable<T>{
+    return this.http.get<T>(this.backAdress + url).pipe( catchError(this.handleError));
   }
 
   public handleError (error : any){
