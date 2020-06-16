@@ -22,50 +22,57 @@ app.use(express.urlencoded({ extended: true }));
 
 /** Route pour les activités */
 app.route('/activity')
-  .get((req, res) => {
-  console.log('GET /activity params[idU=%s]', req.query.idU)
-  getUserActivity(req.query.idU, res)
-  })
-  .post(modifyActivities)
+  .get(getActivity)
+  .post(postActivity)
 
   
 /** Route pour la gestion des types d'activités */
 app.route('/activity/type')
-.get((req, res) => {
-conn.query('SELECT * FROM activityType', (err, result, fields) => {
-  console.log('GET /activity/type')
-  if (err) handleSqlError(err);
-  res.setHeader("Access-Control-Allow-Origin","*");
-  res.json(result);
-});
-})
+.get(getActivityType)
 
 /** Route pour les Utilisateurs */
 app.route('/user')
-  .get((req, res) => getUserInformation(req.query.idU, res) )
+  .get(getUser)
 
 /** Fonction pour gérer les erreurs sql */
 function handleSqlError(err){
   console.error(err);
 }
 
-async function query(sqlQuery,values) {
-  return new Promise( (resolve, reject) => {
-    conn.query(sqlQuery, values, (err, result, fields) => {
-      if(err) reject(err);
-      return result;
-    })
+function getActivity(req,res) {
+  console.log('GET /activity params[idU=%s]', req.query.idU)
+  getUserActivity(req.query.idU, res)
+}
+
+function postActivity(req, res) {
+  console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
+  promiseActivitiesModified = new Promise( (resolve, reject)=> { 
+    for (const activity of req.body.activities) {
+      if (activity.idA)  updateActivityAndComments(activity);
+      else  insertActivityIntoTable(activity);
+    }
+    resolve();
+  });
+  promiseActivitiesModified.then( ()=>getUserActivity(req.body.idU, res));
+}
+
+function getActivityType(req,res) {
+  console.log('GET /activity/type');
+  conn.query('SELECT * FROM activityType', (err, result, fields) => {
+    if (err) handleSqlError(err);
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.json(result);
   });
 }
 
 /**
  * Renvoie les informations d'un utilisateur en base.
- * @param {*} idU : id utilisateur
+ * @param {*} req : requête
  * @param {*} res : reponse
  */
-function getUserInformation(idU, res) {
-    conn.query('SELECT * FROM `user` where idU=?', [idU], (err, result, fields) => {
-    console.log('GET /user params[idU=%s]', idU);
+function getUser(req, res) {
+  console.log('GET /user params[idU=%s]', req.query.idU);
+  conn.query('SELECT * FROM `user` where idU=?', [req.query.idU], (err, result, fields) => {
     if (err) handleSqlError(err);
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
@@ -83,18 +90,6 @@ function getUserActivity(idU, res){
   });
 }
 
-function modifyActivities(req, res) {
-  console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
-  promiseActivitiesModified = new Promise( (resolve, reject)=> { 
-    for (const activity of req.body.activities) {
-      if (activity.idA)  updateActivityAndComments(activity);
-      else  insertActivityIntoTable(activity);
-    }
-    resolve();
-  });
-  promiseActivitiesModified.then( ()=>getUserActivity(req.body.idU, res));
-}
-
 /**
  * Fonction pour insérer une activité en base. Insére aussi son commentaire si celui-ci n'est pas vide.
  * @param {*} activity : activité à insérer
@@ -104,7 +99,7 @@ function insertActivityIntoTable (activity) {
   [activity.idU, activity.period, activity.dateActivity, activity.activityType],
   (err, result, fields) => {
     if (err) handleSqlError(err);
-    if (activity.comments) insertCommentsIntoTable(result.insertId, activity.comments);
+    insertCommentsIntoTable(result.insertId, activity.comments);
   });
   
 }
