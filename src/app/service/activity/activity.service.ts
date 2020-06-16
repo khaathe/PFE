@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { User } from 'src/app/model/user.model';
 import { HttpService } from '../http/http.service';
 import { element } from 'protractor';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ActivityService {
 
   private activitySubject : Subject< Array<Activity> >;
 
-  constructor(private httpService : HttpService) {   
+  constructor(private httpService : HttpService, private userService : UserService) {   
     this.initActivityType();
     this.initListActivities();
     this.activitySubject = new Subject<Array<Activity>>();
@@ -35,27 +36,25 @@ export class ActivityService {
           at.libelle = element.libelle;
           this._activityType.push(at);
         });
-      },
-      //TODO: gérer les erreurs à l'aide d'un service
-      (error) => { console.error(error) }
+      }
     );
   }
 
-   private initListActivities (){
+  private initListActivities (){
       this._listActivities = [];
-      //TODO : Appel BD
-      let morning = new Activity();
-      morning.activityType = 'ADMINISTRATION';
-      morning.period = 'MATIN';
-      morning.comments = "Une petite activité administrative un peu nulle";
-      morning.date = new Date();
-      this._listActivities.push(morning);
-      
-      let afternoon = new Activity();
-      afternoon.period = 'APRES_MIDI';
-      afternoon.activityType = 'CONGES';
-      afternoon.date = new Date();
-      this._listActivities.push(afternoon);
+      this.httpService.get("/activity?idU="+this.userService.user.idU).subscribe(
+        (response) => {
+          response.forEach(element => {
+            let a = new Activity();
+            a.idA = element.idA;
+            a.period = element.period;
+            a.date = element.date;
+            a.activityType = element.activityType;
+            a.comments = element.comments;
+            this._listActivities.push(a);
+          });
+        }
+      );
   }
 
   get activityType () {
