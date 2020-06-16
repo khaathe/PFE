@@ -34,12 +34,8 @@ export class ImputationTempsComponent implements OnInit {
     this.activityType = [];
     this.activityService.getActivityType().subscribe(
       (response) => { 
-        response.forEach(element => {
-          let at = new ActivityType();
-          at.code = element.code;
-          at.libelle = element.libelle;
-          this.activityType.push(at);
-        });
+          console.log("ImputationTempsComponent.ngOnInit - activityType=%o", response);
+          this.activityType = response;
       }
     );
     this.selectedDate = null;

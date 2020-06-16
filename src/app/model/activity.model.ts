@@ -4,7 +4,7 @@ export class Activity {
 
     private _period : string;
 
-    private _date : Date;
+    private _dateActivity : Date;
 
     private _activityType : string;
 
@@ -43,12 +43,12 @@ export class Activity {
         this._comments = comments;
     }
 
-    get date () : Date {
-        return this._date;
+    get dateActivity () : Date {
+        return this._dateActivity;
     }
 
-    set date (date:Date) {
-        this._date = date;
+    set dateActivity (date:Date) {
+        this._dateActivity = date;
     }
 
 }

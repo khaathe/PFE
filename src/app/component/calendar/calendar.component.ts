@@ -47,17 +47,8 @@ export class CalendarComponent implements OnInit {
     };
     this.activityService.getListActivities().subscribe(
       (response) => {
-        let listActivities = []
-        response.forEach(element => {
-          let a = new Activity();
-          a.idA = element.idA;
-          a.period = element.period;
-          a.date = element.date;
-          a.activityType = element.activityType;
-          a.comments = element.comments;
-          listActivities.push(a);
-        });
-        this.initEvent(listActivities);
+        console.log("ImputationTempsComponent.ngOnInit - activityType=%o", response);
+        this.initEvent(response);
       }
     );
     this.activityService.activityObservable.subscribe({
@@ -69,11 +60,12 @@ export class CalendarComponent implements OnInit {
     this.dateClickEvent.emit(info.date);
   }
 
-  initEvent(listActivities){
-    console.log("CalendarComponent.listActivities : %o", listActivities);
+  initEvent(listActivities : Array<Activity>){
+    console.log("CalendarComponent.initEvent - listActivities=%o", listActivities);
     let events=[];
     listActivities.forEach(a => {
-      events.push( {title: a.activityType, date : moment(a.date).format('yyyy-MM-DD')} );
+      console.log({title: a.activityType, date : moment(a.dateActivity).format('yyyy-MM-DD')});
+      events.push( {title: a.activityType, date : moment(a.dateActivity).format('yyyy-MM-DD')} );
     });
     this.events = events;
   }

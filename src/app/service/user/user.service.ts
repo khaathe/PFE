@@ -13,7 +13,7 @@ export class UserService {
   }
 
   initUserInfo = function (){
-    this._user.idU = "bosqueth";
+    this._user.idU = "kevins";
     this._user.name = 'SPINICCI';
     this._user.firstName = 'Kévin';
     this._user.role = 'ADMIN';

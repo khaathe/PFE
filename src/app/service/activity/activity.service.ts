@@ -26,12 +26,12 @@ export class ActivityService {
 
   getActivityType () {
     console.log("ActivityService.getActivityType");
-    return this.httpService.get<any>('/activity/type');
+    return this.httpService.get<Array<ActivityType>>('/activity/type');
   }
 
   getListActivities (){
     console.log("ActivityService.getListActivities - [idU=%s]", this.userService.user.idU);
-    return this.httpService.get<any>("/activity?idU="+this.userService.user.idU);
+    return this.httpService.get<Array<Activity>>("/activity?idU="+this.userService.user.idU);
   }
 
   findActivityByDate = function(date) : Array<Activity>{
