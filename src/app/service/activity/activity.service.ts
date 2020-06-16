@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import { Subject } from 'rxjs';
-import * as moment from 'moment';
 import * as _ from 'lodash';
 import { User } from 'src/app/model/user.model';
 import { HttpService } from '../http/http.service';
-import { element } from 'protractor';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -34,24 +32,13 @@ export class ActivityService {
     return this.httpService.get<Array<Activity>>("/activity?idU="+this.userService.user.idU);
   }
 
-  findActivityByDate = function(date) : Array<Activity>{
-      let dateMoment = moment(date);
-      return _.filter(this._listActivities, a => {
-        return dateMoment.isSame(a.date, 'day');
-      });
+  emitActivitiesUpdate (listActivities){
+    this.activitySubject.next(listActivities);
   }
 
   saveActivities = function (activities : Array<Activity> ) {
     //TODO : faire un appel à la base de données
-    _.forEach(activities, a => {
-      let activity = _.find(this._listActivities, {idA : a.idA, period : a.period, date : a.date});
-      if(activity) { 
-        activity.activityType = a.activityType;
-        activity.comments = a.comments;
-      }
-      else {this._listActivities.push(a);}
-    });
-    this.activitySubject.next(this._listActivities);  
+    this.httpService.post("/activity", {"activities" : activities, "idU" : this.userService.user.idU} ).subscribe( (response) => this.emitActivitiesUpdate(response) );
   }
 
   getTimeAllUserSpentByActivity = function(start:Date, end:Date) : Array<any>{

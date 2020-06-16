@@ -14,11 +14,15 @@ export class HttpService {
     this.backAdress = 'http://localhost:8080';
   }
 
-  public get<T> (url) : Observable<T>{
+  public get<T> (url : string) : Observable<T>{
     return this.http.get<T>(this.backAdress + url).pipe( catchError(this.handleError));
   }
 
-  public handleError (error : any){
+  public post<T>(url : string, body : any){
+    return this.http.post<T>(this.backAdress+url, body);
+  }
+
+  private handleError (error : any){
       //TODO: gérer les erreurs à l'aide d'un service
       if (error.error instanceof ErrorEvent) {
         // A client-side or network error occurred. Handle it accordingly.

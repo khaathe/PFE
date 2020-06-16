@@ -3,6 +3,7 @@ import { ActivityService } from 'src/app/service/activity/activity.service';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -16,6 +17,8 @@ export class ImputationTempsComponent implements OnInit {
   activityType: Array<ActivityType>;
 
   selectedDate : Date;
+
+  private activities : Array<Activity>;
 
   private static DEFAULT_DAY : Array<Activity>;
 
@@ -38,6 +41,14 @@ export class ImputationTempsComponent implements OnInit {
           this.activityType = response;
       }
     );
+    this.activityService.getListActivities().subscribe(
+      (response) => {
+        console.log("ImputationTempsComponent.ngOnInit - activities=%o", response);
+        this.activities = response;
+        this.activityService.emitActivitiesUpdate(this.activities);
+      }
+    );
+    this.activityService.activityObservable.subscribe( (activities) => this.activities=activities );
     this.selectedDate = null;
     this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
@@ -45,10 +56,17 @@ export class ImputationTempsComponent implements OnInit {
   saveInput = function () : void {
     this.activityService.saveActivities(this.day);
   }
+  
+  private findActivityByDate = function(date) : Array<Activity>{
+    let dateMoment = moment(date);
+    return _.filter(this.activities, a => {
+      return dateMoment.isSame(a.date, 'day');
+    });
+  }
 
   dateClick = function (date) : void {
     this.selectedDate = date;
-    let a = this.activityService.findActivityByDate(date);
+    let a = this.findActivityByDate(date);
     //On évite de modifier l'activité directement, par exemple si jamais l'utilisateur réinitialise le formulaire
     if(a.length>0) { this.day = _.cloneDeep(a);}
     else { 
@@ -58,4 +76,5 @@ export class ImputationTempsComponent implements OnInit {
       })
     }
   }
+
 }
