@@ -13,6 +13,7 @@ export class UserService {
   }
 
   initUserInfo = function (){
+    this._user.idU = "bosqueth";
     this._user.name = 'SPINICCI';
     this._user.firstName = 'Kévin';
     this._user.role = 'ADMIN';
@@ -33,17 +34,12 @@ export class UserService {
   getUserActions = function() : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
-      { text : "Calcul du temps par activité", route : "calcul-temps-activite"},
-      { text : "Changer son mot de passe", route : ""},
-      { text : "Exporter ses données", route : ""}
+      { text : "Calcul du temps par activité", route : "calcul-temps-activite"}
     ];
     switch (this._user._role) {
       case 'ADMIN':
         actions.push({ text : "Créer une tâche", route : ""});
-        actions.push({ text : "Clôturer une tâche", route : ""});
-        actions.push({ text : "Ré-activer une tâche", route : ""});
         actions.push({ text : "Ajouter un utilisateur", route : ""});
-        actions.push(({ text : "Supprimer un utilisateur", route : ""}));
         break;
 
       default:
