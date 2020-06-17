@@ -38,7 +38,8 @@ export class ActivityService {
 
   saveActivities = function (activities : Array<Activity> ) {
     //TODO : faire un appel à la base de données
-    this.httpService.post("/activity", {"activities" : activities, "idU" : this.userService.user.idU} ).subscribe( (response) => this.emitActivitiesUpdate(response) );
+    this.httpService.post("/activity", {"activities" : activities, "idU" : this.userService.user.idU} )
+    .subscribe( (response) => this.emitActivitiesUpdate(response) );
   }
 
   getTimeAllUserSpentByActivity = function(start:Date, end:Date) : Array<any>{

@@ -19,7 +19,7 @@ export class HttpService {
   }
 
   public post<T>(url : string, body : any){
-    return this.http.post<T>(this.backAdress+url, body);
+    return this.http.post<T>(this.backAdress+url, body).pipe( catchError(this.handleError));
   }
 
   private handleError (error : any){

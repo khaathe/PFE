@@ -60,7 +60,7 @@ export class ImputationTempsComponent implements OnInit {
   private findActivityByDate = function(date) : Array<Activity>{
     let dateMoment = moment(date);
     return _.filter(this.activities, a => {
-      return dateMoment.isSame(a.date, 'day');
+      return dateMoment.isSame(moment(a.dateActivity), 'day');
     });
   }
 
