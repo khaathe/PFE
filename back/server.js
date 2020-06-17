@@ -48,6 +48,10 @@ app.route('/user')
   .get(getUser)
   .post(postUser)
 
+/** Route pour tout les Utilisateurs */
+app.route('/user/all')
+  .get(getAllUser)
+
 /** Route pour les roles */
 app.route('/role')
 .get(getRole)
@@ -120,6 +124,18 @@ function postUser(req,res) {
     err.code = 500;
     handleError(err,res);
   }
+}
+
+/**
+ * Renvoie les utilisateurs présent en base.
+ * @param {*} req : requête
+ * @param {*} res : reponse
+ */
+function getAllUser(req, res) {
+  console.log('GET /user/all');
+  query('SELECT * FROM `user`', [req.query.idU]).then( (result) => {
+    res.json(result);
+  });
 }
 
 function getRole(req,res) {
