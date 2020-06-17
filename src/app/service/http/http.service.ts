@@ -2,24 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import * as conf from '../../../../optimapp.conf.json';
 
+const backAdress : string = conf.back.adress;
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private backAdress : String;
-
   constructor(private http : HttpClient) { 
-    this.backAdress = 'http://localhost:8080';
   }
 
   public get<T> (url : string) : Observable<T>{
-    return this.http.get<T>(this.backAdress + url).pipe( catchError(this.handleError));
+    return this.http.get<T>(backAdress + url).pipe( catchError(this.handleError));
   }
 
   public post<T>(url : string, body : any){
-    return this.http.post<T>(this.backAdress+url, body).pipe( catchError(this.handleError));
+    return this.http.post<T>(backAdress+url, body).pipe( catchError(this.handleError));
   }
 
   private handleError (error : any){
