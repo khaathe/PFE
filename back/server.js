@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('mysql');
 var fs=require('fs');
+var cors=require('cors');
 
 var config = require('./config.json') ;
 var users = require('./users.json');
@@ -14,6 +15,7 @@ var conn = mysql.createConnection(config.db);
 //Configure l'app
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 /** Fonction pour gérer les erreurs */
 function handleError(err, res){
@@ -57,7 +59,6 @@ app.route('/calcul-temps-activite')
 function getActivity(req,res) {
   console.log('GET /activity params[idU=%s]', req.query.idU)
   getUserActivity(req.query.idU, res).then( (result) => {
-    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 }
@@ -69,7 +70,6 @@ async function postActivity(req, res) {
     else await insertActivityIntoTable(activity).catch((err) => handleError(err, res));
   }
   getUserActivity(req.body.idU, res).then( (result) => {
-    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 }
@@ -77,7 +77,6 @@ async function postActivity(req, res) {
 function getActivityType(req,res) {
   console.log('GET /activity/type');
   query('SELECT * FROM activityType', []).then( (result) => {
-    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   })
   .catch((err) => handleError(err, res));
@@ -98,7 +97,6 @@ function postActivityType(req, res){
 function getUser(req, res) {
   console.log('GET /user params[idU=%s]', req.query.idU);
   query('SELECT * FROM `user` where idU=?', [req.query.idU]).then( (result) => {
-    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 }
@@ -127,7 +125,6 @@ function postUser(req,res) {
 function getRole(req,res) {
   console.log("GET /role");
   query("SELECT * from role",[]).then( (result) => {
-    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   })
 }
@@ -146,7 +143,6 @@ function  getCalculTempsActivite(req,res) {
   sqlQuery = selectClause + fromClause + whereClause + groupClause
   query(sqlQuery, values)
   .then( (result) => {
-    res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
   });
 }
