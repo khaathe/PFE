@@ -59,7 +59,6 @@ export class CalendarComponent implements OnInit {
     let events=[];
     if(listActivities){
       listActivities.forEach(a => {
-        console.log({title: a.activityType, date : moment(a.dateActivity).format('yyyy-MM-DD')});
         events.push( {title: a.activityType, date : moment(a.dateActivity).format('yyyy-MM-DD')} );
       });
     }

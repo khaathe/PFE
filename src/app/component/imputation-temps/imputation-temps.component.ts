@@ -48,7 +48,10 @@ export class ImputationTempsComponent implements OnInit {
         this.activityService.emitActivitiesUpdate(this.activities);
       }
     );
-    this.activityService.activityObservable.subscribe( (activities) => this.activities=activities );
+    this.activityService.activityObservable.subscribe( (activities) => {
+      this.activities=activities; 
+      this.dateClick(this.selectedDate);
+    });
     this.selectedDate = null;
     this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
@@ -59,7 +62,7 @@ export class ImputationTempsComponent implements OnInit {
   
   private findActivityByDate = function(date) : Array<Activity>{
     let dateMoment = moment(date);
-    return _.filter(this.activities, a => {
+    return _.filter(this.activities, (a:Activity) => {
       return dateMoment.isSame(moment(a.dateActivity), 'day');
     });
   }
@@ -71,10 +74,13 @@ export class ImputationTempsComponent implements OnInit {
     if(a.length>0) { this.day = _.cloneDeep(a);}
     else { 
       this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
-      _.forEach(this.day, a => {
-        a.date = date;
-      })
     }
+    //On ajoute un jour la date sélectionné car lorsqu'on l'envoie à la BD
+    //La date est enregistrée avec 1 jours en moins (surement car on envoie
+    //un datetime alors que la BD prend un date)
+    _.forEach(this.day, (a:Activity) => {
+      a.dateActivity = moment(date).add(1, 'day').toDate();
+    })
   }
 
 }
