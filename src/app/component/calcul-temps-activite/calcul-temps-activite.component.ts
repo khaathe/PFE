@@ -5,6 +5,14 @@ import { User } from 'src/app/model/user.model';
 import { UserService } from 'src/app/service/user/user.service';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 
+interface UserTimeActivity{
+  idU : string,
+  nom: string,
+  prenom : string,
+  libelle : string,
+  nbActivity : number
+}
+
 @Component({
   selector: 'app-calcul-temps-activite',
   templateUrl: './calcul-temps-activite.component.html',
@@ -12,9 +20,9 @@ import { ActivityService } from 'src/app/service/activity/activity.service';
 })
 export class CalculTempsActiviteComponent implements OnInit {
 
-  header : string[] = ['activity', 'time'];
+  header : string[] = ['idU', 'user', 'activityType', 'timeSpent'];
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<UserTimeActivity>();
 
   userList:Array<User>;
 
@@ -34,22 +42,21 @@ export class CalculTempsActiviteComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource.data = [];
     this.dataSource.paginator = this.paginator;
-    this.userList = this.userService.getUsersList();
     this.userSelected = null;
     this.allUser = false;
     this.startDate = null;
     this.endDate = null;
+    this.userService.getUsersList().subscribe( (response)=>{
+      this.userList = response;
+    })
   }
 
   getTimeUserSpentByActivity = function () {
-    let data = [];
-    if(this.allUser) {
-      data = this.activityService.getTimeAllUserSpentByActivity(this.startDate, this.endDate);
-    }
-    else {
-      data = this.activityService.getTimeUserSpentByActivity(this.userSelected, this.startDate, this.endDate);
-    }
-    this.dataSource.data = data;
+    let observable = this.allUser ? this.activityService.getTimeUserSpentByActivity(this.startDate, this.endDate, null) : 
+    this.activityService.getTimeUserSpentByActivity(this.startDate, this.endDate, this.userSelected.idU);
+    observable.subscribe( (response) => {
+      this.dataSource.data = response;
+    });
   }
 
 }

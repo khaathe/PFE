@@ -4,8 +4,7 @@ import {NgModule} from '@angular/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ImputationTempsComponent} from './component/imputation-temps/imputation-temps.component';
 import {CalendarComponent} from './component/calendar/calendar.component';
-import {FormsModule} from '@angular/forms';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelectModule} from '@angular/material/select'; 
@@ -19,6 +18,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -26,6 +27,9 @@ import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.
 import {AuthentificationComponent} from './component/authentification/authentification.component';
 import {AccueilComponent} from './component/accueil/accueil.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CreationActiviteComponent } from './component/creation-activite/creation-activite/creation-activite.component';
+import { CreationUserComponent } from './component/creation-user/creation-user/creation-user.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/
     BarNavigationComponent,
     AuthentificationComponent,
     AccueilComponent,
-    CalculTempsActiviteComponent
+    CalculTempsActiviteComponent,
+    CreationActiviteComponent,
+    CreationUserComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +60,10 @@ import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/
     MatPaginatorModule,
     MatTableModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTooltipModule,
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

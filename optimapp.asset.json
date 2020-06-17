@@ -1,0 +1,5 @@
+{
+    "icons" : [
+        { "name" : "help", "path" : "assets/help.svg" }
+    ]
+}

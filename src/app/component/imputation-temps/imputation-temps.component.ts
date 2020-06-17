@@ -3,6 +3,7 @@ import { ActivityService } from 'src/app/service/activity/activity.service';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -16,6 +17,8 @@ export class ImputationTempsComponent implements OnInit {
   activityType: Array<ActivityType>;
 
   selectedDate : Date;
+
+  private activities : Array<Activity>;
 
   private static DEFAULT_DAY : Array<Activity>;
 
@@ -31,7 +34,24 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activityType = this.activityService.activityType;
+    this.activityType = [];
+    this.activityService.getActivityType().subscribe(
+      (response) => { 
+          console.log("ImputationTempsComponent.ngOnInit - activityType=%o", response);
+          this.activityType = response;
+      }
+    );
+    this.activityService.getListActivities().subscribe(
+      (response) => {
+        console.log("ImputationTempsComponent.ngOnInit - activities=%o", response);
+        this.activities = response;
+        this.activityService.emitActivitiesUpdate(this.activities);
+      }
+    );
+    this.activityService.activityObservable.subscribe( (activities) => {
+      this.activities=activities; 
+      this.dateClick(this.selectedDate);
+    });
     this.selectedDate = null;
     this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
@@ -39,17 +59,28 @@ export class ImputationTempsComponent implements OnInit {
   saveInput = function () : void {
     this.activityService.saveActivities(this.day);
   }
+  
+  private findActivityByDate = function(date) : Array<Activity>{
+    let dateMoment = moment(date);
+    return _.filter(this.activities, (a:Activity) => {
+      return dateMoment.isSame(moment(a.dateActivity), 'day');
+    });
+  }
 
   dateClick = function (date) : void {
     this.selectedDate = date;
-    let a = this.activityService.findActivityByDate(date);
+    let a = this.findActivityByDate(date);
     //On évite de modifier l'activité directement, par exemple si jamais l'utilisateur réinitialise le formulaire
     if(a.length>0) { this.day = _.cloneDeep(a);}
     else { 
       this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
-      _.forEach(this.day, a => {
-        a.date = date;
-      })
     }
+    //On ajoute un jour la date sélectionné car lorsqu'on l'envoie à la BD
+    //La date est enregistrée avec 1 jours en moins (surement car on envoie
+    //un datetime alors que la BD prend un date)
+    _.forEach(this.day, (a:Activity) => {
+      a.dateActivity = moment(date).add(1, 'day').toDate();
+    })
   }
+
 }

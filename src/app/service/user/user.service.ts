@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/model/user.model';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,12 @@ export class UserService {
 
   private _user : User;
 
-  constructor() {
+  constructor(private httpService : HttpService) {
     this._user = new User();
   }
 
   initUserInfo = function (){
+    this._user.idU = "kevins";
     this._user.name = 'SPINICCI';
     this._user.firstName = 'Kévin';
     this._user.role = 'ADMIN';
@@ -30,20 +32,20 @@ export class UserService {
     return this._user;
   }
 
+  getUsersList = function () {
+    //Ajouté un type de retour ici généré une erreur
+    return this.httpService.get('/user/all');
+  }
+
   getUserActions = function() : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
-      { text : "Calcul du temps par activité", route : "calcul-temps-activite"},
-      { text : "Changer son mot de passe", route : ""},
-      { text : "Exporter ses données", route : ""}
+      { text : "Calcul du temps par activité", route : "calcul-temps-activite"}
     ];
     switch (this._user._role) {
       case 'ADMIN':
-        actions.push({ text : "Créer une tâche", route : ""});
-        actions.push({ text : "Clôturer une tâche", route : ""});
-        actions.push({ text : "Ré-activer une tâche", route : ""});
-        actions.push({ text : "Ajouter un utilisateur", route : ""});
-        actions.push(({ text : "Supprimer un utilisateur", route : ""}));
+        actions.push({ text : "Créer une activité", route : "creation-activite"});
+        actions.push({ text : "Ajouter un utilisateur", route : "creation-user"});
         break;
 
       default:
@@ -52,13 +54,12 @@ export class UserService {
     return actions;
   }
 
-  getUsersList = function () {
-    let user1 = new User();
-    user1.idU = 1;
-    user1.name = 'BOSQUET';
-    user1.firstName = 'Hugo';
-    user1.role = 'ADMIN';
-    return [this._user, user1];
+  getRole(){
+    return this.httpService.get<any>('/role');
+  }
+
+  createUser(idU, password, nom, prenom, role){
+    return this.httpService.post<any>('/user', {"idU": idU, "password": password, "nom": nom, "prenom": prenom, "role": role});
   }
 
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import * as moment from 'moment';
+import { Activity } from 'src/app/model/activity.model';
 
 @Component({
   selector: 'app-calendar',
@@ -22,7 +23,7 @@ export class CalendarComponent implements OnInit {
   buttonText : any; 
   events : Array<any>;
   @Output() dateClickEvent = new EventEmitter<Date>();
-
+  
   constructor( private activityService : ActivityService) {
   }
 
@@ -44,23 +45,23 @@ export class CalendarComponent implements OnInit {
       day:      'Jour',
       list:     'Liste Semaine'
     };
-    
-    this.initEvent(this.activityService.listActivities);
-    const activityObserver = {
-      next: a => this.initEvent(a)
-    };
-    this.activityService.activityObservable.subscribe(activityObserver);
+    this.activityService.activityObservable.subscribe({
+      next: listActivities => this.initEvent(listActivities)
+    });
   }
 
   dateClick = function (info) {
     this.dateClickEvent.emit(info.date);
   }
 
-  initEvent(listActivities){
+  initEvent(listActivities : Array<Activity>){
+    console.log("CalendarComponent.initEvent - listActivities=%o", listActivities);
     let events=[];
-    listActivities.forEach(a => {
-      events.push( {title: a.activityType, date : moment(a.date).format('yyyy-MM-DD')} );
-    });
+    if(listActivities){
+      listActivities.forEach(a => {
+        events.push( {title: a.activityType, date : moment(a.dateActivity).format('yyyy-MM-DD')} );
+      });
+    }
     this.events = events;
   }
 
