@@ -59,7 +59,7 @@ export class UserService {
   }
 
   createUser(idU, password, nom, prenom, role){
-    return this.httpService.post<any>('/user', {"idu": idU, "password": password, "nom": nom, "prenom": prenom, "role": role});
+    return this.httpService.post<any>('/user', {"idU": idU, "password": password, "nom": nom, "prenom": prenom, "role": role});
   }
 
 }
