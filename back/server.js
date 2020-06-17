@@ -66,8 +66,8 @@ function getActivity(req,res) {
 async function postActivity(req, res) {
   console.log('POST /activity param[activities=%o, idU=%s]',req.body.activities, req.body.idU);
   for (const activity of req.body.activities) {
-    if (activity.idA)  await updateActivityAndComments(activity).catch((err) => handleError(err, res));
-    else await insertActivityIntoTable(activity).catch((err) => handleError(err, res));
+    if (activity.idA)  await updateActivityAndComments(activity, req.body.idU).catch((err) => handleError(err, res));
+    else await insertActivityIntoTable(activity, req.body.idU).catch((err) => handleError(err, res));
   }
   getUserActivity(req.body.idU, res).then( (result) => {
     res.json(result);
@@ -158,10 +158,13 @@ function getUserActivity(idU){
  * Fonction pour insérer une activité en base. Insére aussi son commentaire si celui-ci n'est pas vide.
  * @param {*} activity : activité à insérer
  */
-function insertActivityIntoTable (activity) {
+function insertActivityIntoTable (activity, idU) {
   return query("INSERT INTO `activity` (`idU`, `period`, `dateActivity`, `activityType`) VALUES (?, ?, ?, ?)", 
-  [activity.idU, activity.period, activity.dateActivity, activity.activityType])
-  .then( (result) => insertCommentsIntoTable(result.insertId, activity.comments) );
+  [idU, activity.period, activity.dateActivity, activity.activityType])
+  .then( (result) => {
+    if (activity.comments) insertCommentsIntoTable(result.insertId, activity.comments)
+    else  insertCommentsIntoTable(result.insertId, "")
+  });
   
 }
 
@@ -178,9 +181,9 @@ function insertCommentsIntoTable(idA, comments) {
  * Mets à jour une activité et son commentaire
  * @param {*} activity  : information de l'activité
  */
-function updateActivityAndComments (activity){
+function updateActivityAndComments (activity, idU){
   return query("UPDATE activity SET idU=?, period=?, dateActivity=?, activityType=? where activity.idA=?", 
-  [activity.idU, activity.period, activity.dateActivity, activity.activityType,activity.idA])
+  [idU, activity.period, activity.dateActivity, activity.activityType,activity.idA])
   .then( () => query("UPDATE comments SET comments=? where idA=?",[activity.comments, activity.idA]) )
 }
 
