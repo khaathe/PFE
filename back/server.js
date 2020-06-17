@@ -5,7 +5,7 @@ var fs=require('fs');
 var config = require('./config.json') ;
 var users = require('./users.json');
 const { resolve } = require('path');
-const { reject, result } = require('lodash');
+const { reject, result, values, update } = require('lodash');
 
 var app = express();
 
@@ -46,6 +46,10 @@ app.route('/user')
   .get(getUser)
   .post(postUser)
 
+/** Route pour les roles */
+app.route('/role')
+.get(getRole)
+
  /** Route pour le calcul du temps de l'activité */
 app.route('/calcul-temps-activite')
   .get(getCalculTempsActivite)
@@ -80,10 +84,9 @@ function getActivityType(req,res) {
 }
 
 function postActivityType(req, res){
-  //TODO
   console.log("POST /activity/type - param[code=%s, libelle=%s]", req.body.code, req.body.libelle);
   query("INSERT INTO `activitytype` (`code`, `libelle`) VALUES (?, ?)", [req.body.code, req.body.libelle]).then( ()=>{
-    res.status(200).send();
+    res.status(200).send('Activité créée');
   }).catch((err) => handleError(err, res));
 }
 
@@ -101,7 +104,6 @@ function getUser(req, res) {
 }
 
 function postUser(req,res) {
-  //TODO
   console.log("POST /user - param[idU=%s, password=%s, nom=%s, prenom=%s, role=%s]", req.body.idU, req.body.password, req.body.nom, req.body.prenom, req.body.role);
   if (req.body.idU && req.body.password && req.body.nom && req.body.prenom && req.body.role ){
     query("INSERT INTO user (idU, nom, prenom, role) VALUES (?, ?, ?, ?)", [req.body.idU, req.body.nom, req.body.prenom, req.body.role])
@@ -112,7 +114,7 @@ function postUser(req,res) {
         console.log("File '%s' has been modified", config.server.locationDir+"users.json");
     });
   })
-  .then( res.status(200).send() )
+  .then( res.status(200).send('Utilisateur créé') )
   .catch((err) => handleError(err, res));
   }
   else {
@@ -122,10 +124,27 @@ function postUser(req,res) {
   }
 }
 
+function getRole(req,res) {
+  console.log("GET /role");
+  query("SELECT * from role",[]).then( (result) => {
+    res.setHeader("Access-Control-Allow-Origin","*");
+    res.json(result);
+  })
+}
+
 function  getCalculTempsActivite(req,res) {
-  console.log('GET /calcul-temps-activite params[dateMin=%s, dateMax=%s]', req.query.dateMin, req.query.dateMax);
-  query("SELECT idU, libelle, COUNT(DISTINCT idA) as nbActivity FROM activity NATURAL JOIN user JOIN activitytype ON (activitytype.code=activity.activityType) WHERE activity.dateActivity>=? and activity.dateActivity<=? GROUP BY idU, activityType", 
-  [req.query.dateMin, req.query.dateMax])
+  console.log('GET /calcul-temps-activite params[dateMin=%s, dateMax=%s, idU=%s]', req.query.dateMin, req.query.dateMax, req.query.idU);
+  selectClause = "SELECT idU, nom, prenom, libelle, COUNT(DISTINCT idA) as nbActivity ";
+  fromClause = "FROM activity NATURAL JOIN user JOIN activitytype ON (activitytype.code=activity.activityType) ";
+  whereClause = "WHERE activity.dateActivity>=? and activity.dateActivity<=? "
+  let values=[req.query.dateMin, req.query.dateMax]
+  if(req.query.idU) {
+    whereClause = whereClause+ "and activity.idU=? "
+    values.push(req.query.idU);
+  }
+  groupClause = "GROUP BY idU,activityType";
+  sqlQuery = selectClause + fromClause + whereClause + groupClause
+  query(sqlQuery, values)
   .then( (result) => {
     res.setHeader("Access-Control-Allow-Origin","*");
     res.json(result);
@@ -164,9 +183,9 @@ function insertCommentsIntoTable(idA, comments) {
  * @param {*} activity  : information de l'activité
  */
 function updateActivityAndComments (activity){
-  query("UPDATE activity SET idU=?, period=?, dateActivity=?, activityType=? where activity.idA=?", 
-  [activity.idU, activity.period, activity.dateActivity, activity.activityType,activity.idA]);
-  query("UPDATE comments SET comments=? where idA=?",[activity.comments, activity.idA]);
+  return query("UPDATE activity SET idU=?, period=?, dateActivity=?, activityType=? where activity.idA=?", 
+  [activity.idU, activity.period, activity.dateActivity, activity.activityType,activity.idA])
+  .then( () => query("UPDATE comments SET comments=? where idA=?",[activity.comments, activity.idA]) )
 }
 
 app.listen(config.server.port);
