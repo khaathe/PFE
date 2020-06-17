@@ -1,0 +1,28 @@
+<div class="main-div">
+    <h1>Création d'une nouvelle Activité</h1>
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+            <label for="activityCode" class="label">Code de l'activité : </label>
+            <mat-form-field>
+                <mat-label>Code de l'activité</mat-label>
+                <input type="text" name="activityCode" [(ngModel)]="code" matInput placeholder="ex: PROJET1" pattern="([A-Z 0-9_])*" maxlength="30" required>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Le code de l'activité est un identifiant unique. Il doit être en majuscule, sans accent et peut comprendre des tiret (_). (Ex: PROJET1)" >
+            </mat-icon>
+        </div>
+        <div class="field">
+            <label for="activityCode" class="label">Libellé de l'activité : </label>
+            <mat-form-field>
+                <mat-label>Libellé de l'activité</mat-label>
+                <input type="text" name="activityLibelle" [(ngModel)]="libelle" matInput placeholder="ex: Projet n°1" maxlength="30" required>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Le nom de l'activité qui sera affiché à l'écran. (ex: Projet n°1)" >
+            </mat-icon>
+        </div>
+        <div class="field">
+            <button type='submit' mat-raised-button color='primary' [disabled]="form.pristine || form.invalid">Créer activité</button>
+        </div>
+    </form>
+</div>

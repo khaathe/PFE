@@ -89,7 +89,7 @@ function getActivityType(req,res) {
 function postActivityType(req, res){
   console.log("POST /activity/type - param[code=%s, libelle=%s]", req.body.code, req.body.libelle);
   query("INSERT INTO `activitytype` (`code`, `libelle`) VALUES (?, ?)", [req.body.code, req.body.libelle]).then( ()=>{
-    res.status(200).send('Activité créée');
+    res.json({"message":'Activité créé'});
   }).catch((err) => handleError(err, res));
 }
 
@@ -116,7 +116,7 @@ function postUser(req,res) {
         console.log("File '%s' has been modified", config.server.locationDir+"users.json");
     });
   })
-  .then( res.status(200).send('Utilisateur créé') )
+  .then( res.json({"message":"Utilisateur créé"}) )
   .catch((err) => handleError(err, res));
   }
   else {

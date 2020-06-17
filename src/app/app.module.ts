@@ -18,6 +18,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -26,6 +28,8 @@ import {AuthentificationComponent} from './component/authentification/authentifi
 import {AccueilComponent} from './component/accueil/accueil.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreationActiviteComponent } from './component/creation-activite/creation-activite/creation-activite.component';
+import { CreationUserComponent } from './component/creation-user/creation-user/creation-user.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { HttpClientModule } from '@angular/common/http';
     BarNavigationComponent,
     AuthentificationComponent,
     AccueilComponent,
-    CalculTempsActiviteComponent
+    CalculTempsActiviteComponent,
+    CreationActiviteComponent,
+    CreationUserComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTooltipModule,
+    MatIconModule,
     HttpClientModule
   ],
   providers: [],

@@ -44,14 +44,22 @@ export class UserService {
     ];
     switch (this._user._role) {
       case 'ADMIN':
-        actions.push({ text : "Créer une tâche", route : ""});
-        actions.push({ text : "Ajouter un utilisateur", route : ""});
+        actions.push({ text : "Créer une activité", route : "creation-activite"});
+        actions.push({ text : "Ajouter un utilisateur", route : "creation-user"});
         break;
 
       default:
         break;
     }
     return actions;
+  }
+
+  getRole(){
+    return this.httpService.get<any>('/role');
+  }
+
+  createUser(idU, password, nom, prenom, role){
+    return this.httpService.post<any>('/user', {"idu": idU, "password": password, "nom": nom, "prenom": prenom, "role": role});
   }
 
 }

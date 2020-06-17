@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConnectionService } from './service/connection/connection.service';
 import { Subscription } from 'rxjs';
+import { IconService } from './service/icon/icon.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public connected : boolean;
   private connectionSubscription : Subscription;
 
-  constructor (private router : Router, private connectionService : ConnectionService ){
+  constructor (private router : Router, private connectionService : ConnectionService, private icon : IconService){
     console.log("AppComponent.constructor");
     this.connected = this.connectionService.isConnected();
     this.router = router;

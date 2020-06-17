@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { User } from 'src/app/model/user.model';
 import { UserService } from '../user/user.service';
@@ -33,7 +33,7 @@ export class ActivityService {
     return this.httpService.get<Array<Activity>>("/activity?idU="+this.userService.user.idU);
   }
 
-  saveActivities = function (activities : Array<Activity> ) {
+  saveActivities = function (activities : Array<Activity> ){
     //Ajouté un type de retour ici généré une erreur
     console.log("ActivityService.saveActivities - %o", activities);
     this.httpService.post("/activity", {"activities" : activities, "idU" : this.userService.user.idU} )
@@ -51,7 +51,11 @@ export class ActivityService {
     return this.httpService.get(url);
   }
 
-  emitActivitiesUpdate (listActivities){
+  createActivity(code, libelle) : Observable<any>{
+    return this.httpService.post<any>('/activity/type', { "code": code, "libelle" : libelle});
+  }
+
+  emitActivitiesUpdate (listActivities) : void{
     this.activitySubject.next(listActivities);
   }
 
