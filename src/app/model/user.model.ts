@@ -1,35 +1,35 @@
 export class User {
 
-    private _idU : number;
+    private _idU : string;
 
-    private _name : string;
+    private _nom : string;
 
-    private _firstName : string;
+    private _prenom : string;
 
     private _role : string;
 
-    get idU() : number {
+    get idU() : string {
         return this._idU;
     }
 
-    set idU (idU : number){
+    set idU (idU : string){
         this._idU = idU;
     }
 
-    get name () : string{
-        return this._name;
+    get nom () : string{
+        return this._nom;
     }
 
-    set name ( name : string){
-        this._name = name;
+    set nom ( name : string){
+        this._nom = name;
     }
 
-    get firstName () : string {
-        return this._firstName;
+    get prenom () : string {
+        return this._prenom;
     }
 
-    set firstName ( firstName : string){
-        this._firstName = firstName;
+    set prenom ( firstName : string){
+        this._prenom = firstName;
     }
 
     get role () : string {

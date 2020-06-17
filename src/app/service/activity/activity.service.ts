@@ -4,8 +4,9 @@ import { ActivityType } from 'src/app/model/activityType.model';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { User } from 'src/app/model/user.model';
-import { HttpService } from '../http/http.service';
 import { UserService } from '../user/user.service';
+import * as moment from 'moment';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,38 +33,26 @@ export class ActivityService {
     return this.httpService.get<Array<Activity>>("/activity?idU="+this.userService.user.idU);
   }
 
-  emitActivitiesUpdate (listActivities){
-    this.activitySubject.next(listActivities);
-  }
-
   saveActivities = function (activities : Array<Activity> ) {
-    //TODO : faire un appel à la base de données
+    //Ajouté un type de retour ici généré une erreur
+    console.log("ActivityService.saveActivities - %o", activities);
     this.httpService.post("/activity", {"activities" : activities, "idU" : this.userService.user.idU} )
     .subscribe( (response) => this.emitActivitiesUpdate(response) );
   }
 
-  getTimeAllUserSpentByActivity = function(start:Date, end:Date) : Array<any>{
-    //TODO : appel back
-    return [
-      { activity : 'Congés', time : 5},
-      { activity : 'Administratif', time : 2},
-      { activity : 'projet1', time : 10},
-      { activity : 'projet2', time : 2},
-      { activity : 'projet3', time : 10},
-      { activity : 'projet4', time : 2},
-      { activity : 'projet5', time : 10},
-      { activity : 'projet7', time : 2},
-      { activity : 'projet8', time : 10},
-    ];
+  getTimeUserSpentByActivity = function(start:Date, end:Date, idU:string) : Array<any>{
+    console.log("ActivityService.getTimeUserSpentByActivity - start=%s, end=%s, idU=%s", start, end, idU);
+    let url : string = "/calcul-temps-activite?dateMin=" + moment(start).format('YYYY-MM-DD') 
+    + "&dateMax=" + moment(end).format('YYYY-MM-DD');
+    if (idU){
+      url = url + "&idU=" + idU;
+    }
+    //Ajouté un type de retour ici généré une erreur
+    return this.httpService.get(url);
   }
-  
-  getTimeUserSpentByActivity = function (user:User, start:Date, end:Date) : Array<any>{
-    //TODO : appel back
-    return [
-      { activity : 'Congés', time : 5},
-      { activity : 'Administratif', time : 2},
-      { activity : 'projet1', time : 10}
-    ];
+
+  emitActivitiesUpdate (listActivities){
+    this.activitySubject.next(listActivities);
   }
 
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/model/user.model';
+import { HttpService } from '../http/http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class UserService {
 
   private _user : User;
 
-  constructor() {
+  constructor(private httpService : HttpService) {
     this._user = new User();
   }
 
@@ -31,6 +32,11 @@ export class UserService {
     return this._user;
   }
 
+  getUsersList = function () {
+    //Ajouté un type de retour ici généré une erreur
+    return this.httpService.get('/user/all');
+  }
+
   getUserActions = function() : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
@@ -46,15 +52,6 @@ export class UserService {
         break;
     }
     return actions;
-  }
-
-  getUsersList = function () {
-    let user1 = new User();
-    user1.idU = 1;
-    user1.name = 'BOSQUET';
-    user1.firstName = 'Hugo';
-    user1.role = 'ADMIN';
-    return [this._user, user1];
   }
 
 }
