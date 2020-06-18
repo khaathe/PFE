@@ -22,7 +22,10 @@ export class BarNavigationComponent implements OnInit {
     this.user = this.userService.user;
     this.connectionService.getConnectionSubject().subscribe({
       next : connected => {
-        if(connected) { this._actions = this.userService.getUserActions(); }
+        if(connected) { 
+          this.user = this.userService.user;
+          this._actions = this.userService.getUserActions(); 
+        }
         else {this._actions = null;}
        }
     });

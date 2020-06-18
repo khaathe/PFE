@@ -33,14 +33,14 @@ export class ActivityService {
     return this.httpService.get<Array<Activity>>("/activity?idU="+this.userService.user.idU);
   }
 
-  saveActivities = function (activities : Array<Activity> ){
+  saveActivities (activities : Array<Activity> ){
     //Ajouté un type de retour ici généré une erreur
     console.log("ActivityService.saveActivities - %o", activities);
-    this.httpService.post("/activity", {"activities" : activities, "idU" : this.userService.user.idU} )
+    this.httpService.post<Array<Activity>>("/activity", {"activities" : activities, "idU" : this.userService.user.idU} )
     .subscribe( (response) => this.emitActivitiesUpdate(response) );
   }
 
-  getTimeUserSpentByActivity = function(start:Date, end:Date, idU:string) : Array<any>{
+  getTimeUserSpentByActivity = function (start:Date, end:Date, idU:string) : Array<any>{
     console.log("ActivityService.getTimeUserSpentByActivity - start=%s, end=%s, idU=%s", start, end, idU);
     let url : string = "/calcul-temps-activite?dateMin=" + moment(start).format('YYYY-MM-DD') 
     + "&dateMax=" + moment(end).format('YYYY-MM-DD');
@@ -51,7 +51,7 @@ export class ActivityService {
     return this.httpService.get(url);
   }
 
-  createActivity(code, libelle) : Observable<any>{
+  createActivity (code, libelle) : Observable<any>{
     return this.httpService.post<any>('/activity/type', { "code": code, "libelle" : libelle});
   }
 
