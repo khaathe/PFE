@@ -21,7 +21,6 @@ export class AuthentificationComponent implements OnInit{
   }
 
   connection = function () {
-    //TODO : récupérer les id et mdp user pour les envoyer au service et tenter une connexion
     console.log('AuthentificationComponent.connexion');
     this.connectionService.connectUser(this.id, this.password);
   }
