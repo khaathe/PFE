@@ -4,6 +4,7 @@ import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { NotificationService } from 'src/app/service/notification/notification.service';
 
 @Component({
   selector: 'app-imputation-temps',
@@ -22,7 +23,7 @@ export class ImputationTempsComponent implements OnInit {
 
   private static DEFAULT_DAY : Array<Activity>;
 
-  constructor(private activityService : ActivityService) {
+  constructor(private activityService : ActivityService, private notificationService : NotificationService) {
     ImputationTempsComponent.DEFAULT_DAY = [];
     let morning = new Activity();
     morning.period = 'MATIN';
@@ -56,18 +57,21 @@ export class ImputationTempsComponent implements OnInit {
     this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
 
-  saveInput = function () : void {
-    this.activityService.saveActivities(this.day);
+  saveInput () : void {
+    this.activityService.saveActivities(this.day).subscribe( (response) => {
+      this.activityService.emitActivitiesUpdate(response);
+      this.notificationService.showSucess("L'imputation a bien été enregistrée.","Imputation temps");
+    });
   }
   
-  private findActivityByDate = function(date) : Array<Activity>{
+  private findActivityByDate (date) : Array<Activity>{
     let dateMoment = moment(date);
     return _.filter(this.activities, (a:Activity) => {
       return dateMoment.isSame(moment(a.dateActivity), 'day');
     });
   }
 
-  dateClick = function (date) : void {
+  dateClick (date) : void {
     this.selectedDate = date;
     let a = this.findActivityByDate(date);
     //On évite de modifier l'activité directement, par exemple si jamais l'utilisateur réinitialise le formulaire
@@ -81,6 +85,11 @@ export class ImputationTempsComponent implements OnInit {
     _.forEach(this.day, (a:Activity) => {
       a.dateActivity = moment(date).add(1, 'day').toDate();
     })
+    if (this.day[0].period==='APRES_MIDI'){
+      let tmpA = this.day[0];
+      this.day[0] = this.day[1];
+      this.day[1] = tmpA;
+    }
   }
 
 }

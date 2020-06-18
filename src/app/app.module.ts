@@ -31,6 +31,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreationActiviteComponent } from './component/creation-activite/creation-activite/creation-activite.component';
 import { CreationUserComponent } from './component/creation-user/creation-user/creation-user.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +66,9 @@ import { CreationUserComponent } from './component/creation-user/creation-user/c
     MatNativeDateModule,
     MatTooltipModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

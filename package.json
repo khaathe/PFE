@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~9.0.5",
+    "@angular/animations": "^9.0.7",
     "@angular/cdk": "^9.2.3",
     "@angular/common": "~9.0.5",
     "@angular/compiler": "~9.0.5",
@@ -31,6 +31,7 @@
     "fullcalendar": "^3.10.1",
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
+    "ngx-toastr": "^12.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

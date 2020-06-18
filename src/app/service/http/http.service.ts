@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as conf from '../../../../optimapp.conf.json';
+import { NotificationService } from '../notification/notification.service';
 
 const backAdress : string = conf.back.adress;
 @Injectable({
@@ -10,11 +11,11 @@ const backAdress : string = conf.back.adress;
 })
 export class HttpService {
 
-  constructor(private http : HttpClient) { 
+  constructor(private http : HttpClient, private notificationService : NotificationService) { 
   }
 
   public get<T> (url : string) : Observable<T>{
-    return this.http.get<T>(backAdress + url).pipe( catchError(this.handleError));
+    return this.http.get<T>(backAdress + url).pipe( catchError( (error) => this.handleError(error) ));
   }
 
   public post<T>(url : string, body : any){
@@ -22,6 +23,7 @@ export class HttpService {
   }
 
   private handleError (error : any){
+    this.notificationService.showError("L'application a retourné le message"+error, "Erreur lors de l'appel à l'application");
       //TODO: gérer les erreurs à l'aide d'un service
       if (error.error instanceof ErrorEvent) {
         // A client-side or network error occurred. Handle it accordingly.

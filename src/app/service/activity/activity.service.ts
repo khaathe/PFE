@@ -7,6 +7,7 @@ import { User } from 'src/app/model/user.model';
 import { UserService } from '../user/user.service';
 import * as moment from 'moment';
 import { HttpService } from '../http/http.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +35,8 @@ export class ActivityService {
   }
 
   saveActivities (activities : Array<Activity> ){
-    //Ajouté un type de retour ici généré une erreur
     console.log("ActivityService.saveActivities - %o", activities);
-    this.httpService.post<Array<Activity>>("/activity", {"activities" : activities, "idU" : this.userService.user.idU} )
-    .subscribe( (response) => this.emitActivitiesUpdate(response) );
+    return this.httpService.post<Array<Activity>>("/activity", {"activities" : activities, "idU" : this.userService.user.idU} );
   }
 
   getTimeUserSpentByActivity = function (start:Date, end:Date, idU:string) : Array<any>{
@@ -47,7 +46,6 @@ export class ActivityService {
     if (idU){
       url = url + "&idU=" + idU;
     }
-    //Ajouté un type de retour ici généré une erreur
     return this.httpService.get(url);
   }
 
@@ -55,7 +53,7 @@ export class ActivityService {
     return this.httpService.post<any>('/activity/type', { "code": code, "libelle" : libelle});
   }
 
-  emitActivitiesUpdate (listActivities) : void{
+  emitActivitiesUpdate (listActivities : Array<Activity>) : void{
     this.activitySubject.next(listActivities);
   }
 
