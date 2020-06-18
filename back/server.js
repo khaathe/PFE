@@ -5,6 +5,7 @@ var cors=require('cors');
 
 var config = require('./config.json') ;
 var users = require('./users.json');
+var _ = require('lodash');
 const { resolve } = require('path');
 const { reject, result, values, update } = require('lodash');
 
@@ -47,6 +48,10 @@ app.route('/activity/type')
 app.route('/user')
   .get(getUser)
   .post(postUser)
+
+/** Route pour la connection */
+app.route('/connect')
+  .get(getConnection)
 
 /** Route pour tout les Utilisateurs */
 app.route('/user/all')
@@ -101,7 +106,8 @@ function postActivityType(req, res){
 function getUser(req, res) {
   console.log('GET /user params[idU=%s]', req.query.idU);
   query('SELECT * FROM `user` where idU=?', [req.query.idU]).then( (result) => {
-    res.json(result);
+    if (result.length>0) res.json(result[0]);
+    else res.json({});
   });
 }
 
@@ -123,6 +129,15 @@ function postUser(req,res) {
     err = new Error('Certains paramètres sont vide');
     err.code = 500;
     handleError(err,res);
+  }
+}
+
+function getConnection(req,res) {
+  console.log('GET /connect - [idU=%s, password=%s]', req.query.idU, req.query.password);
+  if ( _.some(users, {"idU": req.query.idU, "password": req.query.password}) ){
+    res.status(200).send()
+  } else {
+    res.status(404).send()
   }
 }
 
@@ -203,5 +218,10 @@ function updateActivityAndComments (activity, idU){
   .then( () => query("UPDATE comments SET comments=? where idA=?",[activity.comments, activity.idA]) )
 }
 
-app.listen(config.server.port);
-console.log("listening on port ", config.server.port);
+if (users) {
+  app.listen(config.server.port);
+  console.log("listening on port ", config.server.port);
+}
+else {
+  console.error('La liste des utilisateurs n\'a pas été chargé. Vérifier que le fichier est bien présent.')
+}

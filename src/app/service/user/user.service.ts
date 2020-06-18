@@ -13,13 +13,6 @@ export class UserService {
     this._user = new User();
   }
 
-  initUserInfo = function (){
-    this._user.idU = "kevins";
-    this._user.name = 'SPINICCI';
-    this._user.firstName = 'Kévin';
-    this._user.role = 'ADMIN';
-  }
-
   resetUserInfo = function(){
     this._user = new User();
   }
@@ -37,12 +30,12 @@ export class UserService {
     return this.httpService.get('/user/all');
   }
 
-  getUserActions = function() : Array<any>{
+  getUserActions () : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
       { text : "Calcul du temps par activité", route : "calcul-temps-activite"}
     ];
-    switch (this._user._role) {
+    switch (this._user.role) {
       case 'ADMIN':
         actions.push({ text : "Créer une activité", route : "creation-activite"});
         actions.push({ text : "Ajouter un utilisateur", route : "creation-user"});
@@ -58,7 +51,7 @@ export class UserService {
     return this.httpService.get<any>('/role');
   }
 
-  createUser(idU, password, nom, prenom, role){
+  createUser(idU: string, password: string, nom: string, prenom: string, role: string){
     return this.httpService.post<any>('/user', {"idU": idU, "password": password, "nom": nom, "prenom": prenom, "role": role});
   }
 
