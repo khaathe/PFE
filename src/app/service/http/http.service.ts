@@ -23,7 +23,7 @@ export class HttpService {
   }
 
   private handleError (error : any){
-    this.notificationService.showError("L'application a retourné le message"+error, "Erreur lors de l'appel à l'application");
+    this.notificationService.showError("L'application a retourné le message : '"+error.error.message +"'", "Erreur lors de l'appel à l'application");
       //TODO: gérer les erreurs à l'aide d'un service
       if (error.error instanceof ErrorEvent) {
         // A client-side or network error occurred. Handle it accordingly.
@@ -34,6 +34,6 @@ export class HttpService {
         console.error( "Backend returned code %o, body was: %o", error.status, error.error);
       }
       // return an observable with a user-facing error message
-      return throwError('Something bad happened; please try again later.');
+      return throwError('Something bad happened; please try again later. Error is : %o', error);
   }
 }
