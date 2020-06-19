@@ -33,7 +33,8 @@ export class UserService {
   getUserActions () : Array<any>{
     let actions = [
       { text : "Imputer le temps", route : "imputations-temps"},
-      { text : "Calcul du temps par activité", route : "calcul-temps-activite"}
+      { text : "Calcul du temps par activité", route : "calcul-temps-activite"},
+      { text : "Changer son mot de passe", route : "changer-son-mdp"}      
     ];
     switch (this._user.role) {
       case 'ADMIN':

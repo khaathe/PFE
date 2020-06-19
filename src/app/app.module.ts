@@ -34,6 +34,7 @@ import { CreationUserComponent } from './component/creation-user/creation-user/c
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { ToastrModule } from 'ngx-toastr';
 import { ChangerMdpUserComponent } from './component/changer-mdp-user/changer-mdp-user.component';
+import { ChangerSonMdpComponent } from './component/changer-son-mdp/changer-son-mdp.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ChangerMdpUserComponent } from './component/changer-mdp-user/changer-md
     CalculTempsActiviteComponent,
     CreationActiviteComponent,
     CreationUserComponent,
-    ChangerMdpUserComponent
+    ChangerMdpUserComponent,
+    ChangerSonMdpComponent
   ],
   imports: [
     BrowserModule,

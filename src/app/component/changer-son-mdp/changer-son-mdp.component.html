@@ -1,22 +1,10 @@
 <!-- Mini Formulaire pour sélectionner les critères de calcul -->
 <div class="main-container">
     
-    <h1>Changez le mot de passe d'un Utilisateur</h1>
+    <h1>Changement de mot de passe</h1>
 
     <form #form="ngForm" (ngSubmit)="onSubmit()">
 
-        <div>
-            <label for="select-user">Choisissez un utilisateur : </label>
-            <mat-form-field>
-              <mat-label>Utilisateur</mat-label>
-              <mat-select name="select-user" [(value)]="userSelected" required>
-                <mat-option *ngFor="let user of userList" [value]='user'>
-                  {{user.nom + ' ' + user.prenom}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-      
           <div class="field">
               <label for="inputPassword" class="label">Mot de passe : </label>
               <mat-form-field>
