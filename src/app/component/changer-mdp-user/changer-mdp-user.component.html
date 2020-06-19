@@ -1,0 +1,42 @@
+<!-- Mini Formulaire pour sélectionner les critères de calcul -->
+<div class="main-container">
+    
+    <h1>Changez le mot de passe d'un utilisateur Utilisateur</h1>
+
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+
+        <div>
+            <label for="select-user">Choisissez un utilisateur : </label>
+            <mat-form-field>
+              <mat-label>Utilisateur</mat-label>
+              <mat-select name="select-user" [(value)]="userSelected" required>
+                <mat-option *ngFor="let user of userList" [value]='user'>
+                  {{user.nom + ' ' + user.prenom}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+      
+          <div class="field">
+              <label for="inputPassword" class="label">Mot de passe : </label>
+              <mat-form-field>
+                  <mat-label>Mot de passe</mat-label>
+                  <input type="password" name="inputPassword" [(ngModel)]="password" matInput placeholder="ex:motDePasse12!" maxlength="30" required>
+              </mat-form-field>
+              <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                  matTooltip="Mot de passe de l'utilisateur pour se connecter. De préférence éviter les accents. (Ex: unJolieMotDePasse123!)" >
+              </mat-icon>
+          </div>
+      
+          <div class="field">
+              <label for="inputConfirmPassword" class="label">Confirmez le mot de passe : </label>
+              <mat-form-field>
+                  <mat-label>Confirmation du Mot de passe</mat-label>
+                  <input type="password" name="inputPassword" [(ngModel)]="confirmPassword" matInput placeholder="ex:motDePasse12!" maxlength="30" required>
+              </mat-form-field>
+          </div>
+
+          <button type="submit" mat-raised-button color="primary" [disabled]="form.pristine || form.invalid || password!=confirmPassword" >Enregistrer le mot de passe</button>
+    </form>
+
+</div>

@@ -39,6 +39,7 @@ export class UserService {
       case 'ADMIN':
         actions.push({ text : "Créer une activité", route : "creation-activite"});
         actions.push({ text : "Ajouter un utilisateur", route : "creation-user"});
+        actions.push({ text : "Changer le mot de passe d'un utilisateur", route : "changer-mdp-user"});
         break;
 
       default:
@@ -55,4 +56,7 @@ export class UserService {
     return this.httpService.post<any>('/user', {"idU": idU, "password": password, "nom": nom, "prenom": prenom, "role": role});
   }
 
+  changeUserPassword(idU : string, password : string){
+    return this.httpService.post<any>('/user/password', {"idU":idU, "password" : password});
+  }
 }
