@@ -18,6 +18,8 @@ export class CreationUserComponent implements OnInit {
 
   password : string;
 
+  confirmPassword : string;
+
   nom : string;
 
   prenom : string;

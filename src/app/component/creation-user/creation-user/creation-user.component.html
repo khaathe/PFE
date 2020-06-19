@@ -27,6 +27,20 @@
                 matTooltip="Mot de passe de l'utilisateur pour se connecter. De préférence éviter les accents. (Ex: unJolieMotDePasse123!)" >
             </mat-icon>
         </div>
+      
+        <div class="field">
+            <label for="inputConfirmPassword" class="label">Confirmez le mot de passe : </label>
+            <mat-form-field>
+                <mat-label>Confirmation du Mot de passe</mat-label>
+                <input type="password" name="inputPassword" [(ngModel)]="confirmPassword" matInput placeholder="ex:motDePasse12!" maxlength="30" required>
+            </mat-form-field>
+        </div>
+
+        <div style="max-width: 30%;">
+          <span class="error-message" *ngIf="password!=confirmPassword">
+              Les mot de passe ne sont pas identiques !
+            </span>
+        </div>
 
         <div class="field">
             <label for="inputNom" class="label">Nom : </label>
@@ -64,7 +78,8 @@
         </div>
         
         <div class="field">
-            <button type='submit' mat-raised-button color='primary' [disabled]="form.pristine || form.invalid" >Créer utilisateur</button>
+            <button type='submit' mat-raised-button color='primary' 
+                [disabled]="form.pristine || form.invalid || password!=confirmPassword" >Créer utilisateur</button>
         </div>
     </form>
 </div>

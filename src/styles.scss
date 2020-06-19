@@ -18,3 +18,12 @@ body {
 .main-container {
     padding: 1em;   
 }
+
+.error-message {
+    background-color: mat-color($warn, A200);
+    color:  mat-color($white);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
