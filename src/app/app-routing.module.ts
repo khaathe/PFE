@@ -16,7 +16,9 @@ const routes: Routes = [
   { path : 'creation-activite', component : CreationActiviteComponent},
   { path : 'creation-user', component : CreationUserComponent},
   { path : 'changer-mdp-user', component : ChangerMdpUserComponent},
-  { path : 'changer-son-mdp', component : ChangerSonMdpComponent}
+  { path : 'changer-son-mdp', component : ChangerSonMdpComponent},
+  //Redirection vers la page principale
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

@@ -1,5 +1,9 @@
 <div class="main-container">
-    <h1>Création d'un nouvel Utilisateur</h1>
+    
+    <div class="title">
+        <h1>Création d'un nouvel Utilisateur</h1>
+    </div>
+
     <form #form="ngForm" (ngSubmit)="onSubmit()">
         
         <div class="field">
@@ -36,7 +40,7 @@
             </mat-form-field>
         </div>
 
-        <div style="max-width: 30%;">
+        <div style="max-width: 30%; padding: 20px;">
           <span class="error-message" *ngIf="password!=confirmPassword">
               Les mot de passe ne sont pas identiques !
             </span>

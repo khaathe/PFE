@@ -6,6 +6,9 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { NotificationService } from 'src/app/service/notification/notification.service';
 
+/**
+ * Component de l'écran pour imputer le temps
+ */
 @Component({
   selector: 'app-imputation-temps',
   templateUrl: './imputation-temps.component.html',
@@ -13,16 +16,26 @@ import { NotificationService } from 'src/app/service/notification/notification.s
 })
 export class ImputationTempsComponent implements OnInit {
 
+  /** Information du jour sélectionné par l'utilisateur */
   day : Array<Activity>;
 
+  /** Liste des différents types d'activités */
   activityType: Array<ActivityType>;
 
+  /** Date sélectionné par l'utilisateur */
   selectedDate : Date;
 
+  /** Liste des activités imputés par l'utilisateur */
   private activities : Array<Activity>;
 
+  /** Jours vide */
   private static DEFAULT_DAY : Array<Activity>;
 
+  /**
+   * Constructeur
+   * @param activityService service de gestion des activités
+   * @param notificationService service de gestion des notifications
+   */
   constructor(private activityService : ActivityService, private notificationService : NotificationService) {
     ImputationTempsComponent.DEFAULT_DAY = [];
     let morning = new Activity();
@@ -34,6 +47,9 @@ export class ImputationTempsComponent implements OnInit {
     ImputationTempsComponent.DEFAULT_DAY.push(afternoon);
   }
 
+  /**
+   * Méthode init d'angular
+   */
   ngOnInit(): void {
     this.activityType = [];
     this.activityService.getActivityType().subscribe(
@@ -57,6 +73,9 @@ export class ImputationTempsComponent implements OnInit {
     this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
 
+  /**
+   * Sauvegarde de l'imputation réalisée par l'utilisateur
+   */
   saveInput () : void {
     this.activityService.saveActivities(this.day).subscribe( (response) => {
       this.activityService.emitActivitiesUpdate(response);
@@ -64,6 +83,10 @@ export class ImputationTempsComponent implements OnInit {
     });
   }
   
+  /**
+   * Recherche des activités par date.
+   * @param date jour d'imputation de l'activité
+   */
   private findActivityByDate (date) : Array<Activity>{
     let dateMoment = moment(date);
     return _.filter(this.activities, (a:Activity) => {
@@ -71,6 +94,14 @@ export class ImputationTempsComponent implements OnInit {
     });
   }
 
+  /**
+   * Méthode appelée lorsqu'un utilisateur clique sur une date.
+   * Les informations des activités imputés à la date choisie par l'utilisateur
+   * sont ensuite récupérée puis affichées à l'écran. Si l'utilisateur n'a pas réalisé 
+   * d'imputation à la date sélectionnée, alors des informations vides sont chargées
+   * (constante DEFAULT_DAY).
+   * @param date date sélectionné par l'utilisateur
+   */
   dateClick (date) : void {
     this.selectedDate = date;
     let a = this.findActivityByDate(date);
