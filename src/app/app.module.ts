@@ -25,7 +25,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.component';
 import {AuthentificationComponent} from './component/authentification/authentification.component';
-import {AccueilComponent} from './component/accueil/accueil.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreationActiviteComponent } from './component/creation-activite/creation-activite/creation-activite.component';
@@ -43,7 +42,6 @@ import { ChangerSonMdpComponent } from './component/changer-son-mdp/changer-son-
     CalendarComponent,
     BarNavigationComponent,
     AuthentificationComponent,
-    AccueilComponent,
     CalculTempsActiviteComponent,
     CreationActiviteComponent,
     CreationUserComponent,

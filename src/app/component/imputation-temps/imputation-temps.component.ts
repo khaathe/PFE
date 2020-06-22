@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import { Activity } from 'src/app/model/activity.model';
 import { ActivityType } from 'src/app/model/activityType.model';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { NotificationService } from 'src/app/service/notification/notification.service';
+import { ConnectionService } from 'src/app/service/connection/connection.service';
+import { Subscription } from 'rxjs';
 
 /**
  * Component de l'écran pour imputer le temps
@@ -14,7 +16,7 @@ import { NotificationService } from 'src/app/service/notification/notification.s
   templateUrl: './imputation-temps.component.html',
   styleUrls: ['./imputation-temps.component.scss']
 })
-export class ImputationTempsComponent implements OnInit {
+export class ImputationTempsComponent implements OnInit, OnDestroy {
 
   /** Information du jour sélectionné par l'utilisateur */
   day : Array<Activity>;
@@ -28,6 +30,8 @@ export class ImputationTempsComponent implements OnInit {
   /** Liste des activités imputés par l'utilisateur */
   private activities : Array<Activity>;
 
+  private connectionSubscription : Subscription;
+
   /** Jours vide */
   private static DEFAULT_DAY : Array<Activity>;
 
@@ -35,8 +39,9 @@ export class ImputationTempsComponent implements OnInit {
    * Constructeur
    * @param activityService service de gestion des activités
    * @param notificationService service de gestion des notifications
+   * @param connectionService service de connection
    */
-  constructor(private activityService : ActivityService, private notificationService : NotificationService) {
+  constructor(private activityService : ActivityService, private notificationService : NotificationService, private connectionService : ConnectionService) {
     ImputationTempsComponent.DEFAULT_DAY = [];
     let morning = new Activity();
     morning.period = 'MATIN';
@@ -48,16 +53,42 @@ export class ImputationTempsComponent implements OnInit {
   }
 
   /**
+   * Méthode destroy d'angular
+   */
+  ngOnDestroy(): void {
+    this.connectionSubscription.unsubscribe();
+  }
+
+  /**
    * Méthode init d'angular
    */
   ngOnInit(): void {
     this.activityType = [];
+    //Récupération type d'activité
     this.activityService.getActivityType().subscribe(
       (response) => { 
           console.log("ImputationTempsComponent.ngOnInit - activityType=%o", response);
           this.activityType = response;
       }
     );
+    //Abonnement service de connection
+    this.connectionSubscription = this.connectionService.getConnectionSubject().subscribe( (value) => {
+      //Récupération de la liste des activités quand on se connecte
+      if(value) this.getListActivities();
+    });
+    //récupérationde la liste des activités quand on ouvre l'écran
+    this.getListActivities();
+    //Abonnement à chaque update d'activité
+    this.activityService.activityObservable.subscribe( (activities) => {
+      this.activities=activities; 
+      this.dateClick(this.selectedDate);
+    });
+    this.selectedDate = null;
+    this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
+  }
+
+  getListActivities(){
+    //Récupréation liste d'activité
     this.activityService.getListActivities().subscribe(
       (response) => {
         console.log("ImputationTempsComponent.ngOnInit - activities=%o", response);
@@ -65,12 +96,6 @@ export class ImputationTempsComponent implements OnInit {
         this.activityService.emitActivitiesUpdate(this.activities);
       }
     );
-    this.activityService.activityObservable.subscribe( (activities) => {
-      this.activities=activities; 
-      this.dateClick(this.selectedDate);
-    });
-    this.selectedDate = null;
-    this.day = _.cloneDeep(ImputationTempsComponent.DEFAULT_DAY);
   }
 
   /**
