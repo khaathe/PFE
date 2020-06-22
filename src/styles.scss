@@ -27,3 +27,8 @@ body {
     align-items: center;
     border-radius: 10px;
 }
+
+.title {
+    background-color: mat-color($accent);
+    color: mat-color($white);
+}
