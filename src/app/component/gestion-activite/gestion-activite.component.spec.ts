@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreationActiviteComponent } from './creation-activite.component';
+import { GestionActiviteComponent } from './gestion-activite.component';
 
-describe('CreationActiviteComponent', () => {
-  let component: CreationActiviteComponent;
-  let fixture: ComponentFixture<CreationActiviteComponent>;
+describe('GestionActiviteComponent', () => {
+  let component: GestionActiviteComponent;
+  let fixture: ComponentFixture<GestionActiviteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreationActiviteComponent ]
+      declarations: [ GestionActiviteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreationActiviteComponent);
+    fixture = TestBed.createComponent(GestionActiviteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

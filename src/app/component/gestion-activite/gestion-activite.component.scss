@@ -1,3 +1,5 @@
+@import 'src/styles.scss';
+
 .field{
     padding: 1em;
     width: 50%;
@@ -16,7 +18,8 @@ table {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 15px;
 }
 
 .button-div > div {
@@ -25,4 +28,11 @@ table {
 
 .create-activity-form {
     display: flex;
+    border: mat-color($primary) solid 2px;
+    border-radius: 10px;
+}
+
+.create-activity-form-title{
+    font-size: 1.5em;
+    color: mat-color($primary);
 }

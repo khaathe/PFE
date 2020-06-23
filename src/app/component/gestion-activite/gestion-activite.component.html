@@ -1,11 +1,12 @@
 <div class="main-container">
     
     <div class="title">
-        <h1>Création d'une nouvelle Activité</h1>
+        <h1>Gestion des Activités</h1>
     </div>
 
     <!-- Mini form pour créer une activité -->
     <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <span class="create-activity-form-title">Créer une activité :</span>
         <div class="create-activity-form">
             <div class="field">
                 <label for="activityCode" class="label">Code de l'activité : </label>

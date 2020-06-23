@@ -62,7 +62,7 @@ export class UserService {
     ];
     switch (this._user.role) {
       case 'ADMIN':
-        actions.push({ text : "Créer une activité", route : "creation-activite"});
+        actions.push({ text : "Gérer les activités", route : "gestion-activite"});
         actions.push({ text : "Ajouter un utilisateur", route : "creation-user"});
         actions.push({ text : "Changer le mot de passe d'un utilisateur", route : "changer-mdp-user"});
         break;

@@ -27,13 +27,13 @@ import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.
 import {AuthentificationComponent} from './component/authentification/authentification.component';
 import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CreationActiviteComponent } from './component/creation-activite/creation-activite/creation-activite.component';
 import { CreationUserComponent } from './component/creation-user/creation-user/creation-user.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { ToastrModule } from 'ngx-toastr';
 import { ChangerMdpUserComponent } from './component/changer-mdp-user/changer-mdp-user.component';
 import { ChangerSonMdpComponent } from './component/changer-son-mdp/changer-son-mdp.component';
+import { GestionActiviteComponent } from './component/gestion-activite/gestion-activite.component';
 
 @NgModule({
   declarations: [
@@ -43,10 +43,10 @@ import { ChangerSonMdpComponent } from './component/changer-son-mdp/changer-son-
     BarNavigationComponent,
     AuthentificationComponent,
     CalculTempsActiviteComponent,
-    CreationActiviteComponent,
     CreationUserComponent,
     ChangerMdpUserComponent,
-    ChangerSonMdpComponent
+    ChangerSonMdpComponent,
+    GestionActiviteComponent
   ],
   imports: [
     BrowserModule,

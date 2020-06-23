@@ -1,21 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivityService } from 'src/app/service/activity/activity.service';
-import { NotificationService } from 'src/app/service/notification/notification.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivityType } from 'src/app/model/activityType.model';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
+import { ActivityService } from 'src/app/service/activity/activity.service';
+import { NotificationService } from 'src/app/service/notification/notification.service';
 
 /**
  * Component de gestion de l'écran de création des activités
  */
 @Component({
-  selector: 'app-creation-activite',
-  templateUrl: './creation-activite.component.html',
-  styleUrls: ['./creation-activite.component.scss']
+  selector: 'app-gestion-activite',
+  templateUrl: './gestion-activite.component.html',
+  styleUrls: ['./gestion-activite.component.scss']
 })
-export class CreationActiviteComponent implements OnInit {
+export class GestionActiviteComponent implements OnInit {
 
+  
   /** Code de l'activité */
   code : string;
 
@@ -105,4 +106,6 @@ export class CreationActiviteComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} Activity : ${row.code}`;
   }
 
+
 }
+
