@@ -39,9 +39,10 @@ export class ActivityService {
    * Méthode pour récupérer les types d'activités
    * @returns un observable pour la récupération des types d'activités
    */
-  getActivityType () {
+  getActivityType (state : string) {
     console.log("ActivityService.getActivityType");
-    return this.httpService.get<Array<ActivityType>>('/activity/type');
+    let url = state ? '/activity/type?state=' + state : '/activity/type';
+    return this.httpService.get<Array<ActivityType>>(url);
   }
 
   /**
@@ -97,4 +98,13 @@ export class ActivityService {
     this.activitySubject.next(listActivities);
   }
 
+  /**
+   * Mets à jours l'état de plusieurs activités.
+   * @param listCode codes des activités àm mettre à jour
+   * @param state nouvel état
+   * @returns un observale pour la requête
+   */
+  updateActivityTypeState (listCode : Array<string>, state : string) {
+    return this.httpService.post<Array<ActivityType>>('/activity/type/state', { "code" : listCode, "state" : state});
+  }
 }

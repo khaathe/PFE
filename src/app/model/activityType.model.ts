@@ -9,6 +9,9 @@ export class ActivityType {
     /** libellé de l'activité */
     private _libelle : string;
 
+    /** Etat de l'activité */
+    private _state : string;
+
     /** Getter */
     get code () {
         return this._code;
@@ -28,5 +31,16 @@ export class ActivityType {
     set libelle (libelle : string) {
         this._libelle = libelle;
     }
+
+    /** Getter */
+    get state() : string {
+        return this._state;
+    }
+    
+    /** Setter */
+    set state(state : string) {
+        this._state = state;
+    }
+    
     
 }

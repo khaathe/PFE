@@ -29,6 +29,9 @@ export class HttpService {
    * @param url url de la requête
    */
   public get<T> (url : string) : Observable<T>{
+    //Attention ne pas faire  catchError(this.handleError) mais bien  catchError( (error) => this.handleError(error))
+    //cela génére une erreur : this.notificationService is undefined
+    //car on est plus dans la classe HttpService mais dans une classe angular
     return this.http.get<T>(backAdress + url).pipe( catchError( (error) => this.handleError(error) ));
   }
 
@@ -38,7 +41,10 @@ export class HttpService {
    * @param body corps de la requête
    */
   public post<T>(url : string, body : any){
-    return this.http.post<T>(backAdress+url, body).pipe( catchError(this.handleError));
+    //Attention ne pas faire  catchError(this.handleError) mais bien  catchError( (error) => this.handleError(error))
+    //cela génére une erreur : this.notificationService is undefined
+    //car on est plus dans la classe HttpService mais dans une classe angular
+    return this.http.post<T>(backAdress+url, body).pipe( catchError((error) => this.handleError(error)));
   }
 
   /**

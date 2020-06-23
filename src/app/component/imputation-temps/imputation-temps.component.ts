@@ -65,7 +65,7 @@ export class ImputationTempsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.activityType = [];
     //Récupération type d'activité
-    this.activityService.getActivityType().subscribe(
+    this.activityService.getActivityType("ACTIVE").subscribe(
       (response) => { 
           console.log("ImputationTempsComponent.ngOnInit - activityType=%o", response);
           this.activityType = response;
