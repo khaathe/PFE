@@ -1,0 +1,10 @@
+<div class="nav-title">
+    <span> {{user.nom}} </span>
+    <span> {{user.prenom}} </span>
+    <span> {{user.role}} </span>
+</div>
+<mat-nav-list>
+    <a mat-list-item routerLink="{{action.route}}" *ngFor="let action of actions"> {{action.text}} </a>
+</mat-nav-list>
+
+<a mat-list-item class="last-button" (click)="deconnect()">Déconnexion</a>

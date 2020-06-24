@@ -1,0 +1,50 @@
+@import 'src/styles.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.nav-title {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    background-color: mat-color($accent);
+    color: mat-color($white);
+}
+
+.mat-list-item {
+    background-color: mat-color($primary, 500);
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.mat-nav-list .mat-list-item {
+    height: 4em;
+}
+
+.mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover{
+    background-color: mat-color($accent);
+}
+
+.mat-nav-list .mat-list-item:focus{
+    background-color: mat-color($accent);
+}
+
+.mat-list-base .mat-list-item {
+    color:mat-color($white);
+}
+
+.last-button {
+    margin-top: auto;    
+    background-color: mat-color($warn);
+    cursor: pointer;
+    color: mat-color($white);
+    height: 2em;
+    text-align: center;
+}
+
+.last-button:hover {
+    background-color: mat-color($warn, A700);
+}

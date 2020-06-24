@@ -1,0 +1,23 @@
+@import 'src/styles.scss';
+
+:host {
+    display: block;
+}
+
+.authenfication-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.item {
+    padding: 1em;
+}
+
+.app-title{
+    background-image: linear-gradient(to right, mat-color($gray), mat-color($primary), mat-color($accent));
+    color: mat-color($white);
+    padding: 1em;
+}

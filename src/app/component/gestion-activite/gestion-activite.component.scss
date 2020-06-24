@@ -1,0 +1,38 @@
+@import 'src/styles.scss';
+
+.field{
+    padding: 1em;
+    width: 50%;
+}
+
+.label {
+    width: 12em;
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+}
+
+.button-div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.button-div > div {
+    padding-left: 10px;
+}
+
+.create-activity-form {
+    display: flex;
+    border: mat-color($primary) solid 2px;
+    border-radius: 10px;
+}
+
+.create-activity-form-title{
+    font-size: 1.5em;
+    color: mat-color($primary);
+}
