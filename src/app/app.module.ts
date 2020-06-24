@@ -1,23 +1,39 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {ImputationTempsComponent} from './imputation-temps/imputation-temps.component';
-import {CalendarComponent} from './calendar/calendar.component';
+import {ImputationTempsComponent} from './component/imputation-temps/imputation-temps.component';
+import {CalendarComponent} from './component/calendar/calendar.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 import {MatInputModule} from '@angular/material/input'; 
 import {MatSelectModule} from '@angular/material/select'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FullCalendarModule} from '@fullcalendar/angular';
-import {BarNavigationComponent} from './bar-navigation/bar-navigation.component';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
-import {AuthentificationComponent} from './authentification/authentification.component';
-import {AccueilComponent} from './accueil/accueil.component'; 
-import { FormsModule } from '@angular/forms';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BarNavigationComponent} from './component/bar-navigation/bar-navigation.component';
+import {AuthentificationComponent} from './component/authentification/authentification.component';
+import { CalculTempsActiviteComponent } from './component/calcul-temps-activite/calcul-temps-activite.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CreationUserComponent } from './component/creation-user/creation-user/creation-user.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { ToastrModule } from 'ngx-toastr';
+import { ChangerMdpUserComponent } from './component/changer-mdp-user/changer-mdp-user.component';
+import { ChangerSonMdpComponent } from './component/changer-son-mdp/changer-son-mdp.component';
+import { GestionActiviteComponent } from './component/gestion-activite/gestion-activite.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +42,11 @@ import { FormsModule } from '@angular/forms';
     CalendarComponent,
     BarNavigationComponent,
     AuthentificationComponent,
-    AccueilComponent
+    CalculTempsActiviteComponent,
+    CreationUserComponent,
+    ChangerMdpUserComponent,
+    ChangerSonMdpComponent,
+    GestionActiviteComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +60,17 @@ import { FormsModule } from '@angular/forms';
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTooltipModule,
+    MatIconModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

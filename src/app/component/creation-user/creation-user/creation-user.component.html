@@ -1,0 +1,89 @@
+<div class="main-container">
+    
+    <div class="title">
+        <h1>Création d'un nouvel Utilisateur</h1>
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+        
+        <div class="field">
+            <label for="inputIdu" class="label">Identifiant : </label>
+            <mat-form-field>
+                <mat-label>Identifiant</mat-label>
+                <input type="text" name="inputIdu" [(ngModel)]="idU" matInput placeholder="ex:lraclette" maxlength="15" required>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="L'identifiant avec l'utilisateur devra se connecter. 
+                Il doit être unique pour chaque utilisateur et doit avoir une taille maximale de 15 caractères. 
+                De préférence éviter les accents et les caractères spéciaux. 
+                Conseil : Rentrez comme identifiant la première lettre du prénom et le nom de famille de l'utilisateur.
+                (Ex: Pour Jean DURAND écrire 'jdurand')" >
+            </mat-icon>
+        </div>
+
+        <div class="field">
+            <label for="inputPassword" class="label">Mot de passe : </label>
+            <mat-form-field>
+                <mat-label>Mot de passe</mat-label>
+                <input type="password" name="inputPassword" [(ngModel)]="password" matInput placeholder="ex:motDePasse12!" maxlength="30" required>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Mot de passe de l'utilisateur pour se connecter. De préférence éviter les accents. (Ex: unJolieMotDePasse123!)" >
+            </mat-icon>
+        </div>
+      
+        <div class="field">
+            <label for="inputConfirmPassword" class="label">Confirmez le mot de passe : </label>
+            <mat-form-field>
+                <mat-label>Confirmation du Mot de passe</mat-label>
+                <input type="password" name="inputPassword" [(ngModel)]="confirmPassword" matInput placeholder="ex:motDePasse12!" maxlength="30" required>
+            </mat-form-field>
+        </div>
+
+        <div style="max-width: 30%; padding: 20px;">
+          <span class="error-message" *ngIf="password!=confirmPassword">
+              Les mot de passe ne sont pas identiques !
+            </span>
+        </div>
+
+        <div class="field">
+            <label for="inputNom" class="label">Nom : </label>
+            <mat-form-field>
+                <mat-label>Nom</mat-label>
+                <input type="text" name="inputNom" [(ngModel)]="nom" matInput placeholder="ex:DURAND" maxlength="30" required>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Le nom de l'utilisateur (Ex: DURAND)." >
+            </mat-icon>
+        </div>
+
+        <div class="field">
+            <label for="inputPrenom" class="label">Prénom : </label>
+            <mat-form-field>
+                <mat-label>Prénom</mat-label>
+                <input type="text" name="inputPrenom" [(ngModel)]="prenom" matInput placeholder="ex: Jean" maxlength="30" required>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Le prenom de l'utilisateur. (Ex: Jean)" >
+            </mat-icon>
+        </div>
+
+        <div class="field">
+            <label for="selectRole" class="label">Rôle : </label>
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select name="selectRole" [(ngModel)]="role" required>
+                    <mat-option *ngFor="let r of listRoles" value="{{r.code}}" >{{r.libelle}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Le role de l'utilisateur. Seul les valeurs ADMIN et STANDARD sont possible." >
+            </mat-icon>
+        </div>
+        
+        <div class="field">
+            <button type='submit' mat-raised-button color='primary' 
+                [disabled]="form.pristine || form.invalid || password!=confirmPassword" >Créer utilisateur</button>
+        </div>
+    </form>
+</div>

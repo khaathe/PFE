@@ -1,0 +1,42 @@
+.main-div {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bloc-activite-et-desc {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(26em, 45%) );
+    column-gap: 4em;
+    row-gap: 4em;
+}
+
+.bloc-demi-journee {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.select-checkbox-type-activite {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.div-periode-demi-journee {
+    font-size: 2em;
+}
+
+.bar-sauvegarder-annuler {
+    display: flex;
+    justify-content: center;
+}
+
+.bar-sauvegarder-annuler>div {
+    padding: 15px;
+}
+
+.desc-activite-textarea {
+    height: 7em;
+    resize: none;
+}

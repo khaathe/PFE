@@ -2,9 +2,10 @@
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
 @import '~@angular/material/theming';
+@import '~ngx-toastr/toastr';
 @import 'custom-theme.scss';
 
-@include angular-material-theme($PFE-theme);
+@include angular-material-theme($theme);
 
 html, body { 
     height: 100%; 
@@ -12,4 +13,22 @@ html, body {
 
 body { 
     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.main-container {
+    padding: 1em;   
+}
+
+.error-message {
+    background-color: mat-color($warn, A200);
+    color:  mat-color($white);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.title {
+    background-color: mat-color($accent);
+    color: mat-color($white);
 }

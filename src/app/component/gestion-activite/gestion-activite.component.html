@@ -1,0 +1,106 @@
+<div class="main-container">
+    
+    <div class="title">
+        <h1>Gestion des Activités</h1>
+    </div>
+
+    <!-- Mini form pour créer une activité -->
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <span class="create-activity-form-title">Créer une activité :</span>
+        <div class="create-activity-form">
+            <div class="field">
+                <label for="activityCode" class="label">Code de l'activité : </label>
+                <mat-form-field>
+                    <mat-label>Code de l'activité</mat-label>
+                    <input type="text" name="activityCode" [(ngModel)]="code" matInput placeholder="ex: PROJET1" pattern="([A-Z 0-9_])*" maxlength="30" required>
+                </mat-form-field>
+                <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                    matTooltip="Le code de l'activité est un identifiant unique. Il doit être en majuscule, sans accent et peut comprendre des tiret (_). (Ex: PROJET1)" >
+                </mat-icon>
+            </div>
+            <div class="field">
+                <label for="activityCode" class="label">Libellé de l'activité : </label>
+                <mat-form-field>
+                    <mat-label>Libellé de l'activité</mat-label>
+                    <input type="text" name="activityLibelle" [(ngModel)]="libelle" matInput placeholder="ex: Projet n°1" maxlength="30" required>
+                </mat-form-field>
+                <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                    matTooltip="Le nom de l'activité qui sera affiché à l'écran. (ex: Projet n°1)" >
+                </mat-icon>
+            </div>
+            <div class="field">
+                <button type='submit' mat-raised-button color='primary' [disabled]="form.pristine || form.invalid">Créer activité</button>
+            </div>
+        </div>        
+    </form>
+
+    <!-- Boutton pour activer ou désactiver une activité -->
+    <div class="button-div">
+        <div>
+            <button type='button' mat-raised-button color='primary' (click)="updateActivityTypeState('ACTIVE')" 
+                [disabled]="isUpdateButtonDisabled()">Activer les activités</button>
+        </div>
+        <div>
+            <button type='button' mat-raised-button color='primary' (click)="updateActivityTypeState('INACTIVE')" 
+                [disabled]="isUpdateButtonDisabled()">Désactiver les activités</button>
+        </div>
+        <div>
+            <mat-icon svgIcon="help" aria-hidden="false" color="accent" aria-label="User help SVG icon"
+                matTooltip="Boutons pour activer ou désactiver une activité.
+                    Une activité désactivée n'apparaitra plus dans la liste des activités lorsqu'un utilisateur voudra imputer son temps.
+                    Les boutons resteront désactivés tant qu'aucune activités n'aura été sélectionnées." >
+            </mat-icon>
+        </div>
+    </div>
+    
+    <!-- tableau pour afficher les activités -->
+    <div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+            </ng-container>
+        
+            <!-- Colonne pour le code -->
+            <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef> Code de l'activité </th>
+            <td mat-cell *matCellDef="let a"> {{a.code}} </td>
+            </ng-container>
+        
+            <!-- Colonne pour le libellé -->
+            <ng-container matColumnDef="libelle">
+            <th mat-header-cell *matHeaderCellDef> Libellé de l'activité </th>
+            <td mat-cell *matCellDef="let a"> {{a.libelle}} </td>
+            </ng-container>
+        
+            <!-- Colonne pour l'état -->
+            <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef> Etat de l'activité </th>
+            <td mat-cell *matCellDef="let a"> {{a.state}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="header"></tr>
+            <tr mat-row *matRowDef="let row; columns: header;"
+                (click)="selection.toggle(row)">
+            </tr>
+        </table>
+        
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="25" showFirstLastButtons></mat-paginator>
+    </div>
+
+    
+</div>

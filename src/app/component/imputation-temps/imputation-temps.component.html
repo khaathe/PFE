@@ -1,0 +1,48 @@
+<div class="main-div">
+
+    <div class="title">
+        <h1>Imputation du temps</h1>
+    </div>
+
+    <!-- Bloc contenant les champs pour le type d'activité le matin, l'après-midi et le champ pour saisir une desc -->
+    <form #form="ngForm" (ngSubmit)="saveInput()" >
+        <div>
+            <h3>Date sélectionnée : {{selectedDate | date : "dd/MM/yyyy" }} </h3>
+        </div>
+        <div class="bloc-activite-et-desc">
+            <!-- Type d'activité pour matin et après-midi-->
+            <div class="bloc-demi-journee" *ngFor="let half_day of day">
+                <div class="div-periode-demi-journee">
+                    <h3 *ngIf="half_day.period === 'MATIN' "> Matin : </h3>
+                    <h3 *ngIf="half_day.period === 'APRES_MIDI' " > Après-Midi : </h3>
+                </div>
+                <div class="select-checkbox-type-activite ">
+                    <mat-form-field>
+                        <mat-select placeholder="Type d'activité" name="{{half_day.period+'-type-activite'}}" [(ngModel)]="half_day.activityType" required>
+                            <mat-option *ngFor="let type of activityType" value="{{type.code}}" >{{type.libelle}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <mat-form-field>
+                    <textarea matInput placeholder="Description de l'activité" class="desc-activite-textarea" name="{{half_day.period+'-desc-activite'}}" [(ngModel)]="half_day.comments" [disabled]="!half_day.activityType"></textarea>
+                </mat-form-field>
+            </div>   
+        </div>
+
+        <!-- Bloc avec les bouttons sauvegarder et annuler -->
+        <div class="bar-sauvegarder-annuler">
+            <div>
+                <button mat-raised-button type="reset" (click)="form.reset()" class="bar-sauvegarder-annuler-item" color="primary">Annuler</button>
+            </div>
+            <div>
+                <button mat-raised-button type="submit" [disabled]="form.pristine || form.invalid" class="bar-sauvegarder-annuler-item" color="primary">Sauvegarder les saisies</button>
+            </div>
+        </div>
+
+        <!-- Bloc pour le calendar -->
+        <div class="div-calendrier">
+            <app-calendar (dateClickEvent)="dateClick($event)"></app-calendar>
+        </div>
+
+    </form>
+</div>
