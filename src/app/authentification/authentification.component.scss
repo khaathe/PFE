@@ -1,0 +1,22 @@
+@import '../../custom-theme.scss';
+@include angular-material-theme($PFE-theme);
+$primary: map-get($PFE-theme, primary);
+$accent: map-get($PFE-theme, accent);
+$warn: map-get($PFE-theme, warn);
+$foreground: map-get($PFE-theme, foreground);
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.item {
+    padding: 2em;
+}
+
+.app-title{
+    
+}
